@@ -29,7 +29,7 @@
   <body onload="fetchSource()">
     <header class="hero-image">
       <section class="hero-text">
-        <h1>CSE 222a: Week 03</h1>
+        <h1>CSE 222b: Week 03</h1>
         <p>Representing Data</p>
       </section>
     </header>
@@ -44,20 +44,20 @@
   after the nouns they modify.</p>
   <p>While each language has its own organizational rules, they all do the same thing. They allow us to organize and express
   our thinking.</p>
-  <h3>Instances of Classes - another organizational concept of Swift</h3>
-  <p>Since Swift has the language Haskell as an ancestor, Swift, like Haskell, has the concept of functions. But Haskell 
-  isn't Swift's only ancestor. Ruby and C# are both OO languages and ancestors of Swift. That's why classes and their 
-  instances are a way to organize your data and code in Swift.</p>
+  <h3>Instances of Classes - another organizational concept of Kotlin</h3>
+  <p>Since Kotlin has the language Haskell as an ancestor, Kotlin, like Haskell, has the concept of functions. But Haskell 
+  isn't Kotlin's only ancestor. Java is an OO language and an ancestor of Kotlin. That's why classes and their 
+  instances are a way to organize your data and code in Kotlin.</p>
   <p>
     Don't get carried away. Some languages don't have stand-alone functions (Java) or strongly discourage their use (C++). 
-    This is not so in Swift. When you begin thinking in Swift you will mix and mingle functions, classes and instances of 
-    classes, and a few other ways of organizing your data we'll cover below. The rule for Swift is simple. Write your code 
+    This is not so in Kotlin. When you begin thinking in Kotlin you will mix and mingle functions, classes and instances of 
+    classes, and a few other ways of organizing your data we'll cover below. The rule for Kotlin is simple. Write your code 
     in the way that best and most clearly describes what you are trying to do. If that's a function, use a function. If 
     that's a class and instances of the class, do that.
   </p>
 
 <h1>The Situation</h1>
-<p>To help learn about the Swift syntax for classes and instances, a set of class descriptions is needed. The set selected 
+<p>To help learn about the Kotlin syntax for classes and instances, a set of class descriptions is needed. The set selected 
   for your perusal describes a very simplified stock-tracker for an imagined pharmaceutical company. Several classes are included in this set. These include a <kbd>Date</kbd> class storing 
   individual numbers for a day, month, and year; a <kbd>medication</kbd> class that is the parent class for two medication types-- <kbd>TabletMedications</kbd>
   and <kbd>LiquidMedications</kbd>. And last, but not least, a model class (<a href="https://www.youtube.com/watch?v=FCkDEHWDATI">MVC</a>) called <kbd>PharmaceuticalStockTracker</kbd> that stores and manipulates data regarding the stock available for 
@@ -72,9 +72,9 @@
 
 <h2>The Date Class</h2>
 <p>
-  The purpose of the <kbd>Date</kbd> class is to store the day, month, and year for any specific date. In a real app, you'd never create this class. Instead you'd use the <a href="https://developer.apple.com/documentation/foundation/date"> 
-  standard Swift date structure</a>. Be flexible. The purpose of this custom <kbd>Date</kbd> class is to 
-  help you learn how to write a simplistic Swift class.
+  The purpose of the <kbd>Date</kbd> class is to store the day, month, and year for any specific date. In a real app, you'd never create this class. Instead you'd use the standard Kotlin <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.js/-date/">
+  Date Built-In Class</a> (BIC). Be flexible. The purpose of this custom <kbd>Date</kbd> class is to 
+  help you learn how to write a simplistic Kotlin class.
 </p>
 <p> 
   The design of the <kbd>Date</kbd> class allows other code to compare dates by comparing any 
@@ -82,71 +82,65 @@
   and one for the year. In the code snippet below the class declaration for <kbd>Date</kbd> starts with the keyword <kbd>class</kbd>. 
 </p>
 <p>
-  <pre><code>class Date{
-    //don't write getters and setters.
-    let day:Int
-    let month:Int
-    let year:Int
-    //each non-Optional property must be set using an initialization method
-    init(aDay:Int, aMonth:Int, aYear:Int){
-        day = aDay
-        month = aMonth
-        year = aYear
-    }
-}
-</code>
+  <pre><code class="Kotlin">class Date(aDay:Int, aMonth:Int, aYear:Int) {
+    val day:Int = aDay
+    val month:Int = aMonth
+    val year:Int = aYear
+}</code>
 </pre>
   </p>
   <p>
-    Notice that there are the three properties, <kbd>day</kbd>, <kbd>month</kbd>, and <kbd>year</kbd>, followed by an 
-    initialization function. When you create an instance of the <kbd>Date</kbd> class, the initialization function 
-    is called. Since init is a special type of function, you don't have to put <kbd>func</kbd> in front of it. The 
-    compiler will figure it out for you.
-  </p> 
+    Notice that there are the three properties, <kbd>day</kbd>, <kbd>month</kbd>, and <kbd>year</kbd>. By default 
+    these properties are public. Each of them is also a <kbd>val</kbd>. That is so they can not be modified after 
+    the date is constructed. Also, the class declaration line also doubles as the <a href="https://www.programiz.com/kotlin-programming/constructors">primary constructor</a> for the class. 
+    When you create an instance of the <kbd>Date</kbd> class, the primary constructor 
+    is called. Since a primary constructor is a special type of function, you don't have to put <kbd>fun</kbd> in front of it. 
+  </p>
   <p>
-    Don't make the mistake of thinking you can have only one init method. You can have as many variations of an init 
-    function as you want. You could have an init function for date 
-    that has no parameters, a default intit function, where you set the values to be some known value like January first 
-    1970, the beginning of what is called the unix epoch. Or maybe you only want to pass some of the parameters and set 
+    Don't make the mistake of thinking you can have only one constructor. You can have as many variations of a constructor 
+    as you want. These are called 
+    <a href="https://www.programiz.com/kotlin-programming/constructors">secondary constructors</a>. 
+    You could have an secondary constructors for <kbd>Date</kbd> 
+    that has no parameters, a default secondary constructors, where you set the values to be some known value like January 
+    first 1970, the beginning of what is called the Unix epoch. Or maybe you only want to pass some of the parameters and set 
     the rest. You can add as many as make sense and that help keep the code that uses your class clean.
   </p>
   <p>
-    How do you instantiate a class? Excellent question. Here is a code snippet that creates an instance of Data and a 
-    variable for the instance given the way the init function is declared.
+    How do you instantiate a class? Excellent question. Here is a code snippet that creates an instance of Date and a 
+    variable for the instance given the way the primary constructor is declared.
   </p>
 <p>
-  <pre><code>let birth = Date(aDay: 16, aMonth: 11, aYear: 1990)
+  <pre><code>val birth = Date(aDay: 16, aMonth: 11, aYear: 1990)
 </code>
 </pre>
   </p>
-<p>
-  Since init functions are functions, you could use the ignore operator for each of the parameters. Should you? Only if 
-  doing so makes the code clearer. In this case, I don't think it does.
-</p>
 <p>
   How do you access the properties? Another great question. Like this.
 </p>
 <p>
-  <pre><code>print(birth.day)
+  <pre><code>println(birth.day)
 </code>
 </pre>
   </p>
 <p>
-  Or if you want to print out something fancy,
+  After all, they are public. Or if you want to print out something fancy,
 </p>
 <p>
-  <pre><code>print("They were born on \(birth.day)\\\(birth.month)\\\(birth.year)")
+  <pre><code>println("They were born on ${birth.day}\\${birth.month}\\${birth.year}")
 </code>
 </pre>
   </p>
   <p>
-    When embedding a value in a string the <kbd>\()</kbd> operator is used. Notice that  the second and third embedded 
-    values are proceeded by <kbd>\\</kbd>. That's there for one reason only. I wanted a <kbd>\</kbd> character between 
-    the parts of the date. Therefore, since the <kbd>\</kbd> character has a specific meaning in the context of a string, I had to <a href="https://en.wikipedia.org/wiki/Escape_character">'escape'</a> the <kbd>\</kbd> character so it would be 
-    interpreted as a regular-old character.
+    When embedding a value in a string the <kbd>$</kbd> operator is used. To get the value of the instance's properties, the 
+    <kbd>{}</kbd> scope operators are required. Otherwise your code will print out a description of the date's property.
+  </p>
+  <p> Notice that  the second and third embedded values are proceeded by <kbd>\\</kbd>. That's there for one reason only. I 
+    wanted a <kbd>\</kbd> character between the parts of the date. Therefore, since the <kbd>\</kbd> character has a specific 
+    meaning in the context of a string, I had to <a href="https://en.wikipedia.org/wiki/Escape_character">'escape'</a> the 
+    <kbd>\</kbd> character so it would be interpreted as a regular-old character.
   </p>
   <p>
-    But what if you want to modify one of these properties? To do this, imagine that, instead of <kbd>let</kbd>, <kbd>var</kbd> 
+    But what if you want to modify one of these properties? To do this, imagine that, instead of <kbd>val</kbd>, <kbd>var</kbd> 
     was used for each of the properties. Then you could modify the birth <kbd>Date</kbd> like this.
   </p>
   <p>
@@ -155,95 +149,90 @@
 </pre>
   </p>
   <p>
-    Now, for those who are in the know, it may seem like the properties of this class are public. They are not. Instead, the 
-    compiler will create the accessors and mutators for you! You can create your own if you want or need greater control, but 
-    unlike some other languages, yes I'm looking at you C++ and Java, you don't have to if you don't need to.
+    Now, for those who are in the know, the properties of this class are public. This can be problematic as any code anywhere 
+    can set any public property to be any value without making sure the value makes sense. Kotlin has <a href="https://www.programiz.com/kotlin-programming/getters-setters">getters and setters</a> that you can create to deal with 
+    these kinds of problems.
   </p>
   <h2>Has_A Inheritance</h2>
   <p>
-    Like all languages that allow Object Oriented application design, Swift supports <a href="https://stackoverflow.com/questions/2218937/has-a-is-a-terminology-in-object-oriented-language">Has_A type inheritance</a>. As an example, look at the Medication class below (see the UML class diagram above for an overview). The medication class represents a bottle of medication in the pharmacy. It Has_A instance of <span class="file_name">Date</span> that represents the expiration date of this bottle of medication. You can see in the code snippet below that there is an instance property called expirationDate. Its type is Date. That's it. That's all you have to do to use the Has_A type of inheritance. Also, if needed, you can have instance variables that are arrays of custom types like Dates.
+    Like all languages that allow Object Oriented application design, Kotlin supports <a href="https://stackoverflow.com/questions/2218937/has-a-is-a-terminology-in-object-oriented-language">Has_A type inheritance</a>. As an example, look at the Medication class below (see the UML class diagram above for an overview). The medication class represents a bottle of medication in the pharmacy. It Has_A instance of <span class="file_name">Date</span> that represents the expiration date of this bottle of medication. You can see in the code snippet below that there is an instance property called expirationDate. Its type is <kbd>Date</kbd>. That's it. That's all you have to do to use the Has_A type of inheritance. Also, if needed, you can have instance variables that are arrays of custom types like <kbd>Dates</kbd>.
   </p>
   <p>
-  <pre><code>class Medication{
-    let name:String
-    let count:Int
-    let unitsDescription:String
-    let expirationDate:Date
-    //each non-Optional property must be set using an initialization method
-    init(aName:String, aCount:Int, aUnitsDescription:String, expiresOn:Date){
-        name = aName
-        count = aCount
-        unitsDescription = aUnitsDescription
-        expirationDate = expiresOn
+  <pre><code>class Medication(aName:String, aCount:Int, aUnitsDescription:String, expiresOn:Date){
+    val name:String = aName
+    var count:Int = aCount
+    set(value) {
+        if (value < 0){
+            throw Exception("Negative count")
+        }
+        field = value
     }
+    val unitsDescription:String = aUnitsDescription
+    val expirationDate:Date = expiresOn
 }
 </code>
 </pre>
 </p>
+<p>
+  Notice that there is a <a href="http://kotlin-quick-reference.com/101-R-getter-setter-properties.html">setter</a> 
+  for the count property. You know the setter is for <kbd>count</kbd> because it appears 
+  directly after the <kbd>count</kbd> property in the code. The setter checks to make sure nobody is trying to set the 
+  value to be negative since a negative count for a medication makes no sense. If an invalid value 
+  is supplied, the setter <a href="https://www.tutorialkart.com/kotlin/kotlin-throw-exception/">throws an exception</a>.
+  That way, the code calling the setter incorrectly can be notified that the property wasn't updated.
+</p>
   <p>
-    It is also common for there to be some sort of container that holds multiple instances of a class in a Has_A relationship. The <kbd>PharmaceuticalStockModel</kbd>  class has such a relationship as seen in the earlier UML diagram and this code snippet.
+    It is also common for there to be some sort of container that holds multiple instances of a class in a Has_A relationship. The <kbd>PharmaceuticalStockModel</kbd> class has such a relationship as seen in the earlier UML diagram and this code snippet.
   </p>
 
 
 <p>
   <pre><code>class PharmaceuticalStockModel{
-    var inStockMedications:[Medication] = []
+    val inStockMedications = listOf<Medication>()
     //other properties here
-    
-    //init and other methods go here
+
+    //constructors and other methods go here
 }
 </code>
 </pre>
 </p>
 <h2>Is_A Inheritance</h2>
   <p>
-    <a href="https://learnappmaking.com/swift-inheritance-subclassing-how-to/">Is_A inheritance is done differently</a>. The snippet below contains the code for both the <kbd>LiquidMedication</kbd> and the <kbd>TabletMedication</kbd>  classes. They both have Is_A relationships with the <kbd>Medication</kbd> class and are subclasses of it. Also, they are child classes of the parent class <kbd>Medication</kbd>. They are derived classes of the <kbd>Medication</kbd> base class. These statements all mean the same thing. Because they are  a derived classes without very much added to the base class, you see very little in the source code for the <kbd>LiquidMedication</kbd> and <kbd>TabletMedication</kbd> source code.
+    <a href="https://www.geeksforgeeks.org/kotlin-inheritance/">Is_A inheritance is done differently</a>. The snippet below contains the code for both the <kbd>LiquidMedication</kbd> and the <kbd>TabletMedication</kbd>  classes. They both have Is_A relationships with the <kbd>Medication</kbd> class and are subclasses of it. Also, they are child classes of the parent class <kbd>Medication</kbd>. They are derived classes of the <kbd>Medication</kbd> base class. These statements all mean the same thing. Because they are  a derived classes without very much added to the base class, you see very little in the source code for the <kbd>LiquidMedication</kbd> and <kbd>TabletMedication</kbd> source code.
   </p>
 
   <p>
-  <pre><code>class LiquidMedication: Medication {
-    let volume:Bool
-    let concentration:Int
-    let concentrationUnits:String
-    init(theName:String, theCount:Int, theUnitsDescription:String, anExpiresOn:Date, isByVolume:Bool, aConcentration:Int, aConcentrationUnits:String){
-        volume = isByVolume
-        concentration = aConcentration
-        concentrationUnits = aConcentrationUnits
-        super.init(aName: theName, aCount: theCount, aUnitsDescription: theUnitsDescription, expiresOn:anExpiresOn)
-    }
+  <pre><code>class LiquidMedication(aName:String, aCount:Int, aUnitsDescription:String, anExpiresOn:Date, isByVolume:Boolean, aConcentration:Int, aConcentrationUnits:String) :
+            Medication(aName,aCount,aUnitsDescription,anExpiresOn) {
+    val volume:Boolean = isByVolume
+    val concentration:Int = aConcentration
+    val concentrationUnits:String = aConcentrationUnits
 }
 
-class TabletMedication: Medication {
-    let potency:Double
-    let potencyUnits:String
-    init(theName:String, theCount:Int, theUnitsDescription:String, aPotency:Double, aPotencyUnits:String){
-        potency = aPotency
-        potencyUnits = aPotencyUnits
-        super.init(aName: theName, aCount: theCount, aUnitsDescription: theUnitsDescription)
-    }
-}
-</code>
+class TabletMedication(aName:String, aCount:Int, aUnitsDescription:String,anExpiresOn:Date, aPotency:Double, aPotencyUnits:String) :
+    Medication(aName,aCount,aUnitsDescription,anExpiresOn) {
+    val potency:Double = aPotency
+    val potencyUnits:String = aPotencyUnits
+}</code>
 </pre>
 </p>
 <p>
-  The most interesting parts of the snippet are the use of the <kbd>:</kbd> character to indicate inheritance, and the use of the <kbd>super</kbd> keyword to call the init method of the <kbd>Medication</kbd> class.
+  The most interesting parts of the snippet are the use of the <kbd>:</kbd> character to indicate inheritance, and the use of the constructor of the <kbd>Medication</kbd> class.
 </p>
 <h2>Is_A Inheritance By Extension</h2>
 <p>
-  There is another very cool way to do what is usually done in other languages by inheritance. In Swift you can add to an existing class without inheriting from it. This is very handy when you are using a library someone else has written and need to augment that class. Inheritance doesn't really fit this situation because it's not feasible for you to go into the library source code, inherit from the base class, and then replace all of the base class's uses. Nor is it feasible to update the source code for the base class itself. While it may be you are prohibited from doing this because the library is closed source, there is a more important reason not to make changes to the library. You will insert new bugs.
+  There is another very cool way to do what is usually done in other languages by inheritance. In Kotlin you can add to an existing class without inheriting from it. This is very handy when you are using a library someone else has written and need to augment that class. Inheritance doesn't really fit this situation because it's not feasible for you to go into the library source code, inherit from the base class, and then replace all of the base class's uses. Nor is it feasible to update the source code for the base class itself. While it may be you are prohibited from doing this because the library is closed source, there is a more important reason not to make changes to the library. You will insert new bugs.
 </p>
 <p>
-  To support the pattern of augmentation, Swift has the concept of extensions. You can extend any class written by anyone. You could extend Swift's standard String class with a JSON parsing function if you wanted to. You could extend the Array class with a function to send the Array across the Internet if you wanted to. What you do is left up to you and your wisdom. The only restriction is you can't add stored properties to a class.
+  To support the pattern of augmentation, Kotlin has the concept of extensions. You can extend any class written by anyone. You could extend Kotlin's standard String class with a JSON parsing function if you wanted to. You could extend the Array class with a function to send the Array across the Internet if you wanted to. What you do is left up to you and your wisdom. The only restriction is you can't add stored properties to a class.
 </p>
 <p>
   Let's say someone wanted to extend your <kbd> TabletMedications</kbd> class to allow it generate a string that was its description. The snippet below is how they could do this.
 </p>
   <p>
   <pre><code>//an extension of the TabletMedication class
-extension TabletMedication {
-    func getDescription() -> String {
-        "['name':'\(name)','count':'\(count)','potency':'\(potency)','units':'\(potencyUnits)'"
-    }
+fun TabletMedication.getDescription() {
+    "['name':'$name','count':'$count','potency':'$potency','units':'$potencyUnits'"
 }
 </code>
 </pre>
@@ -251,71 +240,66 @@ extension TabletMedication {
 <p>
   As you can see, it doesn't take much code to create an extension. It's much less than inheritance requires. It is so easy that many programmers may start to overuse it. Once again, be wise. Use it when it makes your code easier to read and when it lets you write less code.
 </p>
-<h2>Class Alternatives</h2>
+<h2>Alternatives</h2>
 <p>
-  While classes can sometimes be exactly what you need to solve a problem, it is always good to have alternatives. Swift has two major alternatives you can pick when you don't need all of the abilities, overhead, and baggage that go with classes in any computer language.
+  While classes such as those above can sometimes be exactly what you need to solve a problem, it is always good to have alternatives. Kotlin has an alternative you can pick when you don't need methods other than getters and setters. Data classes 
+  are analogous to tuples in other languages, though these are named types where as tuples are not.
 </p>
-<h3>Structures</h3>
+<h3>Data Classes</h3>
 <p>
-  Structures are a value-type. In other words, when they are passed to a function a copy is made and passed in. This differs from instances of classes where a reference to the instance is passed. It can be very nice to have a copy made for you when you need one. For example when you are passing data to be used in during a parallel computation. Also, structures use less RAM than instances of classes do. There are many <a href="https://docs.swift.org/swift-book/LanguageGuide/ClassesAndStructures.html">features that classes and structures have in common</a>. In many ways they can be used interchangeably. 
-</p>
-<p>
-  Let's refactor the <kbd>Medication</kbd> class to be a structure.
+  Let's refactor the <kbd>Medication</kbd> class to be a <a href="https://kotlinlang.org/docs/data-classes.html#data-classes-and-destructuring-declarations">data class</a> since it only holds data and has no behavior.
 </p>
 
 <p>
-  <pre><code>struct Medication{
-    let name:String
-    var count:Int
-    let unitsDescription:String
-    let expirationDate:Date
-}
+  <pre><code>data class Medication(val name:String, var count:Int, val unitsDescription:String, val expirationDate:Date)
 </code>
 </pre>
 </p>
 <p>
-  Notice that there is no <kbd>init</kbd> function in the snippet above. Just like the compiler generates getters and setters, it also generates an init function for you with a parameter for each property. You can write one if you need to do some extra data validation, but you don't have to. This is another difference between classes and structures.
+  Notice that no properties, getters, or setters are required in the snippet above. Just like the compiler generates getters 
+  and setters, it also generates a property for each parameter. You can create these if you need to do some extra data 
+  validation, but you don't have to.
 </p>
 <p>
-  In other ways, structures and classes are very similar. Both Is_a and Has_a types of inheritance are supported for structures. You can also extend structures. So if structures most closely fit your need use them. If classes do, use them. You should also feel free to mix and match classes and structures. You don't have to use just one of these types in an application.
+  Unsurprisingly, both Is_A and Has_A types of inheritance are supported for data classes, but Is_A support is buggy at the 
+  time this is being written. I'd avoid it for now.
+</p>
+<p>
+  There are two pre-built data classes that are part of the standard library. <kbd>Pair</kbd> and <kbd>Triple</kbd> are named 
+  data classes when you don't want or need to create named data classes yourself. You could use a <kbd>Pair</kbd> to represent 
+  a person. The snippet below shows how.
+</p>
+<p><pre><code>//creating a Pair
+val person = Pair("Jeong soon",19)
+</code>
+</pre>
+</p>
+<p>
+  To get the values out into variables, all you have to do is decompose the person pair like this. 
+  <pre><code>//decomposing a Pair to get all the values back out.
+val (name,age) = person
+</code>
+</pre>
 </p>
 
-<h3>Tuples</h3>
 <p>
-  Like some other languages Swift supports the use of tuples. As in those other languages, tuples are a restricted type. In other words Is_a inheritance and extensions are not applicable to tuples. Also, tuples don't have property names. All they really do is keep associated yet independent pieces of data together.
-</p>
-<p>
-  You create a tuple by the process of composition.
-</p>
-<p>
-  <pre><code>//composing a tuple and assigning it to a variable
-let person = ("Jenny",23, 5.5)
+  If you want to do it more old-school you could do it like this. 
+  <pre><code>//decomposing a Pair to get all the values back out.
+val name = person.first
+val age = person.second
 </code>
 </pre>
 </p>
 <p>
-  Using decomposition you can retrieve the individual values.
+  If you don't need all of the stored values back out, just create variables for those you need and use the appropriate 
+  <kbd>first</kbd>,<kbd>second</kbd>, or, when using a <kbd>Triple</kbd>, <kbd>third</kbd> property.
 </p>
-<p>
-  
-  <pre><code>//decomposing a tuple to get each stored value
-let (name,age,height) = person
-</code>
-</pre>
-</p>
-<p>
-  If you don't need all the values, you don't have to create variables for them via decomposition.
-</p>
-<p>
-  For example, if all you needed was the age of a person tuple, you could decompose the person tuple like this. 
-  <pre><code>//decomposing a tuple using the ignore operator
-let (_,age,_) = person
-</code>
-</pre>
-</p>
+
 <h2>Wrap Up</h2>
 <p>
-  You have many options when it comes to representing the data your application works on and with. Make your choices wisely. Each of the types described in this reading were created for a purpose. Use the one that fits. You should also use the 'least' one that fits. For example, if you could use a tuple, a structure, or a class to represent some data you should use a tuple. If only structure or class would fit the need, use a structure. If only a class fits, use a class.
+  You have many options when it comes to representing the data your application works on and with. Make your choices wisely. Each of the types described in this reading were created for a purpose. Use the one that fits. You should also use the 
+  'least' one that fits. For example, if you could use a <kbd>Pair</kbd>, <kbd>Triple</kbd> do so. If you need  a custom data 
+  class create one. If only a full-blown class fits, use a class.
 </p>
 <p>
   If you follow this 'least required' decision pattern, your code will be leaner and have fewer bugs.
