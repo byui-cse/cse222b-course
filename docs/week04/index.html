@@ -5,14 +5,14 @@
 
 <head>
           <link rel="shortcut icon" href="https://byui-cse.github.io/Language-Courses/site/images/fav.ico" type="image/x-i        con">
-        <script type="text/javascript">
-                 var codeType = "JavaScript"
+        <script type="text/Kotlin">
+                 var codeType = "Kotlin"
         </script>
         <script src="https://byui-cse.github.io/Language-Courses/site/highlight.pack.js"></script>
         <link rel="stylesheet" href="https://byui-cse.github.io/Language-Courses/site/highlight_styles/xcode.css">
         <link rel="stylesheet" href="https://byui-cse.github.io/Language-Courses/site/weekly.css">
-        <script type="text/javascript" src="https://byui-cse.github.io/Language-Courses/site/weekly.js"></script>
-        <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/latest.js?config=TeX-MML-AM_CHTML">
+        <script type="text/Kotlin" src="https://byui-cse.github.io/Language-Courses/site/weekly.js"></script>
+        <script type="text/Kotlin" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/latest.js?config=TeX-MML-AM_CHTML">
     </script>
 
     <script type="text/x-mathjax-config">
@@ -48,98 +48,93 @@
 <body onload="fetchSource()">
 <header class="hero-image">
   <section class="hero-text">
-    <h1>CSE 222a: Week 04</h1>
+    <h1>CSE 222b: Week 04</h1>
     <p>Data Collections</p>
   </section>
 </header>
-	<h1>Beyond Arrays</h1>
-	<p>Arrays are wonderful things. If you need to keep several things of the same type together in a specific order, 
+	<h1>Beyond Arrays and Lists</h1>
+	<p>Arrays and Lists are wonderful things. If you need to keep several things of the same type together in a specific order, 
 		an array is the way to go. But for other situations Arrays are slow. For example, searching in unsorted Arrays is uses a \(\mathcal{O}(n)\) algorithm in the best of situations. That's way to slow. Let's look at the two other 
-		Built In Collections (BICs) Swift has.
+		Built In Collections (BICs) Kotlin has.
 	</p>
 	<h2>Sets</h2>
 	<p>
 		Consider a situation where there can only be one copy of any piece of data in a collection. Rather than use an 
-		Array and do a search-check each time you do an insert, way too slow, how about using the collection that is 
-		designed to handle this for you, and do it much faster. The Set.
+		Array or List and do a search-check each time you do an insert, way too slow, how about using the collection that is 
+		designed to handle this for you, and do it much faster. The MutableSet. If you don't need to make changes, the 
+		immutable <kbd>Set</kbd> is the way to go.
 	</p>
 	<p>
-		There are a couple of ways you can create a Set, you can, as in the snippet below, create an empty set of 
+		There are a couple of ways you can create a <kbd>MutableSet</kbd>, you can, as in the snippet below, create an empty set of 
 		some specific type and then add elements to it and remove elements when you need to.
 	</p>
-	<p><pre><code class="JavaScript">var names = Set<String>()
-names.insert("Sally")
-names.insert("Jose")
-names.insert("Sally")//no change. Sally is already there.
+	<p><pre><code class="Kotlin">var names = mutableSetOf<String>()
+names.add("Sally")
+names.add("Jose")
+names.add("Sally")//no change. Sally is already there.
 names.remove("Jane")//no change. Jane isn't in there.
 </code></pre>
 	</p>
 	<p>
 		You can also create a Set while setting its values. The snippet below shows you how to do this with three names.
 	</p>
-	<p><pre><code class="JavaScript">var names:Set = ["Jane","Sally","Jose"]
+	<p><pre><code class="Kotlin">val names = mutableSetOf<String>("Jane","Sally","Jose")
 </code></pre>
 	</p>
 	<p>
-		Notice that you have to tell the compiler that the type of collection you want is a set. Otherwise it will make 
-		it be a list. Also, Sets don't guarantee ordering. That's why they can do searching, inserting, and removing 
-		much faster than an Array. If you need things to stay in order, remember an Array is what you want.
+		It's important to remember that Sets don't guarantee ordering. That's why they can do searching, inserting, and 
+		removing much faster than an Array. If you need things to stay in order, remember an Array or List is what you want.
 	</p>
 	<p>
 		As an extra benefit for selecting Set as your collection type you get to use set operations like union, 
-		difference, intersection, and symmetric difference. There are BIFs for these!
+		partition(making subsets), and the map-filter-reduce BIFs.
 	</p>
-	<h2>Dictionaries</h2>
+	<h2>Maps</h2>
 	<p>
-		Swift also has a Dictionary BIC and it works as you might expect based on your use of such things previously. 
-		It is a key-value store. Just like with Sets, Dictionaries do not guarantee ordering. You can also create 
-		empty dictionaries and then add, remove, and find elements. When you do this you have to indicate the type 
+		Kotlin also has a MutableMap BIC and it works as you might expect based on your use of such things previously. 
+		It is a key-value store. Just like with Sets, Maps do not guarantee ordering. You can also create 
+		empty Maps and then add, remove, and find elements. When you do this you have to indicate the type 
 		of the key and the type of the value.
 	</p>
-	<p><pre><code class="JavaScript">var agesByName = [String:Int]()
+	<p><pre><code class="Kotlin">val agesByName = mutableMapOf<String,Int>()
 agesByName["Sally"] = 21
 agesByName["Jose"] = 23
 agesByName["Jane"] = 20
 </code></pre>
 	</p>
 	<p>
-		You don't have to declare <kbd>agesByName</kbd> to be a Dictionary in the snippet above, the compiler can figure 
-		it out. If you want to, you can also create and fill or partially fill a dictionary all at once.
+		If you want to, you can also create and fill or partially fill a mutable or immutable dictionary all at once.
 	</p>
-	<p><pre><code class="JavaScript">var agesByName = ["Sally": 21,"Jose": 23,"Jane":20]
+	<p><pre><code class="Kotlin">val agesByName = mutableMapOf("Sally" to 21,"Jose" to 23,"Jane" to 20)
 </code></pre>
 	</p>
 	<p>
-		When you are declaring and filling a Dictionary, you don't even have to tell the compiler the key and value 
-		types. It can figure that out to.
-	</p>
-	<p>
 		There are many more methods that these and Arrays have that you can use. You should take some time and review 
-		them. The <a href="https://docs.swift.org/swift-book/LanguageGuide/CollectionTypes.html">Swift documentation</a> 
-		has good descriptions of the methods and how to use them. Go check it out. 
+		them. The <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/">Kotlin documentation</a> 
+		has decent descriptions of the methods and how to use them. Go check it out. 
 	</p>
 	<h2>Applications of Collections</h2>
 	<p>
-		Let's revisit the pharmacy tracker from week 03. The model class <kbd>PharmaceuticalStockTracker</kbd> had an 
-		Array of <kbd>Medications</kbd> that it used to keep track of how many bottles, bags, etc. of medications 
+		Let's revisit the pharmacy tracker from week 03. The model class <kbd>PharmaceuticalStockTracker</kbd> had a 
+		List of <kbd>Medications</kbd> that it used to keep track of how many bottles, bags, etc. of medications 
 		were in stock. It did this by having each instance of <kbd>Medication</kbd> represent a bottle, bag, of medicine stored.
 	</p>
 	<p>
 		But there is a problem with that design. It's the amount of time it takes to find medication in the system. Ah... 
-		It sounds like Array was the wrong choice. If we used a Dictionary of Arrays of Medications, that would solve 
+		It sounds like List was the wrong choice. If we used a Map of Lists of Medications, that would solve 
 		the finding problem and still let us keep multiple bottles or bags of medication of a single type in the tracking 
 		system.
 	</p>
 
 	<p>
 		But what would the code for that look like? Since the system would need to start without any medication being 
-		stored, we'd need to create an empty Dictionary. The example is in the snippet below.
+		stored, we'd need to create an empty MutableDictionary. The example is in the snippet below.
 	</p>
-	<p><pre><code class="JavaScript">var inStockMedications = [String:[Medication]]()
+	<p><pre><code class="Kotlin">val inStockMedications = mutableMapOf&lt;String,MutableList&lt;Medication&gt;&gt;()
 </code></pre>
 	</p>
 	<p>
-		There we go. That's it. The key is a String and the value is an Array of Medications. But what would the code 
+		There we go. That's it. The key is a String and the value is a List of Medications. But what would the code 
 		look like when medication was purchased and needed to be added to the model? Great question. That's part of your 
 		task this week.
 	</p>
