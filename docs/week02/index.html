@@ -511,7 +511,78 @@ println(description)
       <p>
         This can save you from typing extraneous code.
       </p>
+      <h3>Handling Exceptions</h3>
+      <p>
+        When exceptional event happen in your code, you should use <kbd>Exceptions</kbd> to deal with them. Kotlin runs on the Java Virtual Machine. Therefore Kotlin uses Java's <kbd>Exceptions</kbd> and exception handling tools. These exceptions are not intended to replace if-else constructs. Instead, they are to be used to deal with situations where your code could crash in other languages.
+      </p>
+      <p>
+        There are two keywords used when dealing with <kbd>Exceptions</kbd>, <kbd>try</kbd> and <kbd>catch</kbd>. The idea here is your code tries to do something and if it fails the failure is dealt with by catching an <kbd>Exception</kbd> that describes the failure that happened. Here is a silly example.
+      </p>
+      <p>
+      <pre>
+  <code class="Kotlin"> try{
+//some code here to get the sum and the count
+.
+.
+.
+val mean = sum/count
+//the code that depends on mean being calculated correctly goes here
+.
+.
+.
+.
+}
+catch(e:Exception){
+  //put code here to deal with the Exception if something goes wrong
+  .
+  .
+  .
+}
+  </code>
+      </pre>
+      </p>
+      <p>
+        As you know it is 'illegal' to divide by zero. If the <kbd>count</kbd> of the numbers being averaged is zero, a division-by-zero exception will happen. In programming parlance, the <kbd>Exception</kbd> will be thrown so it can be caught by <kbd>catch</kbd>. Any code in the <kbd>try</kbd> keyword's scope that is after the line that throws the <kbd>Exception</kbd> is skipped. That code is only executed if no <kbd>Exception</kbd> is thrown.
+      </p>
+      <p>
+        Since <kbd>try</kbd> and <kbd>catch</kbd> control the flow of your code, some noobs are tempted to use exceptions and their handling instead of <kbd>if-then-else</kbd> clauses. Don't fall for this mistake. Exceptions are expensive to create and handle. Use them judiciously.
+      </p>
+      <p>
+        There are some functions that don't catch and deal with <kbd>Exceptions</kbd> that happen within themselves. Instead they <kbd>throw</kbd> these <kbd>Exceptions</kbd> to let you know something went wrong and the writer of the function doesn't know how to deal with the problem. You, the programmer using their functions, are then responsible to react to the problem correctly with respect to the situation and needs of your application. An example of this is the <a href="https://www.tutorialkart.com/kotlin/kotlin-string-to-int/"><kbd>String</kbd> method, <kbd>toInt</kbd></a>.
+      </p>
+      <p>
+        Consider this situation, your app asks a user to enter their age. If they type in "duck" there is going to be a problem. The <kbd>toInt</kbd> method writers don't know how to deal with the problem. Therefore they have their code throw a <kbd>NumberFormatException</kbd> since the string wasn't formatted as a number.
+      </p>
+      <p>
+        Your code needs to have <kbd>try</kbd> and <kbd>catch</kbd> keywords that deal with the exception. You are the one that knows what to tell the user. Therefore it is your responsibility.
+      </p>
+
+      <p>
+      <pre>
+  <code class="Kotlin"> try{
+//some code here to get the user's age
+.
+.
+.
+val age = ageAsString.toInt()
+//the code that depends on the age actually being a number goes here
+.
+.
+.
+.
+}
+catch(e:Exception){
+  //put code here to deal with the Exception if something goes wrong
+  .
+  .
+  .
+}
+  </code>
+      </pre>
+      </p>
+
       <!- Maybe some stuff here about the let, run, also, scoping functions. !>
+
       <h3>Map, Filter, and Reduce</h3>
       <p>
         As with other languages that have map, filter, and reduce BIF's, you should use those when working with lists. The 
