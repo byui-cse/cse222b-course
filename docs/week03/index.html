@@ -295,6 +295,42 @@ val age = person.second
   <kbd>first</kbd>,<kbd>second</kbd>, or, when using a <kbd>Triple</kbd>, <kbd>third</kbd> property.
 </p>
 
+<h3>File Privacy</h3>
+<p>
+  There are times when each of the options listed in this reading are the wrong solution. To ease this situation the developers of Kotlin included the concept of file privacy. In a single file or across multiple files you can have variables, functions, classes and their instances, or any other Kotlin language type. Anything you don't want to allow access to from other Kotlin code files you mark as private. This makes them 'file private', i.e. they can only be used within the file.
+</p>
+<p>
+  File privacy is very handy when you want to expose only certain functions, classes, etc. for use in other source files. For example, the <kbd>MedicalStockTracker</kbd> class could be replaced with a file private variable, a few file private helper functions, and a set of regular, file public functions. 
+</p>
+<p>
+  <pre><code>private var inStockMedications = ArrayList<Medication>()
+//example of a public function usable anywhere in the application's code
+fun addLiquidMedicationToStock(medicationToAdd:LiquidMedication){
+  .
+  .
+  .
+}
+//other public functions here
+  .
+  .
+  .
+
+//example of a private function only usable within the file where it is declared and defined.
+private fun validateExpirationDate(aDate:Date):Boolean{
+  .
+  .
+  .
+}
+</code>
+</pre>
+</p>
+<p>
+  Anything that is not to be accessed outside of the file must have the keyword <kbd>private</kbd> in front of the rest of the declaration. In the example above you will see two <kbd>private</kbd> items. The first is the list of medications used to store the current medication stock. The second is a helper function that isn't for use outside of the module.
+</p>
+<p>
+  Modules are a handy way to create API's for others and yourself to use latter in other code. They are also a handy way to replace some classes and their instances, such as the <kbd>MedicalStockTracker</kbd> class, when inheritance is not needed.
+</p>
+
 <h2>Wrap Up</h2>
 <p>
   You have many options when it comes to representing the data your application works on and with. Make your choices wisely. Each of the types described in this reading were created for a purpose. Use the one that fits. You should also use the 

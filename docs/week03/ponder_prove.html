@@ -4,7 +4,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>CSE 222a: Week 03 | Ponder and Prove</title>
+	<title>CSE 222b: Week 03 | Ponder and Prove</title>
 	<script type="text/javascript">
     	var codeType = "JavaScript"
     </script>
@@ -17,7 +17,7 @@
 <body onload="fetchSource()">
 	<header class="hero-image">
 		<section class="hero-text">
-			<h1>CSE 222a: Week 03</h1>
+			<h1>CSE 222b: Week 03</h1>
 			<p>Ponder and Prove</p>
 		</section>
 	</header>
@@ -54,13 +54,13 @@
 		<p>
 			Using classes, create a code set that indicates what types of programmers need to be hired to meet the criteria above. Use classes and apply only IS_A inheritance between the classes you create.
 
-			You will not have access to the employee database, so to test your application the Quality Assurance group has asked that you generate a testing data set to run your code against. This data set is to consist of 52 development leads and between 120 and 125 programmers. You are instructed to create the data set in such a way that the experience constraint is violated. This <a href="">class_generate_data.swift<kbd>class_generate_data</kbd></a> file has been provided for you to meet this requirement. Use it as if you had written it as per the requirement. The <kbd>generateData</kbd> function is all you will need to call.
+			You will not have access to the employee database, so to test your application the Quality Assurance group has asked that you generate a testing data set to run your code against. This data set is to consist of 52 development leads and between 120 and 125 programmers. You are instructed to create the data set in such a way that the experience constraint is violated. This <a href="">class_generate_data.kt</a> file has been provided for you to meet this requirement. Use it as if you had written it as per the requirement. The <kbd>generateData</kbd> function is all you will need to call to produce the data as if it had come from a database.
 		</p>
 
 		<p>
 			This UML diagram has been provided by the engineers at your company. Write code to match this UML diagram. The <kbd>generateData</kbd> function will use your implementation of these classes.
 			<figure>
-		    <img src="images/cse222a_week03_prove_uml.png" alt="An image showing the Emplyee and Manager classes, their properties, and the relationships between them. It also shows the EmplyeeType and AssignmentError enumerations.">
+		    <img src="images/cse222b_week03_prove_uml.png" alt="An image showing the Emplyee and Manager classes, their properties, and the relationships between them. It also shows the EmplyeeType and AssignmentError enumerations.">
 		    <figcaption>Fig.1 - A UML Class Diagram for the Employee class, the Manager class, and the EmployeeType and AssignmentError enumerations.</figcaption>
 			</figure>
 		</p>
@@ -82,7 +82,7 @@
 
 			<h3>Task 3</h3>
 			<p>
-				Recreate your solution for Task 1 using structures and protocols. This time choose between using either or both IS_A and HAS_A inheritance. Use your best judgment to make these decisions. You will need to judiciously modify the generate_data.swift file to make this work.
+				Recreate your solution for Task 1 using data classes. Data classes do not allow for IS_A inheritance.
 			</p>
 		</section>
 		<section>
