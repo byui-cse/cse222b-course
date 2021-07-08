@@ -21,8 +21,7 @@ open class Employee(var name:String, val hireDate: LocalDate, var yearsExperienc
 
 
 
-class Manager(name:String, hireDate:LocalDate, yearsExperience:Short, type:EmployeeType,
-                   var canAddManageeCriteriaFunc:((ArrayList<Employee>)->Boolean)){
+class Manager(name:String, hireDate:LocalDate, yearsExperience:Short, type:EmployeeType){
     var employee = Employee(name, hireDate, yearsExperience, type)
     val managees = ArrayList<Employee>()
 

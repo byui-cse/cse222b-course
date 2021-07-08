@@ -129,9 +129,7 @@ private fun buildManagers(numManagersNeeded:Int): ArrayList<Manager> {
     if (numManagersNeeded == 0){
         return ArrayList<Manager>()
     }
-    val aManager = Manager(randomName(), LocalDate.now(), (0..21).random().toShort(), EmployeeType.DEVLEAD){
-        it.count() <= 15
-    }
+    val aManager = Manager(randomName(), LocalDate.now(), (0..21).random().toShort(), EmployeeType.DEVLEAD)
     var managers = arrayListOf<Manager>(aManager)
     managers.addAll(buildManagers(numManagersNeeded - 1))
     return managers

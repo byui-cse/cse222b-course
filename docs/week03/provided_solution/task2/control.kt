@@ -20,7 +20,7 @@ import java.time.Period
 
 
 fun add(managee:Employee, to:Manager) {
-    if (!to.canAddManageeCriteriaFunc(to.managees)) {
+    if (to.managees.count() > 15) {
         throw AssignmentException("Error: violated add managee criteria")
     }
 

@@ -21,8 +21,7 @@ data class Employee(var name:String, val hireDate: LocalDate, var yearsExperienc
 
 
 
-data class Manager(var name:String, val hireDate:LocalDate, var yearsExperience:Short, var type:EmployeeType,
-                   var canAddManageeCriteriaFunc:((ArrayList<Employee>)->Boolean)){
+data class Manager(var name:String, val hireDate:LocalDate, var yearsExperience:Short, var type:EmployeeType){
     var employee = Employee(name, hireDate, yearsExperience, type)
     val managees = ArrayList<Employee>()
 }
