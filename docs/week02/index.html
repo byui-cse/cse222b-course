@@ -144,9 +144,9 @@ age = 'old'</code>
       <pre>
 <code class="Kotlin">var age = 3
 age = 5
-age = "4"//compilation failure, type change
-age = 4.2//compilation failure, type change
-age = "old"//compilation failure, type change</code>
+age = "4" //compilation failure, type change
+age = 4.2 //compilation failure, type change
+age = "old" //compilation failure, type change</code>
 	</pre>
   </p>
     <p>
@@ -171,9 +171,9 @@ height = "tall"//compilation failure, type change</code>
 <code class="Kotlin">var name = "Sue"
 name = "Gunhilda"
 name = "7"
-name = 4//compilation failure, type change
-name = age//compiliation failure, age's type in the previous example doesn't match
-name = 3.1456778889547637653//compilation failure, type change</code>
+name = 4 //compilation failure, type change
+name = age //compiliation failure, age's type in the previous example doesn't match
+name = 3.1456778889547637653 //compilation failure, type change</code>
   </pre>
   </p>
       <h3>Constants</h3>
@@ -185,12 +185,12 @@ name = 3.1456778889547637653//compilation failure, type change</code>
       <p>
         In Kotlin this is done differently. If you are creating class or instance constants, upper snake-case
         names are used. If you are creating a local constant, lower snake-case is used. 
-        Kotlin requires the use of the <kbd>let</kbd> keyword in both of these cases. Like this:
+        Kotlin requires the use of the <kbd>val</kbd> keyword in both of these cases. Like this:
       </p>
       <pre>
-<code class="Kotlin">let PI = 3.14
-let BASE_VALUE = 3147
-let div_result = 3/4</code>
+<code class="Kotlin">val PI = 3.14
+val BASE_VALUE = 3147
+val div_result = 3/4</code>
 	</pre>
       <p>
         For more information about declaring and using variables and constants in Kotlin
@@ -199,7 +199,7 @@ let div_result = 3/4</code>
           href="https://www.youtube.com/watch?v=iJ11StpAhCk"
           target="_blank"
           rel="noreferrer"
-          >Kotlin Variables - var vs. let explained</a> now.
+          >Kotlin Variables - var vs. val explained</a> now.
       </p>
       <h3>But I Want More Control!</h3>
       <p>
@@ -207,7 +207,7 @@ let div_result = 3/4</code>
         instead of allowing it to interpolate it with any <a href="https://www.tutorialspoint.com/Kotlin/Kotlin_variables.htm" target="_blank">basic Kotlin type</a>. 
         For example, 
               <pre>
-<code class="Kotlin">val   PI : Double = 3.14</code>
+<code class="Kotlin">val PI : Double = 3.14</code>
   </pre>
       creates a constant called pi of type Float, a floating point number type that uses fewer bytes of RAM than a variable of type Double. Also, 
        <pre>
@@ -651,7 +651,7 @@ catch(e:Exception){
       </p>
       <p>
       <pre>
-  <code class="Kotlin">var bigNumbers = numbers.filter{it > 12.0}
+  <code class="Kotlin">val bigNumbers = numbers.filter{it > 12.0}
 </code>
   </pre>
       </p>
@@ -669,7 +669,7 @@ catch(e:Exception){
       </p>
       <p>
       <pre>
-  <code class="Kotlin">let sum = numbers.reduce{ accumulator, anInt -> accumulator + anInt })
+  <code class="Kotlin">val sum = numbers.reduce{ accumulator, anInt -> accumulator + anInt })
 </code>
   </pre>
       </p>
