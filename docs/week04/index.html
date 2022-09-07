@@ -14,7 +14,7 @@
         <script type="text/javascript" src="https://byui-cse.github.io/Language-Courses/site/weekly.js"></script>
         <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/latest.js?config=TeX-MML-AM_CHTML">
     </script>
-
+<link rel="stylesheet" href="../main.css" />
     <script type="text/x-mathjax-config">
     MathJax.Hub.Config({
         tex2jax: {
@@ -68,13 +68,13 @@
 		There are a couple of ways you can create a <kbd>MutableSet</kbd>, you can, as in the snippet below, create an empty set of 
 		some specific type and then add elements to it and remove elements when you need to.
 	</p>
-	<p><pre><code class="Kotlin">var names = mutableSetOf<String>()
+	<pre><code class="Kotlin">var names = mutableSetOf<String>()
 names.add("Sally")
 names.add("Jose")
 names.add("Sally")//no change. Sally is already there.
 names.remove("Jane")//no change. Jane isn't in there.
 </code></pre>
-	</p>
+	
 	<p>
 		You can also create a Set while setting its values. The snippet below shows you how to do this with three names.
 	</p>

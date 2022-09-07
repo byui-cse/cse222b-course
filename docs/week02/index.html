@@ -24,6 +24,7 @@
       type="text/javascript"
       src="https://byui-cse.github.io/Language-Courses/site/weekly.js"
     ></script>
+    <link rel="stylesheet" href="../main.css" />
   </head>
 
   <body onload="fetchSource()">
@@ -140,7 +141,7 @@ age = 'old'</code>
         each variable or constant in Kotlin can hold only one type and that type can not change. In Kotlin you use the 
         var keyword to declare a variable. Like this:
       </p>
-      <p>
+      
       <pre>
 <code class="Kotlin">var age = 3
 age = 5
@@ -148,7 +149,7 @@ age = "4" //compilation failure, type change
 age = 4.2 //compilation failure, type change
 age = "old" //compilation failure, type change</code>
 	</pre>
-  </p>
+  
     <p>
       Kotlin uses what is called <a href="https://www.merriam-webster.com/dictionary/interpolate" target="_blank">'interpolation'</a> 
       to figure out the type of the variable. In the code above, the compiler 
@@ -156,7 +157,7 @@ age = "old" //compilation failure, type change</code>
       In the code snippet below, the compiler 
       discovers that the height variable is of type Double because 3.25 is a Double. Double being one of Kotlin's basic types of floating point numbers.
     </p>
-    <p>
+    
       <pre>
 <code class="Kotlin">var height = 3.25
 height = 4.2
@@ -164,9 +165,9 @@ height = 4//no compilation failure, 4 is converted to a Double
 height = age//compilation failure, age's type in the previous example doesn't match
 height = "tall"//compilation failure, type change</code>
   </pre>
-  </p>
+  
   <p>Here is an example where the compiler interpolates a variable to be of type String.</p>
-  <p>
+  
       <pre>
 <code class="Kotlin">var name = "Sue"
 name = "Gunhilda"
@@ -175,7 +176,7 @@ name = 4 //compilation failure, type change
 name = age //compiliation failure, age's type in the previous example doesn't match
 name = 3.1456778889547637653 //compilation failure, type change</code>
   </pre>
-  </p>
+  
       <h3>Constants</h3>
       <p>In Python, constants are declared using an all upper case name, a hold-over from its C ancestor.</p>
 
@@ -206,6 +207,7 @@ val div_result = 3/4</code>
         Well...sometimes you do and sometimes you don't. You can tell the Kotlin compiler the type of a variable 
         instead of allowing it to interpolate it with any <a href="https://www.tutorialspoint.com/Kotlin/Kotlin_variables.htm" target="_blank">basic Kotlin type</a>. 
         For example, 
+        </p>
               <pre>
 <code class="Kotlin">val PI : Double = 3.14</code>
   </pre>
@@ -214,20 +216,22 @@ val div_result = 3/4</code>
 <code class="Kotlin">var name : String = "Sue"</code>
   </pre>
       creates a variable called 'name' of type String and sets the value to be Sue.
-      </p>
+      
       <p>
         Kotlin has something analogous the Python's None. In Kotlin it is <kbd>null</kbd>. Declaring the type of a variable is required if the variable is initialized to <kbd>null</kbd>. 
         Think about this for a minute and take a look at this code snippet. 
+        </p>
         <pre>
 <code class="Kotlin">var city = null</code>
   </pre>
         Here, the compiler can't interpolate a type for the city variable because nil has no type! That code won't compile.
-      </p>
+      
       <p>
         Instead, Kotlin will require you to add in the type. You might think, based on previous programming experience, that this code snippet would compile 
         <pre>
 <code class="Kotlin">var city:String = null</code>
   </pre>
+      <p>
         but that would also be incorrect. This code will also fail to compile and you will get an error message that includes a '?' character. This is 
         because Kotlin is designed to be safer than other languages you may have used. Instead, you would need a variable that is a 'Nullable' type.
       </p>
@@ -244,7 +248,6 @@ val div_result = 3/4</code>
   </pre>
       The compiler takes care of all the wrapping up of the string Kinshasa in the String Nullable for you. You don't need to add any extra code. After 
       assigning "Kinshasa" to the String Nullable city, the city String Nullable now is wrapped around the String "Kinshasa".
-      </p>
       <p>
         When you have a String Nullable and want to get the string back out, you use the <kbd>!!</kbd> operator. Be careful! If you try this
   <pre>        
@@ -258,7 +261,7 @@ val div_result = 3/4</code>
   </pre>
       This code prints "Unknown" if the String Nullable <kbd>city</kbd> is <kbd>null</kbd>, or the value wrapped by the String Nullable if <kbd>city</kbd> is not <kbd>null</kbd>. This is due to the 
       elvis operator, <kbd>?:</kbd>. That's its job. In this case, Kinshasa is printed out since city is not <kbd>null</kbd>.
-      </p>
+      
       <h3>Wrap Up</h3>
 
       <p>
@@ -286,14 +289,15 @@ val div_result = 3/4</code>
 	</code></pre>
       As with variables, if you don't want the compiler to interpolate the type of elements the array can hold, you 
       could write this same code snippet as
-      <pre><code class="Kotlin">var names = arrayOf<String>('Bob','Sue','Jorge','Svetlana')
-  </code></pre>
+      <!-- <pre><code class="Kotlin">
+        var names = arrayOf<String>('Bob','Sue','Jorge','Svetlana')
+      </code></pre> -->
 
       If you want an array variable that can only hold the initial array but the values in that array can be changed, 
       use the <kbd>val</kbd> keyword like this.
           <pre><code class="Kotlin">val names = arrayOf('Bob','Sue','Jorge','Svetlana')
   </code></pre>
-      These array declarations and assignments probably look very familiar to you.</p>
+      These array declarations and assignments probably look very familiar to you.
       <p>To access elements of an array, use the access operator <kbd>[]</kbd>
       <pre><code class="Kotlin">val aName = names[0]
 	</code></pre>
@@ -301,7 +305,7 @@ val div_result = 3/4</code>
         you access the elements of the array, but you can modify them also.
       <pre class="Kotlin"><code>names[2]='George'
 	</code></pre>
-      After the previous line of code executes, the third element of the names array is George instead of Jorge.</p>
+      After the previous line of code executes, the third element of the names array is George instead of Jorge.
       <p>One of the goals of the developers of the Kotlin language is code safety. Because of this, if you attempt to 
       modify an array by using an index that is too large, your code will produce a runtime error instead of 
       writing to memory the application hasn't claimed like some other languages do. Yes C, I'm looking at you.</p>
@@ -310,7 +314,6 @@ val div_result = 3/4</code>
         <pre><code class="Kotlin">names[4]='George'
   </code></pre>
         fails at runtime.
-      </p>
       <h1>When Arrays Just Won't Work</h1>
       <p>
         While this way of creating arrays is great when you know all or most of the values that are to be stored in 
@@ -320,14 +323,14 @@ val div_result = 3/4</code>
       <p>
         Let's say you are loading a bunch of names from a text file, from a database, or across a network. The 
         preferred way, there are several <a href="https://stackoverflow.com/questions/30430550/how-to-create-an-empty-array-in-Kotlin"></a> others, to declare a modifiable, empty array of Strings looks like this.
-        <pre><code class="Kotlin">val names : MutableList<String> = mutableListOf()
-  </code></pre>
+        <!-- <pre><code class="Kotlin">val names : MutableList<String> = mutableListOf()
+  </code></pre> -->
         The translation of this line of code into English reads like this. "Create a value called 
         <kbd>names</kbd> of type MutableLists that holds Strings. Create an empty list Strings and assign it to the the <kbd>names</kbd> value."
         Since there is no way for the compiler to interpolate the type of values in an empty array, you have to 
         tell it the type. Also, you have to use the 
         <a href="https://www.techiedelight.com/add-elements-list-kotlin/"><kbd>add</kbd></a> or <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-mutable-list/set.html"><kbd>set</kbd></a> 
-        Built in Functions(BIF's)</a> to add to the array, not the accessor operator <kbd>[]</kbd>. However you can use 
+        Built in Functions(BIF's) to add to the array, not the accessor operator <kbd>[]</kbd>. However you can use 
         the accessor operator to get or set a value at an existing index. You just can't use it to add new indexes.
       </p>
       <p>
@@ -404,7 +407,6 @@ val div_result = 3/4</code>
   return avg
 }</code>
   </pre>
-</p>
 <p>
   Here is an example of a Kotlin function that has parameters but no return value. 
   <pre>
@@ -413,21 +415,19 @@ val div_result = 3/4</code>
 }</code>
   </pre>
   Notice that there is no <kbd>return</kbd> operator at the end of the declaration. This reduces useless code.
-</p>
 <p>
   What if there are no parameters and no return value? Here is an example.
+</p>
   <pre>
 <code class="Kotlin">fun printSillyMessage(){
     println("Don't be silly.")
 }</code>
   </pre>
-</p>
 <p>
   Any function in any Kotlin file is available to use in any other file as long as the two files are in the 
   same project. As long as this is so, no import declaration is needed. Here is 
   an example.
 </p>
-<p>
 <pre>
 <code class="Kotlin">//in file named stuff.kt
 
@@ -441,7 +441,6 @@ fun averageTwoNumbers(firstNum: Double, secondNum: Double) : Double{
 print(averageTwoNumbers(firstNum:5.0,secondNum:3.0))
 }</code>
   </pre>
-</p>
     <p>
      Notice that when the average function is used, the names of each parameter is required. A good IDE will 
      fill these in for you.
