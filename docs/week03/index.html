@@ -8,9 +8,6 @@
       href="https://byui-cse.github.io/Language-Courses/site/images/fav.ico"
       type="image/x-icon"
     />
-    <script type="text/javascript">
-      var codeType = "JavaScript";
-    </script>
     <script src="https://byui-cse.github.io/Language-Courses/site/highlight.pack.js"></script>
     <link
       rel="stylesheet"
@@ -25,6 +22,9 @@
       src="https://byui-cse.github.io/Language-Courses/site/weekly.js"
     ></script>
     <link rel="stylesheet" href="../main.css" />
+    <script type="text/javascript">
+      var codeType = "kotlin";
+    </script>
   </head>
 
   <body onload="fetchSource()">
@@ -37,16 +37,16 @@
     <main>
       <h1>Language Organization and Access</h1>
       <p>
-        All computer languages are ways to organize your communication and
-        thinking. In this, they are very similar to spoken languages. Each
-        spoken language, or family of spoken languages, does this organization
-        differently. English sentences often have a structure of Subject-Helper
-        Verb-Verb-Predicate structure, such as "The boy will bite the dog," for
-        example. German, a language closely related to English, organizes things
-        differently. Sometimes German sentences have a Subject-Helper
-        Verb-Predicate-Verb structure... "Ich werde das Buch bald lesen," which
-        if translated word-by-word is "I will the book soon read." Spanish has
-        adjectives after the nouns they modify.
+        Computer languages organize your communication and thinking. In this,
+        they are very similar to spoken languages. Each spoken language, or
+        family of spoken languages, does this organization differently. English
+        sentences often have a structure of Subject-Helper Verb-Verb-Predicate
+        structure, such as "The boy will bite the dog," for example. German, a
+        language closely related to English, organizes things differently.
+        Sometimes German sentences have a Subject-Helper Verb-Predicate-Verb
+        structure... "Ich werde das Buch bald lesen," which if translated
+        word-by-word is "I will the book soon read." Spanish has adjectives
+        after the nouns they modify.
       </p>
       <p>
         While each language has its own organizational rules, they all do the
@@ -54,11 +54,10 @@
       </p>
       <h3>Instances of Classes - another organizational concept of Kotlin</h3>
       <p>
-        Since Kotlin has the language Haskell as an ancestor, Kotlin, like
-        Haskell, has the concept of functions. But Haskell isn't Kotlin's only
-        ancestor. Java is an OO language and an ancestor of Kotlin. That's why
-        classes and their instances are a way to organize your data and code in
-        Kotlin.
+        Since Kotlin has the language Haskell as an ancestor, it has the concept
+        of functions. But Haskell isn't Kotlin's only ancestor. Java is an OO
+        language and an ancestor of Kotlin. That's why classes and their
+        instances are a way to organize your data and code in Kotlin.
       </p>
       <p>
         Don't get carried away. Some languages don't have stand-alone functions
@@ -77,10 +76,10 @@
         of class descriptions is needed. The set selected for your perusal
         describes a very simplified stock-tracker for an imagined pharmaceutical
         company. Several classes are included in this set. These include a
-        <kbd>Date</kbd> class storing individual numbers for a day, month, and
-        year; a <kbd>medication</kbd> class that is the parent class for two
-        medication types-- <kbd>TabletMedications</kbd> and
-        <kbd>LiquidMedications</kbd>. And last, but not least, a model class (<a
+        <kbd>Date</kbd> class for storing individual numbers for a day, month,
+        and year; a <kbd>Medication</kbd> class that is the parent class for two
+        medication types-- <kbd>TabletMedication</kbd> and
+        <kbd>LiquidMedication</kbd>. And last, but not least, a model class (<a
           href="https://www.youtube.com/watch?v=FCkDEHWDATI"
           >MVC</a
         >) called <kbd>PharmaceuticalStockTracker</kbd> that stores and
@@ -106,8 +105,8 @@
         <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.js/-date/">
           Date Built-In Class</a
         >
-        (BIC). Be flexible. The purpose of this custom <kbd>Date</kbd> class is
-        to help you learn how to write a simplistic Kotlin class.
+        (BIC). The purpose of this custom <kbd>Date</kbd> class is to help you
+        learn how to write a simple Kotlin class.
       </p>
       <p>
         The design of the <kbd>Date</kbd> class allows other code to compare
@@ -122,9 +121,7 @@
     val day:Int = aDay
     val month:Int = aMonth
     val year:Int = aYear
-}</code>
-</pre>
-
+}</code></pre>
       <p>
         Notice that there are the three properties, <kbd>day</kbd>,
         <kbd>month</kbd>, and <kbd>year</kbd>. By default these properties are
@@ -145,37 +142,32 @@
         called
         <a href="https://www.programiz.com/kotlin-programming/constructors"
           >secondary constructors</a
-        >. You could have an secondary constructors for <kbd>Date</kbd>
-        that has no parameters, a default secondary constructors, where you set
-        the values to be some known value like January first 1970, the beginning
-        of what is called the Unix epoch. Or maybe you only want to pass some of
-        the parameters and set the rest. You can add as many as make sense and
-        that help keep the code that uses your class clean.
+        >. You could have secondary constructors for <kbd>Date</kbd>
+        that has no parameters, a default secondary constructor, where you set
+        the values to be some known value like January 1, 1970, the beginning of
+        the Unix epoch. Or maybe you only want to pass some of the parameters
+        and set the rest. You can add as many as make sense to help keep the
+        code that uses your class clean.
       </p>
       <p>
         How do you instantiate a class? Excellent question. Here is a code
-        snippet that creates an instance of Date and a variable for the instance
-        given the way the primary constructor is declared.
+        snippet that creates an instance of <kbd>Date</kbd> and a variable for
+        the instance given the way the primary constructor is declared.
       </p>
 
       <pre><code>val birth = Date(aDay: 16, aMonth: 11, aYear: 1990)
-</code>
-</pre>
-
+</code></pre>
       <p>
-        How do you access the properties? Another great question. Like this.
+        How do you access the properties? Another great question. Like this:
       </p>
-
       <pre><code>println(birth.day)
-</code>
-</pre>
+</code></pre>
 
       <p>
         After all, they are public. Or if you want to print out something fancy,
       </p>
       <pre><code>println("They were born on ${birth.day}\\${birth.month}\\${birth.year}")
-</code>
-</pre>
+</code></pre>
 
       <p>
         When embedding a value in a string the <kbd>$</kbd> operator is used. To
@@ -197,13 +189,9 @@
         But what if you want to modify one of these properties? To do this,
         imagine that, instead of <kbd>val</kbd>, <kbd>var</kbd> was used for
         each of the properties. Then you could modify the birth
-        <kbd>Date</kbd> like this.
+        <kbd>Date</kbd> like this:
       </p>
-
-      <pre><code>birth.year = 2005
-</code>
-</pre>
-
+      <pre><code>birth.year = 2005</code></pre>
       <p>
         Now, for those who are in the know, the properties of this class are
         public. This can be problematic as any code anywhere can set any public
@@ -214,22 +202,22 @@
         >
         that you can create to deal with these kinds of problems.
       </p>
-      <h2>Has_A Inheritance</h2>
+      <h2>HAS-A Inheritance</h2>
       <p>
         Like all languages that allow Object Oriented application design, Kotlin
         supports
         <a
           href="https://stackoverflow.com/questions/2218937/has-a-is-a-terminology-in-object-oriented-language"
-          >Has_A type inheritance</a
+          >HAS-A type inheritance</a
         >. As an example, look at the Medication class below (see the UML class
         diagram above for an overview). The medication class represents a bottle
-        of medication in the pharmacy. It Has_A instance of
+        of medication in the pharmacy. It HAS-A instance of
         <span class="file_name">Date</span> that represents the expiration date
         of this bottle of medication. You can see in the code snippet below that
         there is an instance property called expirationDate. Its type is
-        <kbd>Date</kbd>. That's it. That's all you have to do to use the Has_A
+        <kbd>Date</kbd>. That's it. That's all you have to do to use the HAS-A
         type of inheritance. Also, if needed, you can have instance variables
-        that are arrays of custom types like <kbd>Dates</kbd>.
+        that are arrays of custom types like <kbd>Date</kbd>.
       </p>
 
       <pre><code>class Medication(aName:String, aCount:Int, aUnitsDescription:String, expiresOn:Date){
@@ -244,8 +232,7 @@
     val unitsDescription:String = aUnitsDescription
     val expirationDate:Date = expiresOn
 }
-</code>
-</pre>
+</code></pre>
 
       <p>
         Notice that there is a
@@ -266,26 +253,25 @@
       </p>
       <p>
         It is also common for there to be some sort of container that holds
-        multiple instances of a class in a Has_A relationship. The
+        multiple instances of a class in a HAS-A relationship. The
         <kbd>PharmaceuticalStockModel</kbd> class has such a relationship as
-        seen in the earlier UML diagram and this code snippet.
+        seen in the earlier UML diagram in this code snippet.
       </p>
 
       <pre><code>class PharmaceuticalStockModel{
-    val inStockMedications = listOf<Medication>()
+    val inStockMedications = listOf&lt;Medication&gt;()
     //other properties here
 
     //constructors and other methods go here
 }
-</code>
-</pre>
-      <h2>Is_A Inheritance</h2>
+</code></pre>
+      <h2>IS-A Inheritance</h2>
       <p>
         <a href="https://www.geeksforgeeks.org/kotlin-inheritance/"
-          >Is_A inheritance is done differently</a
+          >IS-A inheritance is done differently</a
         >. The snippet below contains the code for both the
         <kbd>LiquidMedication</kbd> and the <kbd>TabletMedication</kbd> classes.
-        They both have Is_A relationships with the <kbd>Medication</kbd> class
+        They both have IS-A relationships with the <kbd>Medication</kbd> class
         and are subclasses of it. Also, they are child classes of the parent
         class <kbd>Medication</kbd>. They are derived classes of the
         <kbd>Medication</kbd> base class. These statements all mean the same
@@ -312,19 +298,19 @@ class TabletMedication(aName:String, aCount:Int, aUnitsDescription:String,anExpi
         <kbd>:</kbd> character to indicate inheritance, and the use of the
         constructor of the <kbd>Medication</kbd> class.
       </p>
-      <h2>Is_A Inheritance By Extension</h2>
+      <h2>IS-A Inheritance By Extension</h2>
       <p>
-        There is another very cool way to do what is usually done in other
-        languages by inheritance. In Kotlin you can add to an existing class
-        without inheriting from it. This is very handy when you are using a
-        library someone else has written and need to augment that class.
-        Inheritance doesn't really fit this situation because it's not feasible
-        for you to go into the library source code, inherit from the base class,
-        and then replace all of the base class's uses. Nor is it feasible to
-        update the source code for the base class itself. While it may be you
-        are prohibited from doing this because the library is closed source,
-        there is a more important reason not to make changes to the library. You
-        will insert new bugs.
+        There is another way to do what is usually done in other languages by
+        inheritance. In Kotlin you can add to an existing class without
+        inheriting from it. This is very handy when you are using a library
+        someone else has written and need to augment a class. Inheritance
+        doesn't really fit this situation because it's not feasible for you to
+        go into the library source code, inherit from the base class, and then
+        replace all of the base class's uses. Nor is it feasible to update the
+        source code for the base class itself. While it may be you are
+        prohibited from doing this because the library is closed source, there
+        is a more important reason not to make changes to the library. You might
+        insert new bugs inadvertently.
       </p>
       <p>
         To support the pattern of augmentation, Kotlin has the concept of
@@ -344,8 +330,7 @@ class TabletMedication(aName:String, aCount:Int, aUnitsDescription:String,anExpi
 fun TabletMedication.getDescription() {
     "['name':'$name','count':'$count','potency':'$potency','units':'$potencyUnits'"
 }
-</code>
-</pre>
+</code></pre>
       <p>
         As you can see, it doesn't take much code to create an extension. It's
         much less than inheritance requires. It is so easy that many programmers
@@ -380,40 +365,36 @@ fun TabletMedication.getDescription() {
         you need to do some extra data validation, but you don't have to.
       </p>
       <p>
-        Unsurprisingly, both Is_A and Has_A types of inheritance are supported
-        for data classes, but Is_A support is buggy at the time this is being
-        written. I'd avoid it for now.
+        Unsurprisingly, both IS-A and HAS-A types of inheritance are supported
+        for data classes.
       </p>
       <p>
         There are two pre-built data classes that are part of the standard
         library. <kbd>Pair</kbd> and <kbd>Triple</kbd> are named data classes
-        when you don't want or need to create named data classes yourself. You
-        could use a <kbd>Pair</kbd> to represent a person. The snippet below
-        shows how.
+        you can use when you don't want or need to create named data classes
+        yourself. You could use a <kbd>Pair</kbd> to represent a person. The
+        snippet below shows how.
       </p>
       <pre><code>//creating a Pair
 val person = Pair("Jeong soon",19)
-</code>
-</pre>
+</code></pre>
       <p>
         To get the values out into variables, all you have to do is decompose
         the person pair like this.
       </p>
       <pre><code>//decomposing a Pair to get all the values back out.
 val (name,age) = person
-</code>
-</pre>
+</code></pre>
 
-      <p>If you want to do it more old-school you could do it like this.</p>
+      <p>If you want to do it verbosely, you could do it like this.</p>
       <pre><code>//decomposing a Pair to get all the values back out.
 val name = person.first
 val age = person.second
-</code>
-</pre>
+</code></pre>
       <p>
         If you don't need all of the stored values back out, just create
         variables for those you need and use the appropriate
-        <kbd>first</kbd>,<kbd>second</kbd>, or, when using a <kbd>Triple</kbd>,
+        <kbd>first</kbd>, <kbd>second</kbd>, or when using a <kbd>Triple</kbd>,
         <kbd>third</kbd> property.
       </p>
 
@@ -424,8 +405,8 @@ val age = person.second
         the concept of file privacy. In a single file or across multiple files
         you can have variables, functions, classes and their instances, or any
         other Kotlin language type. Anything you don't want to allow access to
-        from other Kotlin code files you mark as private. This makes them 'file
-        private', i.e. they can only be used within the file.
+        from other Kotlin code, you can mark as <kbd>private</kbd>. This makes
+        them 'file private', i.e. they can only be used within the file.
       </p>
       <p>
         File privacy is very handy when you want to expose only certain
@@ -434,7 +415,7 @@ val age = person.second
         private variable, a few file private helper functions, and a set of
         regular, file public functions.
       </p>
-      <pre><code>private var inStockMedications = ArrayList<Medication>()
+      <pre><code>private var inStockMedications = ArrayList&lt;Medication&gt;()
 //example of a public function usable anywhere in the application's code
 fun addLiquidMedicationToStock(medicationToAdd:LiquidMedication){
   .
@@ -452,8 +433,7 @@ private fun validateExpirationDate(aDate:Date):Boolean{
   .
   .
 }
-</code>
-</pre>
+</code></pre>
       <p>
         Anything that is not to be accessed outside of the file must have the
         keyword <kbd>private</kbd> in front of the rest of the declaration. In
@@ -464,7 +444,7 @@ private fun validateExpirationDate(aDate:Date):Boolean{
       </p>
       <p>
         Modules are a handy way to create API's for others and yourself to use
-        latter in other code. They are also a handy way to replace some classes
+        later in other code. They are also a handy way to replace some classes
         and their instances, such as the <kbd>MedicalStockTracker</kbd> class,
         when inheritance is not needed.
       </p>
@@ -475,9 +455,9 @@ private fun validateExpirationDate(aDate:Date):Boolean{
         application works on and with. Make your choices wisely. Each of the
         types described in this reading were created for a purpose. Use the one
         that fits. You should also use the 'least' one that fits. For example,
-        if you could use a <kbd>Pair</kbd>, <kbd>Triple</kbd> do so. If you need
-        a custom data class create one. If only a full-blown class fits, use a
-        class.
+        if you could use a <kbd>Pair</kbd> or <kbd>Triple</kbd>, do so. If you
+        need a custom data class, create one. If only a full-blown class fits,
+        use a class.
       </p>
       <p>
         If you follow this 'least required' decision pattern, your code will be
