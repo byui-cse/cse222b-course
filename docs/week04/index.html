@@ -2,150 +2,177 @@
 -->
 
 <html>
-
-<head>
-          <link rel="shortcut icon" href="https://byui-cse.github.io/Language-Courses/site/images/fav.ico" type="image/x-i        con">
-        <script type="text/javascript">
-                 var codeType = "JavaScript"
-        </script>
-        <script src="https://byui-cse.github.io/Language-Courses/site/highlight.pack.js"></script>
-        <link rel="stylesheet" href="https://byui-cse.github.io/Language-Courses/site/highlight_styles/xcode.css">
-        <link rel="stylesheet" href="https://byui-cse.github.io/Language-Courses/site/weekly.css">
-        <script type="text/javascript" src="https://byui-cse.github.io/Language-Courses/site/weekly.js"></script>
-        <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/latest.js?config=TeX-MML-AM_CHTML">
+  <head>
+    <link
+      rel="shortcut icon"
+      href="https://byui-cse.github.io/Language-Courses/site/images/fav.ico"
+      type="image/x-i        con"
+    />
+    <script type="text/javascript">
+      var codeType = "JavaScript";
     </script>
-<link rel="stylesheet" href="../main.css" />
+    <script src="https://byui-cse.github.io/Language-Courses/site/highlight.pack.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://byui-cse.github.io/Language-Courses/site/highlight_styles/xcode.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://byui-cse.github.io/Language-Courses/site/weekly.css"
+    />
+    <script
+      type="text/javascript"
+      src="https://byui-cse.github.io/Language-Courses/site/weekly.js"
+    ></script>
+    <script
+      type="text/javascript"
+      async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/latest.js?config=TeX-MML-AM_CHTML"
+    ></script>
+    <link rel="stylesheet" href="../main.css" />
     <script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [['\\(', '\\)']]
-        }
-    });
-    MathJax.Hub.Config({
-        TeX: {
-            equationNumbers: {
-                autoNumber: "AMS"
-            }
-        }
-    });
-    MathJax.Hub.Config({
-        "HTML-CSS": {
-            availableFonts: [],
-            preferredFont: null,
-            // force Web fonts
-            webFont: "Latin-Modern"
-        }
-    });
-    MathJax.Hub.Config({
-        TeX: {
-            extensions: ["color.js"]
-        }
-    });
+      MathJax.Hub.Config({
+          tex2jax: {
+              inlineMath: [['\\(', '\\)']]
+          }
+      });
+      MathJax.Hub.Config({
+          TeX: {
+              equationNumbers: {
+                  autoNumber: "AMS"
+              }
+          }
+      });
+      MathJax.Hub.Config({
+          "HTML-CSS": {
+              availableFonts: [],
+              preferredFont: null,
+              // force Web fonts
+              webFont: "Latin-Modern"
+          }
+      });
+      MathJax.Hub.Config({
+          TeX: {
+              extensions: ["color.js"]
+          }
+      });
     </script>
+  </head>
 
-</head>
-
-<body onload="fetchSource()">
-<header class="hero-image">
-  <section class="hero-text">
-    <h1>CSE 222b: Week 04</h1>
-    <p>Data Collections</p>
-  </section>
-</header>
-	<h1>Beyond Arrays and Lists</h1>
-	<p>Arrays and Lists are wonderful things. If you need to keep several things of the same type together in a specific order, 
-		an array is the way to go. But for other situations Arrays are slow. For example, searching in unsorted Arrays is uses a \(\mathcal{O}(n)\) algorithm in the best of situations. That's way to slow. Let's look at the two other 
-		Built In Collections (BICs) Kotlin has.
-	</p>
-	<h2>Sets</h2>
-	<p>
-		Consider a situation where there can only be one copy of any piece of data in a collection. Rather than use an 
-		Array or List and do a search-check each time you do an insert, way too slow, how about using the collection that is 
-		designed to handle this for you, and do it much faster. The MutableSet. If you don't need to make changes, the 
-		immutable <kbd>Set</kbd> is the way to go.
-	</p>
-	<p>
-		There are a couple of ways you can create a <kbd>MutableSet</kbd>, you can, as in the snippet below, create an empty set of 
-		some specific type and then add elements to it and remove elements when you need to.
-	</p>
-	<pre><code class="Kotlin">var names = mutableSetOf<String>()
+  <body onload="fetchSource()">
+    <header class="hero-image">
+      <section class="hero-text">
+        <h1>CSE 222b: Week 04</h1>
+        <p>Data Collections</p>
+      </section>
+    </header>
+    <h1>Beyond Arrays and Lists</h1>
+    <p>
+      Arrays and Lists are wonderful things. If you need to keep several things
+      of the same type together in a specific order, an array is the way to go.
+      However, for other situations, an Array is slow. For example, searching an
+      unsorted Array uses a \(\mathcal{O}(n)\) algorithm in the best of
+      situations. That's way too slow. Let's look at the two other Built-in
+      Collections (BICs) Kotlin has.
+    </p>
+    <h2>Set</h2>
+    <p>
+      Consider a situation where there can only be one copy of any piece of data
+      in a collection. Rather than use an Array or List and do a search-check
+      each time you do an insert, how about using the collection that is
+      designed to handle this for you, the <kbd>MutableSet</kbd>. If you don't
+      need to make changes, the immutable <kbd>Set</kbd> is the way to go.
+    </p>
+    <p>
+      There are a couple of ways you can create a <kbd>MutableSet</kbd>, you
+      can, as in the snippet below, create an empty set of some specific type
+      and then add elements to it and remove elements when you need to.
+    </p>
+    <pre><code class="Kotlin">var names = mutableSetOf&lt;String&gt;()
 names.add("Sally")
 names.add("Jose")
 names.add("Sally")//no change. Sally is already there.
-names.remove("Jane")//no change. Jane isn't in there.
-</code></pre>
-	
-	<p>
-		You can also create a Set while setting its values. The snippet below shows you how to do this with three names.
-	</p>
-	<p><pre><code class="Kotlin">val names = mutableSetOf<String>("Jane","Sally","Jose")
-</code></pre>
-	</p>
-	<p>
-		It's important to remember that Sets don't guarantee ordering. That's why they can do searching, inserting, and 
-		removing much faster than an Array. If you need things to stay in order, remember an Array or List is what you want.
-	</p>
-	<p>
-		As an extra benefit for selecting Set as your collection type you get to use set operations like union, 
-		partition(making subsets), and the map-filter-reduce BIFs.
-	</p>
-	<h2>Maps</h2>
-	<p>
-		Kotlin also has a MutableMap BIC and it works as you might expect based on your use of such things previously. 
-		It is a key-value store. Just like with Sets, Maps do not guarantee ordering. You can also create 
-		empty Maps and then add, remove, and find elements. When you do this you have to indicate the type 
-		of the key and the type of the value.
-	</p>
-	<p><pre><code class="Kotlin">val agesByName = mutableMapOf<String,Int>()
+names.remove("Jane")//no change. Jane isn't in there.</code></pre>
+
+    <p>
+      You can also create a Set while setting its values. The snippet below
+      shows you how to do this with three names.
+    </p>
+    <pre><code class="Kotlin">val names = mutableSetOf&lt;String&gt;("Jane","Sally","Jose")</code></pre>
+
+    <p>
+      It's important to remember that Sets don't guarantee ordering. That's why
+      they can do searching, inserting, and removing much faster than an Array.
+      If you need the elements to stay in order, an Array or List is what you
+      want.
+    </p>
+    <p>
+      As an extra benefit for selecting <kbd>Set</kbd> as your collection type,
+      you get to use set operations like union, partition (making subsets), and
+      the map-filter-reduce BIFs.
+    </p>
+    <h2>Map</h2>
+    <p>
+      Kotlin also has a MutableMap BIC and it works as you might expect. It is a
+      key-value store. Just like with Sets, Maps do not guarantee ordering. You
+      can also create empty Maps and then add, remove, and find elements. When
+      you do this you have to indicate the type of the key and the type of the
+      value.
+    </p>
+    <pre><code class="Kotlin">val agesByName = mutableMapOf&lt;String,Int&gt;()
 agesByName["Sally"] = 21
 agesByName["Jose"] = 23
-agesByName["Jane"] = 20
-</code></pre>
-	</p>
-	<p>
-		If you want to, you can also create and fill or partially fill a mutable or immutable dictionary all at once.
-	</p>
-	<p><pre><code class="Kotlin">val agesByName = mutableMapOf("Sally" to 21,"Jose" to 23,"Jane" to 20)
-</code></pre>
-	</p>
-	<p>
-		There are many more methods that these and Arrays have that you can use. You should take some time and review 
-		them. The <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/">Kotlin documentation</a> 
-		has decent descriptions of the methods and how to use them. Go check it out. 
-	</p>
-	<h2>Applications of Collections</h2>
-	<p>
-		Let's revisit the pharmacy tracker from week 03. The model class <kbd>PharmaceuticalStockTracker</kbd> had a 
-		List of <kbd>Medications</kbd> that it used to keep track of how many bottles, bags, etc. of medications 
-		were in stock. It did this by having each instance of <kbd>Medication</kbd> represent a bottle, bag, of medicine stored.
-	</p>
-	<p>
-		But there is a problem with that design. It's the amount of time it takes to find medication in the system. Ah... 
-		It sounds like List was the wrong choice. If we used a Map of Lists of Medications, that would solve 
-		the finding problem and still let us keep multiple bottles or bags of medication of a single type in the tracking 
-		system.
-	</p>
+agesByName["Jane"] = 20</code></pre>
+    <p>
+      If you want to, you can also create and fill or partially fill a mutable
+      or immutable dictionary all at once.
+    </p>
+    <pre><code class="Kotlin">val agesByName = mutableMapOf("Sally" to 21,"Jose" to 23,"Jane" to 20)</code></pre>
+    <p>
+      There are many more methods that these colletions and Arrays/Lists have
+      that you can use. Take some time and review them. The
+      <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/"
+        >Kotlin documentation</a
+      >
+      has decent descriptions of the methods and how to use them.
+    </p>
+    <h2>Applications of Collections</h2>
+    <p>
+      Let's revisit the pharmacy tracker from Week 3. The model class
+      <kbd>PharmaceuticalStockTracker</kbd> had a List of
+      <kbd>Medications</kbd> that is used to keep track of how many bottles,
+      bags, etc. of medications are in stock. It did this by having each
+      instance of <kbd>Medication</kbd> represent a bottle, bag, etc. of
+      medicine stored.
+    </p>
+    <p>
+      But there is a problem with that design. The amount of time it takes to
+      find medication in the system is far too long. It seems like List was the
+      wrong choice. If we used a Map of Lists of Medications, that would solve
+      the finding problem and still let us keep multiple bottles or bags of
+      medication of a single type in the tracking system.
+    </p>
 
-	<p>
-		But what would the code for that look like? Since the system would need to start without any medication being 
-		stored, we'd need to create an empty MutableDictionary. The example is in the snippet below.
-	</p>
-	<p><pre><code class="Kotlin">val inStockMedications = mutableMapOf&lt;String,MutableList&lt;Medication&gt;&gt;()
-</code></pre>
-	</p>
-	<p>
-		There we go. That's it. The key is a String and the value is a List of Medications. But what would the code 
-		look like when medication was purchased and needed to be added to the model? Great question. That's part of your 
-		task this week.
-	</p>
-<footer>
+    <p>
+      But what would the code for that look like? Since the system would need to
+      start without any medication being stored, we'd need to create an empty
+      MutableDictionary. The example is in the snippet below.
+    </p>
+    <pre><code class="Kotlin">val inStockMedications = mutableMapOf&lt;String,MutableList&lt;Medication&gt;&gt;()</code></pre>
+    <p>
+      There we go. That's it. The key is a String and the value is a List of
+      Medications. But what would the code look like when medication was
+      purchased and needed to be added to the model? Great question. That's part
+      of your task this week.
+    </p>
+    <footer>
       <a
         rel="license"
         href="http://creativecommons.org/licenses/by/4.0/"
         target="_blank"
         ><img
           alt="This work is licensed under a Creative Commons Attribution 4.0 International License"
-          style="border-width: 0;"
+          style="border-width: 0"
           src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a
       ><br />This work is licensed under a
       <a
@@ -155,5 +182,5 @@ agesByName["Jane"] = 20
         >Creative Commons Attribution 4.0 International License</a
       >.
     </footer>
-</body>
+  </body>
 </html>
