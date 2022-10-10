@@ -92,7 +92,7 @@
       you store lambdas in a data structure you can retrieve the right one for
       any given situation and use it within a function, you are replacing some
       of the fixed computational steps with some that are dependent on the
-      situation. Consider this example.
+      situation. Consider the following example.
     </p>
     <p>
       Imagine you are creating a web service of some kind. Each time a request
@@ -101,11 +101,10 @@
       some data that goes along with the command (username and password, the
       name of the file to download, the data from the file to store on the
       server, etc.). You could write a function with a huge
-      <kbd>if-else if-else</kbd> clause where each branch of the
-      <kbd>if-else if-else</kbd> clause checks the command and executes code
-      inside the scope of the correct branch to deal with the data sent. This
-      naive design has many problems and would look something like the code
-      below.
+      <kbd>if-else</kbd> clause where each branch of the
+      <kbd>if-else</kbd> clause checks the command and executes code inside the
+      scope of the correct branch to deal with the data sent. This naive design
+      has many problems and would look something like the code below.
     </p>
     <pre><code class="Kotlin">fun handleRequest(aCommand:String, theData:Map&lt;String,Object&gt;){
 
@@ -137,8 +136,8 @@
       But there is even a bigger problem. What order are you going to do the
       checks in? String comparison is an expensive computation to perform in any
       language so you should put the most commonly used commands first. But
-      which command is that? Oh...by the way, the most commonly used command
-      will change over time.
+      which command is that? The most commonly used command will change over
+      time, so you need to make sure to always check what your users are doing.
     </p>
     <p>
       What, then, can be done? Well, first of all, in web services you usually
@@ -148,25 +147,25 @@
       message. You'd better be validating the command.
     </p>
     <p>
-      You also have to validate the data. Once they figure out a valid command,
+      You also need validate the data. Once they figure out a valid command,
       these same hackers will send invalid data to try to crash your service so
       they can take over your system by performing a code injection or some
       other type of attack.
     </p>
     <p>
-      Once you've validated both of these things, your web service will usually
-      interact with a database. This could be by getting data from the database,
-      putting data in the database, or both and then finally, your service will
+      Once you've validated both the command and the data, your web service will
+      usually interact with a database. This could be by getting data from the
+      database, putting data in the database, or both. Then your service will
       put together some data to send back to the client.
     </p>
     <p>
-      So these steps are performed over, and over, and over. At major web sites
-      these steps are performed millions of times a minute. The naive
-      <kbd>if-else if-else</kbd> design isn't going to be good enough. You'll
-      have to duplicate this validation, access, response pattern for each
-      command. How then can this be made better? After all, each command has to
-      be dealt with in a specific way. The solution to this lies in using a Map
-      and the principle that functions and lambdas are
+      These steps are performed over and over. At major web sites these steps
+      are performed millions of times a minute. The naive
+      <kbd>if-else</kbd> design isn't going to be good enough. You'll have to
+      duplicate this validation, access, response pattern for each command. How
+      then can this be made better? After all, each command must be dealt with
+      in a specific way. The solution to this lies in using a Map and the
+      principle that functions and lambdas are
       <a href="https://lispcast.com/what-are-first-class-functions/"
         >first class citizens</a
       >
@@ -175,9 +174,9 @@
     <p>
       Consider this. Imagine you had a Map where the key was the command and the
       value for that key was a closure. Let's call this type
-      <kbd>CommandMap</kbd> and have it be immutable. Here are a couple of type
-      aliases to make it easier to read code later on. After all, you don't want
-      to keep typing stuff you don't have too, right? :)
+      <kbd>CommandMap</kbd> and have it be immutable. Here are a couple of
+      <kbd>typealiases</kbd> to make it easier to read code later on. After all,
+      you don't want to keep typing stuff you don't have too, right? &#128521;
     </p>
     <pre><code class="Kotlin">//some aliases to make the code easier to read
 typealias DataMap = Map&lt;String,Object&gt;
@@ -187,14 +186,14 @@ typealias CommandMap = Map&lt;String,(DataMap)->DataMap?&gt;
       Now each time you need a <kbd>Map</kbd> that has a <kbd>String</kbd> as a
       key and anything at all as the value, you can use the custom type
       <kbd>DataMap</kbd> instead of typing <kbd>Map&lt;String,Any&gt;</kbd> over
-      and over. The <kbd>CommandMap</kbd> type alias uses
+      and over. The <kbd>CommandMap</kbd> <kbd>typealias</kbd> uses
       <kbd>DataMap</kbd> right away. Each <kbd>CommandMap</kbd>, as you see
-      above, has <kbd>Strings</kbd> for keys and functions or lambdas as values.
-      Each of these functions or lambdas has a <kbd>DataMap</kbd> as a parameter
-      and a <kbd>DataMap</kbd> optional as its value. This way, each of the
-      command functions in the dictionary can receive data in the form of a
-      dictionary, do its job, and then return either the same dictionary it was
-      passed or modify it and return the modified dictionary. You'll see how
+      above, has a <kbd>String</kbd> as the key and a function or lambda as the
+      value. Each of these functions or lambdas has a <kbd>DataMap</kbd> as a
+      parameter and a <kbd>DataMap</kbd> optional as its value. This way, each
+      of the command functions in the dictionary can receive data in the form of
+      a dictionary, do its job, and then return either the same dictionary it
+      was passed or modify it and return the modified dictionary. You'll see how
       this fits together below.
     </p>
     <p>
@@ -202,7 +201,7 @@ typealias CommandMap = Map&lt;String,(DataMap)->DataMap?&gt;
       created three command dictionaries, one to hold validation functions, a
       second to hold interaction functions, and a third to hold response
       generation functions, you could completely get rid of the
-      <kbd>if-else if-else</kbd> clause from the <kbd>handlRequest</kbd>
+      <kbd>if-else</kbd> clause from the <kbd>handlRequest</kbd>
       function above and create a variation of the
       <a
         href="https://www.javaguides.net/2018/08/application-controller-design-pattern-in-java.html"
@@ -216,11 +215,11 @@ typealias CommandMap = Map&lt;String,(DataMap)->DataMap?&gt;
       also mapped to one interaction function. This function does any database
       access and/or updates and data calculations needed. Finally, each command
       is mapped to a response generation function where the data is packaged
-      correctly for what ever client made the request be it a mobile app, a web
-      browser, or an application.
+      correctly for whichever client made the request. It could be a mobile app,
+      a web browser, or an application.
     </p>
     <p>
-      That means that all <kbd>handleRequest</kbd> needs to do is get each of
+      This means that all <kbd>handleRequest</kbd> needs to do is get each of
       these functions from the three <kbd>CommandMaps</kbd>, apply them in the
       industry standard order, and deal with any failures when the functions
       from the dictionaries are applied. The code below, you'll need to scroll
@@ -260,23 +259,22 @@ fun handleRequest(aCommand:String, theData:DataMap, theValidationFunctions:Comma
     val theResponseData = aResponseFunction(theInteractionData) ?: return Pair(false,null)
     
     return Pair(true,theResponseData)
-}</code>
-	</pre>
+}</code></pre>
     <p>
       This function enforces security for your web service. Nothing can be
-      executed until it passes validation. Also, when your boss come to you and
+      executed until it passes validation. Also, when your boss comes to you and
       says, "Can you get it to do this too?" Your answer can be yes! All you
       need to do is add three functions to the dictionaries! No more wasted time
       trying to find the appropriate place in the
-      <kbd>if-else if-else</kbd> clause and no more duplicating code. Storing
-      functions and lambdas in variables and data collections is a very powerful
+      <kbd>if-else</kbd> clause and no more duplicating code. Storing functions
+      and lambdas in variables and data collections is a very powerful
       technique. As you get more and more comfortable with it you'll see more
       and more ways to make your code more abstract, and therefore more
-      powerful. :)
+      powerful.
     </p>
     <h3>Passing Functions or lambdas as Parameters</h3>
     <p>
-      You've used functions that had other functions as parameters. The
+      You've already used functions that had other functions as parameters. The
       <kbd>map, filter,</kbd> and <kbd>reduce</kbd>
       functions last week leveraged this concept heavily. But you are not
       limited to being able to do this with BIF's. You can write your own
@@ -290,10 +288,10 @@ fun handleRequest(aCommand:String, theData:DataMap, theValidationFunctions:Comma
       instead of one.
     </p>
     <p>
-      Having a function or closure as a parameter allows a programmer to decide
-      later, long after you've written your function, what some of the behavior
-      of your function should be. That way your function can be reused and there
-      will be less code duplication in the application.
+      Having a function as a parameter allows a programmer to decide later, long
+      after you've written your function, what some of the behavior of your
+      function should be. That way your function can be reused and there will be
+      less code duplication in the application.
     </p>
     <p>
       Imagine how horrible it would be to have to write a loop to filter each of
@@ -304,24 +302,22 @@ fun handleRequest(aCommand:String, theData:DataMap, theValidationFunctions:Comma
     </p>
     <p>
       What, then, does the method signature of a function that accepts a
-      function or closure look like? I'm going to give you a silly example below
-      so you can focus on the principle. I'd never actually write this function
-      for an application. Instead I'd use the <kbd>reduce</kbd> BIF.
+      function look like? Here is an example that illustrates the principle. In
+      a real application, you should use the
+      <kbd>reduce</kbd> BIF, but this example is an interesting look at how you
+      could use a closure as a parameter.
     </p>
 
-    <pre>
-		<code class="Kotlin">fun doIntegerMath(integers:Array<Int>, initialValue:Int, mathToDo:(Int, Int)->Int) : Int {
+    <pre><code class="Kotlin">fun doIntegerMath(integers:Array&lt;Int&gt;, initialValue:Int, mathToDo:(Int, Int)->Int) : Int {
     var accumulator = initialValue
     for (integer in integers) {
         accumulator = mathToDo(accumulator,integer)
     }
     return accumulator
-}
-</code>
-</pre>
+}</code></pre>
     <p>
-      In the snippet, the <kbd>mathToDo</kbd> parameter is a function or closure
-      that has two integer parameters and has an integer as it's value. The
+      In the snippet, the <kbd>mathToDo</kbd> parameter is a function that has
+      two integer parameters and has an integer as it's value. The
       <kbd>mathToDo</kbd> parameter's type declaration ends at the
       <kbd>)</kbd> character that concludes the list of parameters for the
       <kbd>doIntegerMath</kbd> function. The <kbd>: Int</kbd> characters after
