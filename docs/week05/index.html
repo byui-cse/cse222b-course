@@ -179,8 +179,8 @@
       you don't want to keep typing stuff you don't have too, right? &#128521;
     </p>
     <pre><code class="Kotlin">//some aliases to make the code easier to read
-typealias DataMap = Map&lt;String,Object&gt;
-typealias CommandMap = Map&lt;String,(DataMap)->DataMap?&gt;
+typealias DataMap = HashMap&lt;String, Any&gt;
+typealias CommandMap = HashMap&lt;String, (DataMap)->DataMap?&gt;
 </code></pre>
     <p>
       Now each time you need a <kbd>Map</kbd> that has a <kbd>String</kbd> as a
