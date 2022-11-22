@@ -45,21 +45,67 @@ fun testTask0() {
 }
 
 fun testTask1() {
-    val test5 = task1(null)
-    check(test5 == 0) { "aString is null, the result should be zero"}
+    val test0 = task1(null)
+    check(test0 == 0) { "aString is null, the result should be zero"}
 
-    val test6 = task1("this is fine")
-    check(test6 == 12) { "aString should have a length of 12"}
+    val test1 = task1("this is fine")
+    check(test1 == 12) { "aString should have a length of 12"}
 
-    val test7 = task1("")
-    check(test7 == 0) { "aString is empty, so it should also return 0"}
+    val test2 = task1("")
+    check(test2 == 0) { "aString is empty, so it should also return 0"}
 }
 
-fun testTask2() {}
-fun testTask3() {}
-fun testTask4() {}
-fun testTask5() {}
-fun testTask6() {}
+fun testTask2() {
+    val test0 = task2("4")
+    check(test0 == 4) { "the string '4' is easily converted into a string" }
+
+    val test1 = task2("not a number")
+    check(test1 == null) { "cannot be converted to a strign" }
+}
+
+fun testTask3() {
+
+    val functions = task3()
+    val test1 = functions[0](1, 1)
+    check(test1 == 2) { "1 plus 1 equals 2" }
+
+    val test2 = functions[1](2, 2)
+    check(test2 == 4) { "2 times 2 equals 4" }
+
+    val test3 = functions[2](1, 2)
+    check(test3 == -1) { "one is less than 2" }
+
+    val test4 = functions[2](2, 1)
+    check(test4 == 1) { "one is less than 2" }
+
+    val test5 = functions[2](1, 1)
+    check(test5 == 0) { "one and one are equal" }
+
+    val test6 = functions[3](1, 3)
+    check(test6 == -1) { "one and three are both odd" }
+
+    val test7 = functions[3](2, 4)
+    check(test7 == 1) { "two and four are both even" }
+
+    val test8 = functions[3](1, 2)
+    check(test8 == 0) { "one is odd and two is even" }
+}
+
+fun testTask4() {
+    val test0 = task4(listOf(1, 2, 3, 4))
+    check(test0[3] == "4") { "please convert each value into a string"}
+}
+
+fun testTask5() {
+    val test0 = task5(listOf(1, 2, 3, 4))
+    check(test0[0] == 2) { "please remove all odd values" }
+}
+
+fun testTask6() {
+    val test0 = task6(listOf(1, 2, 3, 4, 5))
+    check(test0 == 15) { "please return the sum of the input array" }
+}
+
 fun testTask7() {}
 fun testTask8() {}
 fun testTask9() {}

@@ -40,6 +40,57 @@ fun task1(aString: String?): Int {
 }
 
 // Task 2
-fun task2(): Int? {
-    return null
+// Convert the input string into an integer. If the string cannot be converted into an integer, return  null
+fun task2(aString: String): Int? {
+    return aString.toIntOrNull()
+}
+
+
+//  Task 3
+//  Built-in functions like map, filter, reduce and sort take a parameter that is a closure.
+//
+//  Inside this function is an array of closures that each take two Int parameters. Complete each
+//  closure according to the requirements below.
+//
+//  Closure 0: return the sum of the two parameters
+//  Closure 1: return the product of the two parameters
+//  Closure 2: return -1 if the first parameter is less than the second parameter,
+//              return 0 if they are equal
+//              return 1 if the first parameter is greater than the second parameter
+//  Closure 3: return -1 if both parameters are odd
+//              return 1 if both parameters are even
+//              return 0 if one parameter is odd and the other is even
+typealias task3Func = (Int, Int) -> Int
+fun task3(): List<task3Func> {
+    return listOf(fun (lhs: Int, rhs: Int): Int {
+        return lhs + rhs
+    },fun (lhs: Int, rhs: Int): Int {
+        return lhs * rhs
+    },fun (lhs: Int, rhs: Int): Int {
+        if (lhs < rhs) return -1
+        if (lhs > rhs) return 1
+        return 0
+    },fun (lhs: Int, rhs: Int): Int {
+        if (lhs % 2 == 0 && rhs % 2 == 0) return 1
+        if (lhs % 2 != 0 && rhs % 2 != 0) return -1
+        return 0
+    })
+}
+
+// Task 4
+// Using the built-in map function, convert each integer into a string
+fun task4(input: List<Int>): List<String> {
+    return input.map { it.toString() }
+}
+
+// Task 5
+// Using the built-in filter method, remove all odd values from the array
+fun task5(input: List<Int>): List<Int> {
+    return input.filter { it % 2 == 0 }
+}
+
+// Task 6
+// Using the built-in reduce method, return the sum of the input array
+fun task6(input: List<Int>): Int {
+    return input.reduce { acc, value -> acc + value }
 }
