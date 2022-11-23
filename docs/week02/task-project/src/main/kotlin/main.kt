@@ -1,12 +1,9 @@
 // *************************
 //  Do not modify this file!
 // *************************
-//  You are welcome to read this file and to try to understand it, but it may include
-//  elements of Swift that have not yet been taught in the course at this point.
-//  Your assignment is to edit task.swift and then run this file and task.swift in a project.
+//  You are welcome to read this file and to try to understand it, but you should not make edits.
+//  Your assignment is to edit tasks.kt and then run this file, assuming tasks.kt is in the same project as main.kt
 //  The code in this file will test your task functions and indicate which task functions pass.
-//  You should definitely not try to just copy code from a test here to your task,
-//  but instead, understand how to correctly create a task that meets the needs of the test.
 //
 //  main.kt
 //  Week 2 Tasks
