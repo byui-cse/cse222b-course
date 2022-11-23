@@ -106,6 +106,32 @@ fun testTask6() {
     check(test0 == 15) { "please return the sum of the input array" }
 }
 
-fun testTask7() {}
-fun testTask8() {}
-fun testTask9() {}
+fun testTask7() {
+    val input0 = listOf(listOf(1, null, 3, 4), null, listOf(null, null, 5))
+    val test0 = task7(input0)
+    check(test0 == 4) { "Make sure to check all possible null values"}
+}
+
+fun testTask8() {
+    val test0 = task8(1, 1, 10)
+    check(test0.count() == 1) { "There should only be one row" }
+    check(test0[0].count() == 1) { "There should only be one column" }
+    check(test0[0][0] <= 10) { "max random value should be 10" }
+
+    val test1 = task8(100, 100, 100)
+    check(test1.count() == 100) { "There should only be one row" }
+    check(test1[50].count() == 100) { "There should only be one row" }
+    check(test1[50][50] <= 100) { "There should only be one row" }
+}
+
+fun testTask9() {
+    val input0 = listOf(listOf(1, 3, 5))
+    val test0 = task9(input0)
+    check(test0[0] == 3.0) { "Make sure to calculate the average of the items in the list"}
+
+    val input1 = listOf(listOf(1, 3, 5), listOf(7, 8, 9), listOf(11, 13, 15))
+    val test1 = task9(input1)
+    check(test1[0] == 3.0) { "Make sure to calculate the average of the items in the list"}
+    check(test1[1] == 8.0) { "Make sure to calculate the average of the items in the list"}
+    check(test1[2] == 13.0) { "Make sure to calculate the average of the items in the list"}
+}

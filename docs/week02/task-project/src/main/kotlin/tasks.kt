@@ -1,3 +1,5 @@
+import kotlin.random.Random
+
 enum class TestResult {
     SUCCESS,
     INVALID_INPUT
@@ -93,4 +95,55 @@ fun task5(input: List<Int>): List<Int> {
 // Using the built-in reduce method, return the sum of the input array
 fun task6(input: List<Int>): Int {
     return input.reduce { acc, value -> acc + value }
+}
+
+// Task 7
+// Given the 2-dimensional input array, return the count of null values
+//
+// Note: Both the sublists or the integers can be null
+fun task7(input: List<List<Int?>?>): Int {
+    var count = 0
+
+    for (list in input) {
+        if (list == null) {
+            count++
+        } else {
+            for (value in list) {
+                if (value == null) {
+                    count++
+                }
+            }
+        }
+    }
+
+    return count
+}
+
+// Task 9
+// Return a 2-dimensional array with the appropriate rows and columns
+// The max parameter specifies the  maximum value for the random numbers
+//
+// Hint: https://kotlinlang.org/docs/ranges.html
+fun task8(rows: Int, columns: Int, max: Int): List<List<Int>> {
+    var list = mutableListOf<List<Int>>()
+    var rnd = Random.Default
+    for (row in 0 until rows) {
+        var sublist = mutableListOf<Int>()
+        for (col in 0 until columns) {
+            sublist.add(rnd.nextInt(max))
+        }
+        list.add((sublist))
+    }
+
+    return list
+}
+
+// Task 9
+// Using the built-in map function, transform each row of data into the average of the row
+// The input 2-dimensional array is like a spreadsheet, with rows and columns
+// We need the average of each row
+//
+// Hint: List has a function called .average()
+fun task9(data: List<List<Int>>): List<Double> {
+    return data.map { it.average() }
 }
