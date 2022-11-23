@@ -25,6 +25,12 @@ fun main(args: Array<String>) {
     testTask7()
     testTask8()
     testTask9()
+
+    println("")
+    println("*********************************")
+    println("All Tasks Completed Successfully!")
+    println("*********************************")
+    println("")
 }
 
 fun testTask0() {
