@@ -8,7 +8,7 @@
 //  You should definitely not try to just copy code from a test here to your task,
 //  but instead, understand how to correctly create a task that meets the needs of the test.
 //
-//  main.swift
+//  main.kt
 //  Week 2 Tasks
 //
 //  Created by Layne Moseley on 11/21/22.

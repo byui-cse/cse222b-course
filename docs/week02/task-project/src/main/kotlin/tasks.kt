@@ -13,22 +13,6 @@ enum class TestResult {
 //      int2 must be greater than int1
 //      aString must be exactly 4 characters long
 fun task0(aBool: Boolean, int1: Int, int2: Int, aString: String): TestResult {
-    if (!aBool) {
-        return TestResult.INVALID_INPUT
-    }
-
-    if (int1 < 0) {
-        return TestResult.INVALID_INPUT
-    }
-
-    if (int1 > int2) {
-        return TestResult.INVALID_INPUT
-    }
-
-    if (aString.length != 4) {
-        return TestResult.INVALID_INPUT
-    }
-
     return TestResult.SUCCESS
 }
 
@@ -38,13 +22,13 @@ fun task0(aBool: Boolean, int1: Int, int2: Int, aString: String): TestResult {
 // If the string is null, return 0
 // If the string is not null, return the length of the string
 fun task1(aString: String?): Int {
-    return aString?.length ?: 0
+    return -1
 }
 
 // Task 2
 // Convert the input string into an integer. If the string cannot be converted into an integer, return  null
 fun task2(aString: String): Int? {
-    return aString.toIntOrNull()
+    return Int.MAX_VALUE
 }
 
 
@@ -65,16 +49,12 @@ fun task2(aString: String): Int? {
 typealias task3Func = (Int, Int) -> Int
 fun task3(): List<task3Func> {
     return listOf(fun (lhs: Int, rhs: Int): Int {
-        return lhs + rhs
-    },fun (lhs: Int, rhs: Int): Int {
-        return lhs * rhs
-    },fun (lhs: Int, rhs: Int): Int {
-        if (lhs < rhs) return -1
-        if (lhs > rhs) return 1
         return 0
     },fun (lhs: Int, rhs: Int): Int {
-        if (lhs % 2 == 0 && rhs % 2 == 0) return 1
-        if (lhs % 2 != 0 && rhs % 2 != 0) return -1
+        return 0
+    },fun (lhs: Int, rhs: Int): Int {
+        return 0
+    },fun (lhs: Int, rhs: Int): Int {
         return 0
     })
 }
@@ -82,19 +62,19 @@ fun task3(): List<task3Func> {
 // Task 4
 // Using the built-in map function, convert each integer into a string
 fun task4(input: List<Int>): List<String> {
-    return input.map { it.toString() }
+    return listOf()
 }
 
 // Task 5
 // Using the built-in filter method, remove all odd values from the array
 fun task5(input: List<Int>): List<Int> {
-    return input.filter { it % 2 == 0 }
+    return listOf()
 }
 
 // Task 6
 // Using the built-in reduce method, return the sum of the input array
 fun task6(input: List<Int>): Int {
-    return input.reduce { acc, value -> acc + value }
+    return -1
 }
 
 // Task 7
@@ -102,21 +82,7 @@ fun task6(input: List<Int>): Int {
 //
 // Note: Both the sublists or the integers can be null
 fun task7(input: List<List<Int?>?>): Int {
-    var count = 0
-
-    for (list in input) {
-        if (list == null) {
-            count++
-        } else {
-            for (value in list) {
-                if (value == null) {
-                    count++
-                }
-            }
-        }
-    }
-
-    return count
+    return 0
 }
 
 // Task 9
@@ -125,17 +91,7 @@ fun task7(input: List<List<Int?>?>): Int {
 //
 // Hint: https://kotlinlang.org/docs/ranges.html
 fun task8(rows: Int, columns: Int, max: Int): List<List<Int>> {
-    var list = mutableListOf<List<Int>>()
-    var rnd = Random.Default
-    for (row in 0 until rows) {
-        var sublist = mutableListOf<Int>()
-        for (col in 0 until columns) {
-            sublist.add(rnd.nextInt(max))
-        }
-        list.add((sublist))
-    }
-
-    return list
+    return listOf()
 }
 
 // Task 9
@@ -145,5 +101,5 @@ fun task8(rows: Int, columns: Int, max: Int): List<List<Int>> {
 //
 // Hint: List has a function called .average()
 fun task9(data: List<List<Int>>): List<Double> {
-    return data.map { it.average() }
+    return listOf()
 }
