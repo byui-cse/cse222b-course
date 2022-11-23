@@ -119,7 +119,7 @@
 //    return count
 //}
 //
-//// Task 9
+//// Task 8
 //// Return a 2-dimensional array with the appropriate rows and columns
 //// The max parameter specifies the  maximum value for the random numbers
 ////
