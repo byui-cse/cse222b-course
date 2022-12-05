@@ -9,9 +9,8 @@ import java.util.*
 //  when you implement those functions.
 //
 //  Due to the tests we need to perform, lines in main.kt may generate
-//  warning errors. If you get an unexplained warning error from main.swift, please
+//  warning errors. If you get an unexplained warning error from main.kt, please
 //  check if there is a comment near that line saying to ignore warning errors.
-//
 
 //  Task 0
 //  This week the project will not compile without errors until you complete task 0.
@@ -19,21 +18,10 @@ import java.util.*
 //  web page. After you have correctly completed task 0 the project should successfully
 //  compile and acknowledge that task 0 passed.
 //
-//  Hint: when writing initializers for child classes, list the parent parameters first.
-//  That is not a Swift requirement, but allows
-//
-//  As mentioned in the reading, the parent type MedicationContainer includes generic
-//  properties and methods. We also store medications as MedicationContainers allowing
-//  both child types in the same array. But it is not meaningful to create an object
-//  of type MedicationContainer, only of the child types. We cannot prevent this entirely,
-//  but best practice would be to put the keyword fileprivate before the init for
-//  MedicationContainer which will at least prevent any code from another file in the
-//  project accidentally trying to directly create a MedicationContainer.
-//
 //  Add the classes and structs here:
 
 /* NOTE TO EDITOR: Delete this struct and these classes when creating tasks.swift. */
-open class MedicationContainer(name: String, date: Date) {
+abstract class MedicationContainer(name: String, date: Date) {
     val id = UUID.randomUUID().toString()
     private val expirationDate = date
     val name = name
@@ -96,32 +84,24 @@ fun task1(): Pair<LiquidMedicationContainer, TabletMedicationContainer>? {
 }
 
 //  Task 2
-//  Add a method to PharmaceuticalStockTracker like this:
-//      mutating func addContainer(_ container: MedicationContainer) -> Bool
+//  Add a method to PharmaceuticalStockTracker that looks like this:
+//      fun addContainer(container: MedicationContainer): Bool
 //  Your method should add the container to the inStockMedications
-//  Array, but only if that exact container is not already in the array.
+//  List, but only if that exact container is not already in the array.
 //  Return true if we successfully added it to the array. Remember that
 //  the MedicationContainer parameter could actually be a
-//  LiquidMedicationContainer or a tabletMedicationContainer.
+//  LiquidMedicationContainer or a TabletMedicationContainer.
 //  Note that having the same name does not mean it is the same MedicationContainer,
 //  but if you correctly set up the id field, it will be unique for a MedicationContainer.
-//  Struct methods are generally assumed to not modify the struct itself
-//  which is why the mutating keyword is needed to indicate  a struct method that
-//  modifies the struct itself.
 //
 //  Add another method to PharmaceuticalStockTracker like this:
-//      func count(of name: String) -> Int
+//      fun count(name: String): Int
 //  This will count the number of items in MedicationContainers that have a
 //  name that matches the parameter passed in. Note that it will be called
 //  like this:
-//      let aCount = aTracker.count(of: "Aspirin")
-//  but inside your method ou will refer to the parameter as "name".
+//      val aCount = aTracker.count("Aspirin")
 
-//  Add TrackerProtocol2 to the PharmaceuticalStockTracker. This will
-//  confirm that you have added the correct methods. You do not need
-//  to create the protocol. It already exists in main.swift.
-
-//  Then change task2() to return true rather than nil
+//  Then change task2() to return true rather than null
 fun task2(): PharmaceuticalStockTracker? {
     return PharmaceuticalStockTracker()
 }
@@ -133,7 +113,7 @@ fun task2(): PharmaceuticalStockTracker? {
 //  return an Array that has values counting from int1 down to and including
 //  int 2.
 fun task3(int1: Int, int2: Int): Any? {
-    //    return nil
+    //    return null
     // The following code used to validate the test code will be deleted for tasks.swift.
     if (int1 <= int2) { return int1..int2 }
     return (int2 .. int1).toList().reversed()
@@ -145,7 +125,7 @@ fun task3(int1: Int, int2: Int): Any? {
 //  Return 2 if the value returned from task3() is an Array<Int>.
 //  Otherwise return 0 (this case should not happen if task3() is correct)
 fun task4(int1: Int, int2: Int): Int {
-    //    return nil
+    //    return null
 
     // The following code used to validate the test code will be deleted for tasks.swift.
     val value = task3(int1, int2) ?: return 0
@@ -156,17 +136,17 @@ fun task4(int1: Int, int2: Int): Int {
 
 //  Task 5
 //  This function receives an array that might have any values in it
-//      including nil.
+//      including null.
 //  Use mapNotNull to process it as follows:
 //      if the value received is an Int, put 1 in the Array
 //      if the value received is a Double, put 2 in the Array
 //      if the value received is a String, put 3 in the Array
 //      otherwise put null in the array and let compactMap remove it
 //  Then return that new array.
-//  Note: the "is" keyword correctly matches the underlying value of optionals
+//  Note: the "is" keyword can be used to check a variable type
 //  Note: you might need to use return@mapNotNull for the different cases
 fun task5(anyArray: List<Any?>): List<Int> {
-    //    return nil
+    //    return null
 
     return anyArray.mapNotNull {
         if (it is Int) { return@mapNotNull 1 }
@@ -186,10 +166,10 @@ fun task5(anyArray: List<Any?>): List<Int> {
 //          Note that if Double() fails to convert a String it conveniently returns null.
 //      if the value received is null, return null so compactMap removes it
 //  Then return that new array.
-//  Note: the "is" keyword correctly matches the underlying value of optionals
+//  Note: the "is" keyword can be used to check a variable type
 //  Note: you might need to use return@mapNotNull for the different cases
 fun task6(anyArray: List<Any?>): List<Double> {
-    //    return nil
+    //    return null
 
     return anyArray.mapNotNull {
         if (it is Int) { return@mapNotNull it.toDouble() }
@@ -205,9 +185,9 @@ fun task6(anyArray: List<Any?>): List<Double> {
 //  of the two properties.
 //
 //  Then apply the additional protocol DateSequencerProtocol that will let the tests
-//  conform that your solution has the correct functrions implemented
+//  conform that your solution has the correct functions implemented
 //
-//  Then change task3() to return true rather than nil
+//  Then change task3() to return true rather than null
 //struct DateSequencer: DateSequencerProtocol  {
 //
 //    var sequenceCurrent = 0
@@ -220,9 +200,9 @@ fun task6(anyArray: List<Any?>): List<Double> {
 //    }
 //}
 //func task7() -> Bool? {
-////    return nil
+////    return null
 //
-//    // When creating tasks.swift, change this back to "return nil"
+//    // When creating tasks.swift, change this back to "return null"
 //    return true
 //}
 
@@ -234,14 +214,14 @@ fun task6(anyArray: List<Any?>): List<Double> {
 //  sequenceEnd. That means if sequenceCurrent < sequenceEnd add one to sequenceCurrent
 //  and if sequenceCurrent > sequenceEnd subtract one from sequenceCurrent. If it
 //  is asked to generate another sequence element when sequenceCurrent == sequenceEnd
-//  return nil. Note that the date returned should be based on the value of sequenceCurrent
+//  return null. Note that the date returned should be based on the value of sequenceCurrent
 //  prior to its being incremented. You are welcome to call daysToMs() or futureDate()
 //  or borrow code from them.
 //
 //  Then apply the additional protocol DateSequencerProtocol2 to the extension that
 //  will let the tests conform that your solution has the correct functrion implemented
 //
-//  Then change task4() to return true rather than nil
+//  Then change task4() to return true rather than null
 //
 /* NOTE TO EDITOR: use the following version of the extension that is empty and
  without the list of protocols when creating tasks.swift
@@ -258,14 +238,14 @@ fun task6(anyArray: List<Any?>): List<Double> {
 //            sequenceCurrent -= 1
 //            return Date(timeIntervalSinceNow: daysToSeconds(sequenceCurrent+1))
 //        } else {
-//            return nil
+//            return null
 //        }
 //    }
 //}
 //func task8() -> Bool? {
-////    return nil
+////    return null
 //
-//    // When creating tasks.swift, change this back to "return nil"
+//    // When creating tasks.swift, change this back to "return null"
 //    return true
 //}
 
@@ -276,9 +256,9 @@ fun task6(anyArray: List<Any?>): List<Double> {
 //  object. Add "for let aDate in yourObject" to create a loop where
 //  "yourObject" is whatever you called your DateSequencer object.
 //  Inside that loop, append each date returned by the DateSequencer
-//  to the returnValue array. Then return the returnValue array instead of nil.
+//  to the returnValue array. Then return the returnValue array instead of null.
 //func task9(_ aTuple: (Int, Int)) -> [Date]? {
-//    //    return nil
+//    //    return null
 //
 //    // The following code used to validate the test code will be deleted for tasks.swift.
 //    var returnValue: [Date] = []
