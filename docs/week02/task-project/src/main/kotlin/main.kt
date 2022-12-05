@@ -63,7 +63,7 @@ fun testTask2() {
     check(test0 == 4) { "the string '4' is easily converted into a string" }
 
     val test1 = task2("not a number")
-    check(test1 == null) { "cannot be converted to a strign" }
+    check(test1 == null) { "cannot be converted to a string" }
 }
 
 fun testTask3() {
@@ -122,9 +122,9 @@ fun testTask8() {
     check(test0[0][0] <= 10) { "max random value should be 10" }
 
     val test1 = task8(100, 100, 100)
-    check(test1.count() == 100) { "There should only be one row" }
-    check(test1[50].count() == 100) { "There should only be one row" }
-    check(test1[50][50] <= 100) { "There should only be one row" }
+    check(test1.count() == 100) { "There should only be 100 rows" }
+    check(test1[50].count() == 100) { "There should be 100 columns" }
+    check(test1[50][50] <= 100) { "Max value should be 100" }
 }
 
 fun testTask9() {
