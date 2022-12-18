@@ -101,11 +101,19 @@ fun testTask6() {
 }
 
 fun testTask7() {
-
+    val meds = task7()
+    val test1 = meds.first.toString()
+    val test2 = meds.second.toString()
+    check(test1 == "Liquid: ${meds.first.id}") { "toString() should use look like this: Liquid: ${meds.first.id}"}
+    check(test2 == "Tablet: ${meds.second.id}") { "toString() should use look like this: Tablet: ${meds.second.id}"}
 }
 
 fun testTask8() {
-
+    val meds = task8()
+    val liquids = meds.first
+    val tablets = meds.second
+    check(liquids.first == liquids.second) { "Both liquids have the same id, they should be equal"}
+    check(tablets.first != tablets.second) { "The tablets are not the same id, they shouldn't be equal"}
 }
 
 fun testTask9() {

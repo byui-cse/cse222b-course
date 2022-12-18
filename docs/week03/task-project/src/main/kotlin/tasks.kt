@@ -19,14 +19,33 @@ import java.util.*
 //  compile and acknowledge that task 0 passed.
 //
 //  Add the classes and structs here:
-
-/* NOTE TO EDITOR: Delete this struct and these classes when creating tasks.swift. */
 abstract class MedicationContainer(name: String, date: Date) {
-    val id = UUID.randomUUID().toString()
+    var id = UUID.randomUUID().toString()
     private val expirationDate = date
-    val name = name
+    var name = name
     val isExpired: Boolean
         get() = Date() >= expirationDate
+
+    override fun toString(): String {
+        if (this is LiquidMedicationContainer) {
+            return "Liquid: ${this.id}"
+        }
+
+        if (this is TabletMedicationContainer) {
+            return "Tablet: ${this.id}"
+        }
+
+        return "Generic: ${this.id}"
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (other is MedicationContainer) {
+            return other.id == this.id
+        }
+
+        return false
+    }
+
 }
 
 class LiquidMedicationContainer(name: String, date: Date, volume: Double, concentration: Int, concentrationUnits: String): MedicationContainer(name, date) {
@@ -50,7 +69,6 @@ class PharmaceuticalStockTracker {
         return inStockMedications.count { it.name == name }
     }
 }
-/* NOTE TO EDITOR: This is the end of section to delete for tasks.swift. */
 
 //  You can use this, but there is no need to make edits to it
 fun futureDate(daysFromNow: Int): Date {
@@ -145,6 +163,7 @@ fun task4(int1: Int, int2: Int): Int {
 //  Then return that new array.
 //  Note: the "is" keyword can be used to check a variable type
 //  Note: you might need to use return@mapNotNull for the different cases
+//  https://kotlinlang.org/docs/returns.html#break-and-continue-labels
 fun task5(anyArray: List<Any?>): List<Int> {
     //    return null
 
@@ -180,90 +199,46 @@ fun task6(anyArray: List<Any?>): List<Double> {
 }
 
 //  Task 7
-//  Add a mutating method called setDates to DateSequencer with one parameter called
-//  daysTuple that is a tuple of two Ints. Use them to set the values (in order)
-//  of the two properties.
+//  When we print a MedicationContainer, the description is not very informative.
+//  It makes it harder to print things and track down errors.
 //
-//  Then apply the additional protocol DateSequencerProtocol that will let the tests
-//  conform that your solution has the correct functions implemented
+//  Assignment: Override the build in toString() on MedicationContainer.
+//  It should include the name of the subclass as well as the id of the medication
+//  You can use the "is" keyword to check the type of object
 //
-//  Then change task3() to return true rather than null
-//struct DateSequencer: DateSequencerProtocol  {
+//  If the medication is a LiquidMedicationContainer, and it has an id of 5,
+//  toString() should return:
+//      Liquid: 5
 //
-//    var sequenceCurrent = 0
-//    var sequenceEnd = 10
+//  If the medication is a TabletMedicationContainer, and it has an id of 5,
+//  toString() should return:
+//      Tablet: 5
 //
-//    /* NOTE TO EDITOR: Delete the following method when creating tasks.swift
-//     so the struct will just have the two private properties above. */
-//    mutating func setDates(daysTuple: (Int, Int)) {
-//        (sequenceCurrent, sequenceEnd) = daysTuple
-//    }
-//}
-//func task7() -> Bool? {
-////    return null
-//
-//    // When creating tasks.swift, change this back to "return null"
-//    return true
-//}
+fun task7(): Pair<LiquidMedicationContainer, TabletMedicationContainer> {
+    val aLiquidContainer = LiquidMedicationContainer("liquid medication 3", futureDate(-7), 4.5, 2, "ml")
+    val aTabletContainer = TabletMedicationContainer("tablet medication 9", futureDate(7), 90, 2.3, "mg")
+    return Pair(aLiquidContainer, aTabletContainer)
+}
 
 //  Task 8
-//  Edit the extension below to make the DateSequencer conform to the Sequence protocol.
-//  Use the approach that has it also conforms to the IteratorProtocol.
-//  Every time it generates a sequence element it should return a date optional that
-//  is sequenceCurrent days in the future and also increment sequenceCurrent towards
-//  sequenceEnd. That means if sequenceCurrent < sequenceEnd add one to sequenceCurrent
-//  and if sequenceCurrent > sequenceEnd subtract one from sequenceCurrent. If it
-//  is asked to generate another sequence element when sequenceCurrent == sequenceEnd
-//  return null. Note that the date returned should be based on the value of sequenceCurrent
-//  prior to its being incremented. You are welcome to call daysToMs() or futureDate()
-//  or borrow code from them.
+//  You can override the equals operator in Kotlin. This allows
+//  you, the author of the code, to decide what it means for two objects to be
+//  equal to each other.
 //
-//  Then apply the additional protocol DateSequencerProtocol2 to the extension that
-//  will let the tests conform that your solution has the correct functrion implemented
+//  Add an override of the equals method in MedicationContainer to compare the id
+//  of the medication. If both have the same id, return true. Otherwise, return false.
 //
-//  Then change task4() to return true rather than null
-//
-/* NOTE TO EDITOR: use the following version of the extension that is empty and
- without the list of protocols when creating tasks.swift
- */
-// extension DateSequencer {
-// }
+//  https://kotlinlang.org/docs/operator-overloading.html
 
-//extension DateSequencer: Sequence, IteratorProtocol, DateSequencerProtocol2  {
-//    mutating func next() -> Date? {
-//        if sequenceCurrent < sequenceEnd {
-//            sequenceCurrent += 1
-//            return Date(timeIntervalSinceNow: daysToSeconds(sequenceCurrent-1))
-//        } else if sequenceCurrent > sequenceEnd {
-//            sequenceCurrent -= 1
-//            return Date(timeIntervalSinceNow: daysToSeconds(sequenceCurrent+1))
-//        } else {
-//            return null
-//        }
-//    }
-//}
-//func task8() -> Bool? {
-////    return null
-//
-//    // When creating tasks.swift, change this back to "return null"
-//    return true
-//}
+fun task8(): Pair<Pair<LiquidMedicationContainer, LiquidMedicationContainer>, Pair<TabletMedicationContainer, TabletMedicationContainer>> {
+    val liquidOne = LiquidMedicationContainer("liquid medication 3", futureDate(-7), 4.5, 2, "ml")
+    val liquidTwo = LiquidMedicationContainer("liquid medication 3", futureDate(-7), 4.5, 2, "ml")
+    // Two objects with the same id should be equal to each other
+    liquidTwo.id = liquidOne.id
 
-//  Task 9
-//  Add an empty variable of Type [Date] called returnValue.
-//  Add code to task9() that creates a local object of type DateSequencer. Use the
-//  input parameter with .setDates() to set the properties inside that DateSequencer
-//  object. Add "for let aDate in yourObject" to create a loop where
-//  "yourObject" is whatever you called your DateSequencer object.
-//  Inside that loop, append each date returned by the DateSequencer
-//  to the returnValue array. Then return the returnValue array instead of null.
-//func task9(_ aTuple: (Int, Int)) -> [Date]? {
-//    //    return null
-//
-//    // The following code used to validate the test code will be deleted for tasks.swift.
-//    var returnValue: [Date] = []
-//    var seqObj = DateSequencer()
-//    seqObj.setDates(daysTuple: aTuple)
-//    for aDate in seqObj { returnValue.append(aDate) }
-//    return returnValue
-//}
+    val tabletOne = TabletMedicationContainer("tablet medication 8", futureDate(7), 90, 2.3, "mg")
+    val tabletTwo = TabletMedicationContainer("tablet medication 9", futureDate(7), 90, 2.3, "mg")
+
+
+    return Pair(Pair(liquidOne, liquidTwo), Pair(tabletOne, tabletTwo))
+}
