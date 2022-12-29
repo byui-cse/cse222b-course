@@ -6,9 +6,7 @@
 //  The code in this file will test your task functions and indicate which task functions pass.
 //
 //  main.kt
-//  Week 2 Tasks
-//
-//  Created by Layne Moseley on 11/21/22.
+//  Week 3 Tasks
 //
 
 fun main(args: Array<String>) {
@@ -117,5 +115,9 @@ fun testTask8() {
 }
 
 fun testTask9() {
-
+    val tracker = task9()
+    tracker.addContainer(LiquidMedicationContainer("med1", futureDate(7), 4.5, 2, "ml"))
+    check(tracker.count("med1") == 1) { "There should be one medication in the tracker"}
+    tracker.removeAllContainers()
+    check(tracker.count("med1") == 0) { "removeAllContainers should remove all of the containers"}
 }

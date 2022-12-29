@@ -3,72 +3,16 @@ import java.util.*
 //  Tasks.kt
 //  Week 3 Tasks
 //
-//  You need to write code to complete the functions below to complete each task.
-//  You can develop and test each function individually.
-//  Initially you may see some warnings about unused variables that you will address
-//  when you implement those functions.
+//  You need to write code to complete the functions and classes below to complete each task.
 //
-//  Due to the tests we need to perform, lines in main.kt may generate
-//  warning errors. If you get an unexplained warning error from main.kt, please
-//  check if there is a comment near that line saying to ignore warning errors.
+//  Recommendation: Fix the compile errors first, and then work on getting the tests to pass
 
 //  Task 0
 //  This week the project will not compile without errors until you complete task 0.
 //  Please add classes and structs as defined in the UML document in the assignment
-//  web page. After you have correctly completed task 0 the project should successfully
-//  compile and acknowledge that task 0 passed.
+//  web page.
 //
 //  Add the classes and structs here:
-abstract class MedicationContainer(name: String, date: Date) {
-    var id = UUID.randomUUID().toString()
-    private val expirationDate = date
-    var name = name
-    val isExpired: Boolean
-        get() = Date() >= expirationDate
-
-    override fun toString(): String {
-        if (this is LiquidMedicationContainer) {
-            return "Liquid: ${this.id}"
-        }
-
-        if (this is TabletMedicationContainer) {
-            return "Tablet: ${this.id}"
-        }
-
-        return "Generic: ${this.id}"
-    }
-
-    override fun equals(other: Any?): Boolean {
-        if (other is MedicationContainer) {
-            return other.id == this.id
-        }
-
-        return false
-    }
-
-}
-
-class LiquidMedicationContainer(name: String, date: Date, volume: Double, concentration: Int, concentrationUnits: String): MedicationContainer(name, date) {
-
-}
-
-class TabletMedicationContainer(name: String, date: Date, pillCount: Int, potency: Double, potencyUnits: String): MedicationContainer(name, date) {
-
-}
-
-class PharmaceuticalStockTracker {
-    private var inStockMedications = mutableListOf<MedicationContainer>()
-
-    fun addContainer(container: MedicationContainer): Boolean {
-        if (inStockMedications.contains(container)) return false
-        inStockMedications.add(container)
-        return true
-    }
-
-    fun count(name: String): Int {
-        return inStockMedications.count { it.name == name }
-    }
-}
 
 //  You can use this, but there is no need to make edits to it
 fun futureDate(daysFromNow: Int): Date {
@@ -77,14 +21,15 @@ fun futureDate(daysFromNow: Int): Date {
     return calendar.time
 }
 
+// You do not need to modify the task0 function.
 fun task0(): Pair<MedicationContainer, MedicationContainer> {
     // Print some sample dates
     println("Yesterday: ${futureDate(-1)}")
     println("Tomorrow: ${futureDate(1)}")
 
     // initialize a test variable of each class
-    val aLiquidContainer = LiquidMedicationContainer("med1", futureDate(7), 4.5, 2, "ml")
-    val aTabletContainer = TabletMedicationContainer("med2", futureDate(7), 90, 2.3, "mg")
+    val aLiquidContainer = LiquidMedicationContainer("med1", futureDate(500), 4.5, 2, "ml")
+    val aTabletContainer = TabletMedicationContainer("med2", futureDate(500), 90, 2.3, "mg")
     return Pair(aLiquidContainer, aTabletContainer)
 }
 
@@ -94,11 +39,7 @@ fun task0(): Pair<MedicationContainer, MedicationContainer> {
 //
 //  Return a liquid medication that has expired, and a tablet medication that has not expired
 fun task1(): Pair<LiquidMedicationContainer, TabletMedicationContainer>? {
-
-    // The following code used to validate the test code will be deleted for tasks.swift.
-    val aLiquidContainer = LiquidMedicationContainer("med1", futureDate(-7), 4.5, 2, "ml")
-    val aTabletContainer = TabletMedicationContainer("med2", futureDate(7), 90, 2.3, "mg")
-    return Pair(aLiquidContainer, aTabletContainer)
+    return null
 }
 
 //  Task 2
@@ -119,9 +60,9 @@ fun task1(): Pair<LiquidMedicationContainer, TabletMedicationContainer>? {
 //  like this:
 //      val aCount = aTracker.count("Aspirin")
 
-//  Then change task2() to return true rather than null
+//  Return a new PharmaceuticalStockTracker object
 fun task2(): PharmaceuticalStockTracker? {
-    return PharmaceuticalStockTracker()
+    return null
 }
 
 //  Task 3
@@ -131,10 +72,7 @@ fun task2(): PharmaceuticalStockTracker? {
 //  return an Array that has values counting from int1 down to and including
 //  int 2.
 fun task3(int1: Int, int2: Int): Any? {
-    //    return null
-    // The following code used to validate the test code will be deleted for tasks.swift.
-    if (int1 <= int2) { return int1..int2 }
-    return (int2 .. int1).toList().reversed()
+    return null
 }
 
 //  Task 4
@@ -143,12 +81,6 @@ fun task3(int1: Int, int2: Int): Any? {
 //  Return 2 if the value returned from task3() is an Array<Int>.
 //  Otherwise return 0 (this case should not happen if task3() is correct)
 fun task4(int1: Int, int2: Int): Int {
-    //    return null
-
-    // The following code used to validate the test code will be deleted for tasks.swift.
-    val value = task3(int1, int2) ?: return 0
-    if (value is IntRange) { return 1 }
-    if (value is List<*>) { return 2 }
     return 0
 }
 
@@ -165,14 +97,7 @@ fun task4(int1: Int, int2: Int): Int {
 //  Note: you might need to use return@mapNotNull for the different cases
 //  https://kotlinlang.org/docs/returns.html#break-and-continue-labels
 fun task5(anyArray: List<Any?>): List<Int> {
-    //    return null
-
-    return anyArray.mapNotNull {
-        if (it is Int) { return@mapNotNull 1 }
-        if (it is Double) { return@mapNotNull 2 }
-        if (it is String) { return@mapNotNull 3 }
-        null
-    }
+    return listOf()
 }
 
 //  Task 6
@@ -188,14 +113,7 @@ fun task5(anyArray: List<Any?>): List<Int> {
 //  Note: the "is" keyword can be used to check a variable type
 //  Note: you might need to use return@mapNotNull for the different cases
 fun task6(anyArray: List<Any?>): List<Double> {
-    //    return null
-
-    return anyArray.mapNotNull {
-        if (it is Int) { return@mapNotNull it.toDouble() }
-        if (it is Double) { return@mapNotNull it }
-        if (it is String) { return@mapNotNull it.toDoubleOrNull() }
-        null
-    }
+    return listOf()
 }
 
 //  Task 7
@@ -214,10 +132,8 @@ fun task6(anyArray: List<Any?>): List<Double> {
 //  toString() should return:
 //      Tablet: 5
 //
-fun task7(): Pair<LiquidMedicationContainer, TabletMedicationContainer> {
-    val aLiquidContainer = LiquidMedicationContainer("liquid medication 3", futureDate(-7), 4.5, 2, "ml")
-    val aTabletContainer = TabletMedicationContainer("tablet medication 9", futureDate(7), 90, 2.3, "mg")
-    return Pair(aLiquidContainer, aTabletContainer)
+fun task7(): Pair<LiquidMedicationContainer, TabletMedicationContainer>? {
+    return null
 }
 
 //  Task 8
@@ -229,10 +145,11 @@ fun task7(): Pair<LiquidMedicationContainer, TabletMedicationContainer> {
 //  of the medication. If both have the same id, return true. Otherwise, return false.
 //
 //  https://kotlinlang.org/docs/operator-overloading.html
-
+//
+//  You don't need to modify the code in task8()
 fun task8(): Pair<Pair<LiquidMedicationContainer, LiquidMedicationContainer>, Pair<TabletMedicationContainer, TabletMedicationContainer>> {
-    val liquidOne = LiquidMedicationContainer("liquid medication 3", futureDate(-7), 4.5, 2, "ml")
-    val liquidTwo = LiquidMedicationContainer("liquid medication 3", futureDate(-7), 4.5, 2, "ml")
+    val liquidOne = LiquidMedicationContainer("liquid medication 3", futureDate( 7), 4.5, 2, "ml")
+    val liquidTwo = LiquidMedicationContainer("liquid medication 3", futureDate( 7), 4.5, 2, "ml")
     // Two objects with the same id should be equal to each other
     liquidTwo.id = liquidOne.id
 
@@ -241,4 +158,14 @@ fun task8(): Pair<Pair<LiquidMedicationContainer, LiquidMedicationContainer>, Pa
 
 
     return Pair(Pair(liquidOne, liquidTwo), Pair(tabletOne, tabletTwo))
+}
+
+// Task 9
+// You can extend a class without inheritance by using an extension.
+// For this task, you should add an extension method to the
+// PharmaceuticalStockTracker class that remove all medications from the stock tracker
+// It will look something like this:
+//  fun PharmaceuticalStockTracker.removeAllContainers
+fun task9(): PharmaceuticalStockTracker {
+    return PharmaceuticalStockTracker()
 }

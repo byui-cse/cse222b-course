@@ -1,149 +1,248 @@
-//import kotlin.random.Random
+// import java.util.*
 //
-//enum class TestResult {
-//    SUCCESS,
-//    INVALID_INPUT
-//}
+// //  Tasks.kt
+// //  Week 3 Tasks
+// //
+// //  You need to write code to complete the functions and classes below to complete each task.
 //
-////  Task 0
-////  Add code to this function using multiple statements to validate that
-////  the parameters comply with the following rules:
-////      aBool must be true
-////      int1 must be greater than or equal to 0
-////      int2 must be greater than int1
-////      aString must be exactly 4 characters long
-//fun task0(aBool: Boolean, int1: Int, int2: Int, aString: String): TestResult {
-//    if (!aBool) {
-//        return TestResult.INVALID_INPUT
-//    }
+// //  Task 0
+// //  This week the project will not compile without errors until you complete task 0.
+// //  Please add classes and structs as defined in the UML document in the assignment
+// //  web page.
+// //
+// //  Add the classes and structs here:
+// abstract class MedicationContainer(name: String, date: Date) {
+//    var id = UUID.randomUUID().toString()
+//    private val expirationDate = date
+//    var name = name
+//    val isExpired: Boolean
+//        get() = Date() >= expirationDate
 //
-//    if (int1 < 0) {
-//        return TestResult.INVALID_INPUT
-//    }
-//
-//    if (int1 > int2) {
-//        return TestResult.INVALID_INPUT
-//    }
-//
-//    if (aString.length != 4) {
-//        return TestResult.INVALID_INPUT
-//    }
-//
-//    return TestResult.SUCCESS
-//}
-//
-//// Task 1
-//// Nullable types in Kotlin are a great way to ensure a value exists before you use it
-//// This function will return the length of an optional string
-//// If the string is null, return 0
-//// If the string is not null, return the length of the string
-//fun task1(aString: String?): Int {
-//    return aString?.length ?: 0
-//}
-//
-//// Task 2
-//// Convert the input string into an integer. If the string cannot be converted into an integer, return  null
-//fun task2(aString: String): Int? {
-//    return aString.toIntOrNull()
-//}
-//
-//
-////  Task 3
-////  Built-in functions like map, filter, reduce and sort take a parameter that is a closure.
-////
-////  Inside this function is an array of closures that each take two Int parameters. Complete each
-////  closure according to the requirements below.
-////
-////  Closure 0: return the sum of the two parameters
-////  Closure 1: return the product of the two parameters
-////  Closure 2: return -1 if the first parameter is less than the second parameter,
-////              return 0 if they are equal
-////              return 1 if the first parameter is greater than the second parameter
-////  Closure 3: return -1 if both parameters are odd
-////              return 1 if both parameters are even
-////              return 0 if one parameter is odd and the other is even
-//typealias task3Func = (Int, Int) -> Int
-//fun task3(): List<task3Func> {
-//    return listOf(fun (lhs: Int, rhs: Int): Int {
-//        return lhs + rhs
-//    },fun (lhs: Int, rhs: Int): Int {
-//        return lhs * rhs
-//    },fun (lhs: Int, rhs: Int): Int {
-//        if (lhs < rhs) return -1
-//        if (lhs > rhs) return 1
-//        return 0
-//    },fun (lhs: Int, rhs: Int): Int {
-//        if (lhs % 2 == 0 && rhs % 2 == 0) return 1
-//        if (lhs % 2 != 0 && rhs % 2 != 0) return -1
-//        return 0
-//    })
-//}
-//
-//// Task 4
-//// Using the built-in map function, convert each integer into a string
-//fun task4(input: List<Int>): List<String> {
-//    return input.map { it.toString() }
-//}
-//
-//// Task 5
-//// Using the built-in filter method, remove all odd values from the array
-//fun task5(input: List<Int>): List<Int> {
-//    return input.filter { it % 2 == 0 }
-//}
-//
-//// Task 6
-//// Using the built-in reduce method, return the sum of the input array
-//fun task6(input: List<Int>): Int {
-//    return input.reduce { acc, value -> acc + value }
-//}
-//
-//// Task 7
-//// Given the 2-dimensional input array, return the count of null values
-////
-//// Note: Both the sublists or the integers can be null
-//fun task7(input: List<List<Int?>?>): Int {
-//    var count = 0
-//
-//    for (list in input) {
-//        if (list == null) {
-//            count++
-//        } else {
-//            for (value in list) {
-//                if (value == null) {
-//                    count++
-//                }
-//            }
+//    override fun toString(): String {
+//        if (this is LiquidMedicationContainer) {
+//            return "Liquid: ${this.id}"
 //        }
-//    }
 //
-//    return count
-//}
-//
-//// Task 8
-//// Return a 2-dimensional array with the appropriate rows and columns
-//// The max parameter specifies the  maximum value for the random numbers
-////
-//// Hint: https://kotlinlang.org/docs/ranges.html
-//fun task8(rows: Int, columns: Int, max: Int): List<List<Int>> {
-//    var list = mutableListOf<List<Int>>()
-//    var rnd = Random.Default
-//    for (row in 0 until rows) {
-//        var sublist = mutableListOf<Int>()
-//        for (col in 0 until columns) {
-//            sublist.add(rnd.nextInt(max))
+//        if (this is TabletMedicationContainer) {
+//            return "Tablet: ${this.id}"
 //        }
-//        list.add((sublist))
+//
+//        return "Generic: ${this.id}"
 //    }
 //
-//    return list
-//}
+//    override fun equals(other: Any?): Boolean {
+//        if (other is MedicationContainer) {
+//            return other.id == this.id
+//        }
 //
-//// Task 9
-//// Using the built-in map function, transform each row of data into the average of the row
-//// The input 2-dimensional array is like a spreadsheet, with rows and columns
-//// We need the average of each row
-////
-//// Hint: List has a function called .average()
-//fun task9(data: List<List<Int>>): List<Double> {
-//    return data.map { it.average() }
-//}
+//        return false
+//    }
+//
+// }
+//
+// class LiquidMedicationContainer(name: String, date: Date, volume: Double, concentration: Int, concentrationUnits: String): MedicationContainer(name, date) {
+//
+// }
+//
+// class TabletMedicationContainer(name: String, date: Date, pillCount: Int, potency: Double, potencyUnits: String): MedicationContainer(name, date) {
+//
+// }
+//
+// class PharmaceuticalStockTracker {
+//    var inStockMedications = mutableListOf<MedicationContainer>()
+//
+//    fun addContainer(container: MedicationContainer): Boolean {
+//        if (inStockMedications.contains(container)) return false
+//        inStockMedications.add(container)
+//        return true
+//    }
+//
+//    fun count(name: String): Int {
+//        return inStockMedications.count { it.name == name }
+//    }
+// }
+//
+// fun PharmaceuticalStockTracker.removeAllContainers() {
+//    this.inStockMedications.removeAll { true }
+// }
+//
+// //  You can use this, but there is no need to make edits to it
+// fun futureDate(daysFromNow: Int): Date {
+//    var calendar = Calendar.getInstance()
+//    calendar.add(Calendar.DAY_OF_YEAR, daysFromNow)
+//    return calendar.time
+// }
+//
+// // You do not need to modify the task0 function.
+// fun task0(): Pair<MedicationContainer, MedicationContainer> {
+//    // Print some sample dates
+//    println("Yesterday: ${futureDate(-1)}")
+//    println("Tomorrow: ${futureDate(1)}")
+//
+//    // initialize a test variable of each class
+//    val aLiquidContainer = LiquidMedicationContainer("med1", futureDate(500), 4.5, 2, "ml")
+//    val aTabletContainer = TabletMedicationContainer("med2", futureDate(500), 90, 2.3, "mg")
+//    return Pair(aLiquidContainer, aTabletContainer)
+// }
+//
+// //  Task 1
+// //  Add a computed property to MedicationContainer "isExpired: Bool" that
+// //  returns true if and only if the container has expired.
+// //
+// //  Return a liquid medication that has expired, and a tablet medication that has not expired
+// fun task1(): Pair<LiquidMedicationContainer, TabletMedicationContainer>? {
+//
+//    val aLiquidContainer = LiquidMedicationContainer("med1", futureDate(-7), 4.5, 2, "ml")
+//    val aTabletContainer = TabletMedicationContainer("med2", futureDate(7), 90, 2.3, "mg")
+//    return Pair(aLiquidContainer, aTabletContainer)
+// }
+//
+// //  Task 2
+// //  Add a method to PharmaceuticalStockTracker that looks like this:
+// //      fun addContainer(container: MedicationContainer): Bool
+// //  Your method should add the container to the inStockMedications
+// //  List, but only if that exact container is not already in the array.
+// //  Return true if we successfully added it to the array. Remember that
+// //  the MedicationContainer parameter could actually be a
+// //  LiquidMedicationContainer or a TabletMedicationContainer.
+// //  Note that having the same name does not mean it is the same MedicationContainer,
+// //  but if you correctly set up the id field, it will be unique for a MedicationContainer.
+// //
+// //  Add another method to PharmaceuticalStockTracker like this:
+// //      fun count(name: String): Int
+// //  This will count the number of items in MedicationContainers that have a
+// //  name that matches the parameter passed in. Note that it will be called
+// //  like this:
+// //      val aCount = aTracker.count("Aspirin")
+//
+// //  Return a new PharmaceuticalStockTracker object
+// fun task2(): PharmaceuticalStockTracker? {
+//    return PharmaceuticalStockTracker()
+// }
+//
+// //  Task 3
+// //  A Range cannot step backwards, but sometimes we want to count down.
+// //  An Array can act like a sequence and be used many places that a Range
+// //  can be used. If the int1 <= int2 return the matching Range. Otherwise,
+// //  return an Array that has values counting from int1 down to and including
+// //  int 2.
+// fun task3(int1: Int, int2: Int): Any? {
+//    //    return null
+//    if (int1 <= int2) { return int1..int2 }
+//    return (int2 .. int1).toList().reversed()
+// }
+//
+// //  Task 4
+// //  task4() is called with two Ints. Call task3() with the parameters received.
+// //  Return 1 if the value returned from task3() is a ClosedRange<Int>.
+// //  Return 2 if the value returned from task3() is an Array<Int>.
+// //  Otherwise return 0 (this case should not happen if task3() is correct)
+// fun task4(int1: Int, int2: Int): Int {
+//    //    return null
+//
+//    val value = task3(int1, int2) ?: return 0
+//    if (value is IntRange) { return 1 }
+//    if (value is List<*>) { return 2 }
+//    return 0
+// }
+//
+// //  Task 5
+// //  This function receives an array that might have any values in it
+// //      including null.
+// //  Use mapNotNull to process it as follows:
+// //      if the value received is an Int, put 1 in the Array
+// //      if the value received is a Double, put 2 in the Array
+// //      if the value received is a String, put 3 in the Array
+// //      otherwise put null in the array and let compactMap remove it
+// //  Then return that new array.
+// //  Note: the "is" keyword can be used to check a variable type
+// //  Note: you might need to use return@mapNotNull for the different cases
+// //  https://kotlinlang.org/docs/returns.html#break-and-continue-labels
+// fun task5(anyArray: List<Any?>): List<Int> {
+//    //    return null
+//
+//    return anyArray.mapNotNull {
+//        if (it is Int) { return@mapNotNull 1 }
+//        if (it is Double) { return@mapNotNull 2 }
+//        if (it is String) { return@mapNotNull 3 }
+//        null
+//    }
+// }
+//
+// //  Task 6
+// //  This function receives the same array as Task5. This time use mapNotNull to
+// //  remove the optionals. Map it to an array of Double values that have the following values:
+// //      if the value received is an Int, convert it to a Double and put it in the Array.
+// //      if the value received is a Double, put it in the Array.
+// //      if the value received is a String, and it can be converted to a Double, put it
+// //          in the array, if not, put null in the array so compactMap removes this item.
+// //          Note that if Double() fails to convert a String it conveniently returns null.
+// //      if the value received is null, return null so compactMap removes it
+// //  Then return that new array.
+// //  Note: the "is" keyword can be used to check a variable type
+// //  Note: you might need to use return@mapNotNull for the different cases
+// fun task6(anyArray: List<Any?>): List<Double> {
+//    //    return null
+//
+//    return anyArray.mapNotNull {
+//        if (it is Int) { return@mapNotNull it.toDouble() }
+//        if (it is Double) { return@mapNotNull it }
+//        if (it is String) { return@mapNotNull it.toDoubleOrNull() }
+//        null
+//    }
+// }
+//
+// //  Task 7
+// //  When we print a MedicationContainer, the description is not very informative.
+// //  It makes it harder to print things and track down errors.
+// //
+// //  Assignment: Override the build in toString() on MedicationContainer.
+// //  It should include the name of the subclass as well as the id of the medication
+// //  You can use the "is" keyword to check the type of object
+// //
+// //  If the medication is a LiquidMedicationContainer, and it has an id of 5,
+// //  toString() should return:
+// //      Liquid: 5
+// //
+// //  If the medication is a TabletMedicationContainer, and it has an id of 5,
+// //  toString() should return:
+// //      Tablet: 5
+// //
+// fun task7(): Pair<LiquidMedicationContainer, TabletMedicationContainer> {
+//    val aLiquidContainer = LiquidMedicationContainer("liquid medication 3", futureDate(-7), 4.5, 2, "ml")
+//    val aTabletContainer = TabletMedicationContainer("tablet medication 9", futureDate(7), 90, 2.3, "mg")
+//    return Pair(aLiquidContainer, aTabletContainer)
+// }
+//
+// //  Task 8
+// //  You can override the equals operator in Kotlin. This allows
+// //  you, the author of the code, to decide what it means for two objects to be
+// //  equal to each other.
+// //
+// //  Add an override of the equals method in MedicationContainer to compare the id
+// //  of the medication. If both have the same id, return true. Otherwise, return false.
+// //
+// //  https://kotlinlang.org/docs/operator-overloading.html
+//
+// fun task8(): Pair<Pair<LiquidMedicationContainer, LiquidMedicationContainer>, Pair<TabletMedicationContainer, TabletMedicationContainer>> {
+//    val liquidOne = LiquidMedicationContainer("liquid medication 3", futureDate(-7), 4.5, 2, "ml")
+//    val liquidTwo = LiquidMedicationContainer("liquid medication 3", futureDate(-7), 4.5, 2, "ml")
+//    // Two objects with the same id should be equal to each other
+//    liquidTwo.id = liquidOne.id
+//
+//    val tabletOne = TabletMedicationContainer("tablet medication 8", futureDate(7), 90, 2.3, "mg")
+//    val tabletTwo = TabletMedicationContainer("tablet medication 9", futureDate(7), 90, 2.3, "mg")
+//
+//
+//    return Pair(Pair(liquidOne, liquidTwo), Pair(tabletOne, tabletTwo))
+// }
+//
+// // Task 9
+// // You can extend a class without inheritance by using an extension.
+// // For this task, you should add an extension method to the
+// // PharmaceuticalStockTracker class that remove all medications from the stock tracker
+// // It will look something like this:
+// //  fun PharmaceuticalStockTracker.removeAllContainers
+// fun task9(): PharmaceuticalStockTracker {
+//    return PharmaceuticalStockTracker()
+// }
