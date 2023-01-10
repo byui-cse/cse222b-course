@@ -53,7 +53,14 @@ fun testTask1() {
 }
 
 fun testTask2() {
+    val test1 = task2("55555-4444-22")
+    check(test1) { "This is a valid code, task2 should return false" }
 
+    val test2 = task2("")
+    check(!test2) { "This is not valid code, task2 should return false" }
+
+    val test3 = task2("33333-44-4444")
+    check(!test3) { "This is not valid code, task2 should return false" }
 }
 
 fun testTask3() {

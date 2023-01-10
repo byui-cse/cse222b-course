@@ -171,7 +171,7 @@ fun task1(): PharmaceuticalStockTracker {
 //      https://www.accessdata.fda.gov/scripts/cder/ndc/dsp_searchresult.cfm
 //  Using regular expression pattern matching, add code to the isFormattedAsNDCCode()
 //  function to return true if and only if the code is in a valid pattern for those
-//  codes: [5 digits]-[3 digits]-[2 digits]. When testing your code you may use
+//  codes: [5 digits] - [4 digits] - [2 digits]. When testing your code you may use
 //  real codes from the database along with real information, or you may make them up.
 //  The only thing that matters for this exercise is matching the pattern, not
 //  whether it is an actual code from the website. Your code should test for a
@@ -182,6 +182,7 @@ fun task1(): PharmaceuticalStockTracker {
 
 fun isFormattedAsNDCCode(code: String): Boolean {
     // Replace the following line with your code
+    return Regex("\\d\\d\\d\\d\\d-\\d\\d\\d\\d-\\d\\d").matches(code)
     return false
 }
 
