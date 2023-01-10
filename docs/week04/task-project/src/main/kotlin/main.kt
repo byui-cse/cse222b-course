@@ -32,10 +32,24 @@ fun main(args: Array<String>) {
 }
 
 fun testTask0() {
+    val test1 = task0()
+    check(test1.first is LiquidMedicationContainer) { "The project should compile at this point" }
+    check(test1.second is TabletMedicationContainer) { "The project should compile at this point" }
 }
 
 fun testTask1() {
+    val tracker = task1()
+    val expired = LiquidMedicationContainer("12345-123-12", "med1", futureDate(-120),
+        4.5,  2,  "ml")
+    val notExpired = LiquidMedicationContainer("12345-123-12", "med1", futureDate(120),
+        4.5,  2,  "ml")
+    tracker.addContainer(expired)
+    tracker.addContainer(notExpired)
+    check(tracker.count == 2) { "The PharmaceuticalStockTracker should have 2 medication in it at this point" }
 
+    // Remove all expired, there should be one afterwards
+    tracker.removeExpired()
+    check(tracker.count == 1) { "There should only be one left after removing the expired ones" }
 }
 
 fun testTask2() {

@@ -67,15 +67,27 @@ import kotlin.math.pow
 
 class PharmaceuticalStockTracker {
 
-    var inStockMedications = mutableMapOf<String, MedicationContainer>()
+    var inStockMedications = mutableMapOf<String, MutableSet<MedicationContainer>>()
     val count: Int
-        get() = 0
+        get() {
+            val sets = inStockMedications.values
+            var count = 0
+            sets.forEach { count += it.count() }
+            return count
+        }
 
-    fun count(of: String): Int {
+    fun count(ndcPackageCode: String): Int {
+        val meds = inStockMedications[ndcPackageCode]
+        if (meds != null) {
+            return meds.count()
+        }
         return 0
     }
 
     fun addContainer(container: MedicationContainer): Boolean {
+        var current = inStockMedications[container.ndcPackageCode] ?: mutableSetOf()
+        current.add(container)
+        inStockMedications[container.ndcPackageCode] = current
         return true
     }
 }
@@ -108,8 +120,6 @@ class PharmaceuticalStockTracker {
 
          return false
      }
-
-
 }
  class LiquidMedicationContainer(ndcPackageCode: String, name: String, date: Date, volume: Double, concentration: Int, concentrationUnits: String): MedicationContainer(ndcPackageCode, name, date) {
 
@@ -142,7 +152,13 @@ fun task0(): Pair<MedicationContainer, MedicationContainer> {
 //  will remove all expired medications
 //
 fun PharmaceuticalStockTracker.removeExpired() {
-
+    val keys = inStockMedications.keys
+    keys.forEach {
+        val meds = inStockMedications[it]
+        if (meds != null) {
+            inStockMedications[it] = meds.filter { v -> !v.isExpired }.toMutableSet()
+        }
+    }
 }
 
 fun task1(): PharmaceuticalStockTracker {
