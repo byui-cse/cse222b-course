@@ -14,6 +14,7 @@
 //
 
 import java.util.*
+import kotlin.math.pow
 
 //  Task 0 Assignment
 //  This week the project will not compile without errors until you complete task 0.
@@ -360,11 +361,29 @@ fun getArea(s: Shape): Double {
     return s.area()
 }
 
-// For task 9, create 4 classes that adopt the "Shape" interface:
+// For task 9, make the following 3 classes adopt the "Shape" protocol
 //      - Circle
 //      - Triangle
 //      - Rectangle
-//      - Cube
-fun task9(value: Shape): Double {
-    return value.area()
+
+class Circle(private val radius: Double): Shape {
+    override fun area(): Double {
+        return Math.PI * radius.pow(2.0)
+    }
+}
+
+class Triangle(private val base: Double, private val height: Double): Shape {
+    override fun area(): Double {
+        return .5 * base * height
+    }
+}
+
+class Rectangle(private val width: Double, private val height: Double): Shape {
+    override fun area(): Double {
+        return width * height
+    }
+}
+
+fun task9(s: Shape): Double {
+    return getArea(s)
 }

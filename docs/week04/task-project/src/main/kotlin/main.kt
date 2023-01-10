@@ -1,3 +1,6 @@
+import org.w3c.dom.css.Rect
+import kotlin.math.roundToInt
+
 // *************************
 //  Do not modify this file!
 // *************************
@@ -64,5 +67,15 @@ fun testTask8() {
 }
 
 fun testTask9() {
+    val c = Circle(10.0)
+    val test1 = task9(c)
+    check(test1.roundToInt() == 314) { "Area of circle should be around 314"}
 
+    val t = Triangle(10.0, 10.0)
+    val test2 = task9(t)
+    check(test2.roundToInt() == 50) { "Area of the triangle should be 50"}
+
+    val r = Rectangle(10.0, 10.0)
+    val test3 = task9(r)
+    check(test3.roundToInt() == 100) { "Area of the rectangle should be 100" }
 }
