@@ -85,6 +85,9 @@ class PharmaceuticalStockTracker {
     }
 
     fun addContainer(container: MedicationContainer): Boolean {
+        if (!isFormattedAsNDCCode(container.ndcPackageCode)) {
+            return false
+        }
         var current = inStockMedications[container.ndcPackageCode] ?: mutableSetOf()
         current.add(container)
         inStockMedications[container.ndcPackageCode] = current
@@ -202,9 +205,9 @@ fun task2(code: String): Boolean {
 //  to addContainers() should have the same ndcPackageCode and that code should
 //  match the expectedNdcPackageCode parameter.
 //
-//  The function returns a tuple with a Bool and an enum of Type AddMessage.
+//  The function returns the enum AddMessage
 //  As you complete the method, parts of your code should return each of the
-//  values in AddMessage except possibly .otherAddFailure. The others all
+//  values in AddMessage except possibly .UNKNOWN_FAILURE. The others all
 //  represent error (or success) conditions that you should detect as you
 //  implement addContainers(). One  error you should detect would be found
 //  by calling the function isFormattedAsNDCCode() to verify the format
@@ -213,15 +216,32 @@ fun task2(code: String): Boolean {
 //  Hint: Remember to deal with both the case where there are currently no
 //  containers matching the ndcPackageCode and the case where there are
 //  already some containers matching the ndcPackageCode.
-//
-//  When you have completed and tested the code for addContainers(),
-//  change task3() to return true rather than nil
 
 enum class AddMessage {
     SUCCESS, NDC_CODE_FORMAT_ERROR, EMPTY_CONTAINER_SET, MIXED_NDC_CODES, UNKNOWN_FAILURE
 }
 
 fun PharmaceuticalStockTracker.addContainers(expectedNdcPackageCode: String, containersToAdd: Set<MedicationContainer>): AddMessage {
+    if (containersToAdd.isEmpty()) {
+        return AddMessage.EMPTY_CONTAINER_SET
+    }
+
+    val matches = containersToAdd.filter { it.ndcPackageCode == expectedNdcPackageCode }
+    if (matches.count() != containersToAdd.count()) {
+        return AddMessage.MIXED_NDC_CODES
+    }
+
+    val valid = containersToAdd.filter { isFormattedAsNDCCode(it.ndcPackageCode) }
+    if (valid.count() != containersToAdd.count()) {
+        return AddMessage.NDC_CODE_FORMAT_ERROR
+    }
+
+    if (valid.isEmpty()) {
+        return AddMessage.EMPTY_CONTAINER_SET
+    }
+
+    valid.forEach { this.addContainer(it) }
+
     return AddMessage.SUCCESS
 }
 
@@ -231,12 +251,10 @@ fun task3(): PharmaceuticalStockTracker {
 
 //  Task 4
 //  Implement the method currentStock(of:) below. This accepts as its parameter an
-//  ndcPackageCode. It returns a tuple with a Bool, an enum of Type StockMessage
-//  and an optional array of MedicationContainers. Validate the ndcPackageCode format,
-//  check if there are any containers of that type and if there are, return them in an
-//  array. Since we should use up medications with the oldest expiration date first,
-//  sort the array by expiration date before returning it so the older expiration
-//  dates come first.
+//  ndcPackageCode. It returns a tuple with an enum of Type StockMessage
+//  and a set of MedicationContainers. Validate the ndcPackageCode format,
+//  check if there are any containers of that type and if there are, return
+//  them in a List
 //
 //  When you have completed and tested the code for currentStock(of:),
 //  change task4() to return true rather than nil
@@ -245,8 +263,17 @@ enum class StockMessage {
     SUCCESS, NDC_CODE_FORMAT_ERROR, NO_INVENTORY, UNKNOWN_FAILURE
 }
 
-fun PharmaceuticalStockTracker.currentStock(of: String): Pair<StockMessage, Set<MedicationContainer>> {
-    return Pair(StockMessage.SUCCESS, setOf())
+fun PharmaceuticalStockTracker.currentStock(of: String): Pair<StockMessage, List<MedicationContainer>> {
+    if (!isFormattedAsNDCCode(of)) {
+        return Pair(StockMessage.NDC_CODE_FORMAT_ERROR, listOf())
+    }
+
+    val stock = inStockMedications[of] ?: return Pair(StockMessage.NO_INVENTORY, listOf())
+    if (stock.isEmpty()) {
+        return Pair(StockMessage.NO_INVENTORY, listOf())
+    }
+
+    return Pair(StockMessage.SUCCESS, stock.toList())
 }
 
 fun task4(): PharmaceuticalStockTracker{

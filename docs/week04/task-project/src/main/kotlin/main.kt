@@ -39,9 +39,9 @@ fun testTask0() {
 
 fun testTask1() {
     val tracker = task1()
-    val expired = LiquidMedicationContainer("12345-123-12", "med1", futureDate(-120),
+    val expired = LiquidMedicationContainer("12345-1234-12", "med1", futureDate(-120),
         4.5,  2,  "ml")
-    val notExpired = LiquidMedicationContainer("12345-123-12", "med1", futureDate(120),
+    val notExpired = LiquidMedicationContainer("12345-1234-12", "med1", futureDate(120),
         4.5,  2,  "ml")
     tracker.addContainer(expired)
     tracker.addContainer(notExpired)
@@ -64,11 +64,54 @@ fun testTask2() {
 }
 
 fun testTask3() {
+    val tracker = task3()
+    val invalid = LiquidMedicationContainer("invalid", "med1", futureDate(120),
+        4.5,  2,  "ml")
+    val test1 = tracker.addContainer(invalid)
+    check(!test1) { "Invalid ndc code, it should not add it"}
 
+    val test2 = tracker.addContainers("55555-4444-22", setOf())
+    check(test2 == AddMessage.EMPTY_CONTAINER_SET) { "Should not add an empty set of containers"}
+
+    val test3 = tracker.addContainers("invalid", setOf(invalid))
+    check(test3 == AddMessage.NDC_CODE_FORMAT_ERROR) { "Invalid codes shouldn't be added" }
+
+    var one = LiquidMedicationContainer("55555-4444-22", "med1", futureDate(120),
+        4.5,  2,  "ml")
+    var two = LiquidMedicationContainer("55555-4444-21", "med1", futureDate(120),
+        4.5,  2,  "ml")
+
+    val test4 = tracker.addContainers("55555-4444-22", setOf(one, two))
+    check(test4 == AddMessage.MIXED_NDC_CODES) { "Mixed codes are not allowed" }
+
+    one = LiquidMedicationContainer("55555-4444-22", "med1", futureDate(120),
+        4.5,  2,  "ml")
+    two = LiquidMedicationContainer("55555-4444-22", "med1", futureDate(120),
+        4.5,  2,  "ml")
+
+    val test5 = tracker.addContainers("55555-4444-22", setOf(one, two))
+    check(test5 == AddMessage.SUCCESS) { "Everything should work at this point!"}
 }
 
 fun testTask4() {
+    val tracker = task4()
+    val test1 = tracker.currentStock("55555-4444-2")
+    check(test1.first == StockMessage.NDC_CODE_FORMAT_ERROR) { "Bad code detected!"}
 
+    // Add some stock to test
+    val one = LiquidMedicationContainer("55555-4444-22", "med1", futureDate(120),
+        4.5,  2,  "ml")
+    val two = LiquidMedicationContainer("55555-4444-22", "med1", futureDate(120),
+        4.5,  2,  "ml")
+
+    tracker.addContainers("55555-4444-22", setOf(one, two))
+    val test2 = tracker.currentStock("55555-4444-22")
+    check(test2.first == StockMessage.SUCCESS) { "There should be stock in the stock tracker" }
+    check(test2.second.count() == 2) { "There is a stock of 2 medications in there" }
+
+    val test3 = tracker.currentStock("55555-4444-11")
+    check(test3.first == StockMessage.NO_INVENTORY) { "There is no inventory for that ndc code" }
+    check(test3.second.isEmpty()) { "There is no stock, so there should be an empty list" }
 }
 
 fun testTask5() {
