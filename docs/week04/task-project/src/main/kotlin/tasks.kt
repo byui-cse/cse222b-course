@@ -283,23 +283,37 @@ fun task4(): PharmaceuticalStockTracker{
 //  Task 5
 //  Fill out the method sellContainers(count:of) below. This accepts as parameters a
 //  count of containers to sell, and an ndcPackageCode.
-//  It returns a Bool, a SellMessage and an optional array of MedicationContainers.
+//  It returns a SellMessage and a list of MedicationContainers.
 //  Like usual, this should validate the format of the ndcPackageCode, then find out
 //  if there is any inventory of the ndcPackageCode. If so, confirm that there is
-//  enough. If not, return a tuple of (false, .notEnoughInventory, nil). If there
+//  enough. If not, return a like this: Pair(SellMessage.NOT_ENOUGH_INVENTORY, listOf()). If there
 //  is enough of inventory of the requested ndcPackageCode, be sure to sell those
 //  with the earliest dates first. Return a sorted array of the containers sold.
 //  If the sale results in the Set being emptied out, remove that dictionary entry.
-//
-//  When you have completed and tested the code for sellContainers(),
-//  change task5() to return true rather than nil
 
 enum class SellMessage {
     SUCCESS, INVALID_COUNT, NDC_CODE_FORMAT_ERROR, NO_INVENTORY, NOT_ENOUGH_INVENTORY
 }
 
-fun PharmaceuticalStockTracker.sellContainers(count: Int, ndcPackageCode: String): Pair<SellMessage, Set<MedicationContainer>> {
-    return Pair(SellMessage.SUCCESS, setOf())
+fun PharmaceuticalStockTracker.sellContainers(count: Int, ndcPackageCode: String): Pair<SellMessage, List<MedicationContainer>> {
+    if (!isFormattedAsNDCCode(ndcPackageCode)) {
+        return Pair(SellMessage.NDC_CODE_FORMAT_ERROR, listOf())
+    }
+
+    if (count < 1) {
+        return Pair(SellMessage.INVALID_COUNT, listOf())
+    }
+
+    val stock = inStockMedications[ndcPackageCode] ?: return Pair(SellMessage.NO_INVENTORY, listOf())
+    if (stock.count() < count) {
+        return Pair(SellMessage.NOT_ENOUGH_INVENTORY, listOf())
+    }
+
+    val items = stock.toList().sortedBy { it.expirationDate }.slice(0 until count)
+    stock.removeAll(items.toSet())
+    inStockMedications[ndcPackageCode] = stock
+
+    return Pair(SellMessage.SUCCESS, items)
 }
 
 fun task5(): PharmaceuticalStockTracker{

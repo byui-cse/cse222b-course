@@ -115,7 +115,33 @@ fun testTask4() {
 }
 
 fun testTask5() {
+    val tracker = task5()
+    val test1 = tracker.sellContainers(0, "invalid")
+    check(test1.first == SellMessage.NDC_CODE_FORMAT_ERROR) { "Should return SellMessage.NDC_CODE_FORMAT_ERROR on an invalid ndc code" }
 
+    // Add some stock to test
+    val one = LiquidMedicationContainer("55555-4444-22", "med1", futureDate(90),
+        4.5,  2,  "ml")
+    val two = LiquidMedicationContainer("55555-4444-22", "med1", futureDate(120),
+        4.5,  2,  "ml")
+
+    tracker.addContainers("55555-4444-22", setOf(one, two))
+
+    val test2 = tracker.sellContainers(3, "55555-4444-22")
+    check(test2.first == SellMessage.NOT_ENOUGH_INVENTORY) { "You cannot sell more items than exist"}
+
+    val test3 = tracker.sellContainers(0, "55555-4444-22")
+    check(test3.first == SellMessage.INVALID_COUNT) { "You cannot sell 0 items"}
+
+    val test4 = tracker.sellContainers(1, "55555-4444-21")
+    check(test4.first == SellMessage.NO_INVENTORY) { "You cannot sell items that do not exist"}
+
+    val test5 = tracker.sellContainers(1, "55555-4444-22")
+    check(test5.first == SellMessage.SUCCESS) { "Should properly sell items if they exist to sell" }
+    check(test5.second.count() == 1) { "One should be sold "}
+
+    val test6 = tracker.sellContainers(2, "55555-4444-22")
+    check(test6.first == SellMessage.NOT_ENOUGH_INVENTORY) { "After selling one, there should not be two left to sell" }
 }
 
 fun testTask6() {
