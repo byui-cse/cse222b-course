@@ -1,149 +1,412 @@
-//import kotlin.random.Random
+////
+////  tasks.kt
+////  Week 4 Tasks
+////
+////  You need to write code to complete the functions below to complete each task.
+////  You can develop and test each function individually, but some sequentially
+////  depend on the prior tasks.
 //
-//enum class TestResult {
-//    SUCCESS,
-//    INVALID_INPUT
-//}
+////  Due to the tests we need to perform, some lines in main.swift may generate
+////  warning errors. If you get an unexplained warning error from main.swift, please
+////  check if there is a comment near that line saying to ignore warning errors.
+////
 //
-////  Task 0
-////  Add code to this function using multiple statements to validate that
-////  the parameters comply with the following rules:
-////      aBool must be true
-////      int1 must be greater than or equal to 0
-////      int2 must be greater than int1
-////      aString must be exactly 4 characters long
-//fun task0(aBool: Boolean, int1: Int, int2: Int, aString: String): TestResult {
-//    if (!aBool) {
-//        return TestResult.INVALID_INPUT
+//import java.util.*
+//import kotlin.math.pow
+//
+////  Task 0 Assignment
+////  This week the project will not compile without errors until you complete task 0.
+////  We have included the classes from last week as we left them except for a few changes,
+////  mostly to match the new UML diagram:
+////
+////      1) PharmaceuticalStockTracker is now a class
+////
+////      1) MedicationContainer has a new property ndcPackageCode that identifies
+////      the specific type of medication container (more about that later in task 2).
+////
+////      2) Changed "inStockMedications" to a Map. The key is a String and
+////      the value is a MutableSet of MedicationContainers
+////      each of which have an ndcPackageCode attribute that matches the key.
+////
+////      3) Added a new computed property called "count"
+////
+////      4) Changed the parameter to count(of:) from "name" to "ndcPackageCode".
+////
+////  Your Task 0 assignment is to get the file to compile by doing the following:
+////
+////      1) Implement the computed property "count" that should return a
+////      total count of all MedicationContainers with any ndcPackageCode
+////      stored in inStockMedications.
+////
+////      2) Change count(of:) to correctly count how many containers of a
+////      specific ndcPackageCode are stored in inStockMedications.
+////
+////      3) Change addContainer() to work correctly for the new data model
+////      using the ndcPackageCode inside the MedicationContainer parameter
+////      as the key. Be sure to address both the case where we are adding
+////      this ndcPackageCode for the first time and the case where one or
+////      more MedicationContainers with the same ndcPackageCode have
+////      already been added.
+////
+//
+//class PharmaceuticalStockTracker {
+//
+//    var inStockMedications = mutableMapOf<String, MutableSet<MedicationContainer>>()
+//    val count: Int
+//        get() {
+//            val sets = inStockMedications.values
+//            var count = 0
+//            sets.forEach { count += it.count() }
+//            return count
+//        }
+//
+//    fun count(ndcPackageCode: String): Int {
+//        val meds = inStockMedications[ndcPackageCode]
+//        if (meds != null) {
+//            return meds.count()
+//        }
+//        return 0
 //    }
 //
-//    if (int1 < 0) {
-//        return TestResult.INVALID_INPUT
+//    fun addContainer(container: MedicationContainer): Boolean {
+//        if (!isFormattedAsNDCCode(container.ndcPackageCode)) {
+//            return false
+//        }
+//        var current = inStockMedications[container.ndcPackageCode] ?: mutableSetOf()
+//        current.add(container)
+//        inStockMedications[container.ndcPackageCode] = current
+//        return true
 //    }
-//
-//    if (int1 > int2) {
-//        return TestResult.INVALID_INPUT
-//    }
-//
-//    if (aString.length != 4) {
-//        return TestResult.INVALID_INPUT
-//    }
-//
-//    return TestResult.SUCCESS
 //}
 //
-//// Task 1
-//// Nullable types in Kotlin are a great way to ensure a value exists before you use it
-//// This function will return the length of an optional string
-//// If the string is null, return 0
-//// If the string is not null, return the length of the string
-//fun task1(aString: String?): Int {
-//    return aString?.length ?: 0
+//abstract class MedicationContainer(ndcPackageCode: String, name: String, date: Date) {
+//    var id = UUID.randomUUID().toString()
+//
+//    val ndcPackageCode = ndcPackageCode
+//    val expirationDate = date
+//    var name = name
+//    val isExpired: Boolean
+//        get() = Date() >= expirationDate
+//
+//    override fun toString(): String {
+//        if (this is LiquidMedicationContainer) {
+//            return "Liquid: ${this.id}"
+//        }
+//
+//        if (this is TabletMedicationContainer) {
+//            return "Tablet: ${this.id}"
+//        }
+//
+//        return "Generic: ${this.id}"
+//    }
+//
+//    override fun equals(other: Any?): Boolean {
+//        if (other is MedicationContainer) {
+//            return other.id == this.id
+//        }
+//
+//        return false
+//    }
+//}
+//class LiquidMedicationContainer(ndcPackageCode: String, name: String, date: Date, volume: Double, concentration: Int, concentrationUnits: String): MedicationContainer(ndcPackageCode, name, date) {
+//
 //}
 //
-//// Task 2
-//// Convert the input string into an integer. If the string cannot be converted into an integer, return  null
-//fun task2(aString: String): Int? {
-//    return aString.toIntOrNull()
+//class TabletMedicationContainer(ndcPackageCode: String, name: String, date: Date, pillCount: Int, potency: Double, potencyUnits: String): MedicationContainer(ndcPackageCode, name, date) {
+//
 //}
 //
+////  You can use this, but there is no need to make edits to it
+//fun futureDate(daysFromNow: Int): Date {
+//    var calendar = Calendar.getInstance()
+//    calendar.add(Calendar.DAY_OF_YEAR, daysFromNow)
+//    return calendar.time
+//}
+//
+//fun task0(): Pair<MedicationContainer, MedicationContainer> {
+//    // Print some sample dates
+//
+//    val aCode = "12345-123-12"
+//    val aLiquidContainer = LiquidMedicationContainer(aCode, "med1", futureDate(120),
+//        4.5,  2,  "ml")
+//    val aTabletContainer = TabletMedicationContainer( aCode,  "med2",  futureDate( 90),
+//        90,  2.3,  "mg")
+//    return Pair(aLiquidContainer, aTabletContainer)
+//}
+//
+////  Task 1
+////  Create a function extension on PharmaceuticalStockTracker that
+////  will remove all expired medications
+////
+//fun PharmaceuticalStockTracker.removeExpired() {
+//    val keys = inStockMedications.keys
+//    keys.forEach {
+//        val meds = inStockMedications[it]
+//        if (meds != null) {
+//            inStockMedications[it] = meds.filter { v -> !v.isExpired }.toMutableSet()
+//        }
+//    }
+//}
+//
+//fun task1(): PharmaceuticalStockTracker {
+//    return PharmaceuticalStockTracker()
+//}
+//
+////  Task 2
+////  The ndcPackageCode that tells what medication is in a container
+////  follows the code pattern in the NDC database:
+////      https://www.accessdata.fda.gov/scripts/cder/ndc/dsp_searchresult.cfm
+////  Using regular expression pattern matching, add code to the isFormattedAsNDCCode()
+////  function to return true if and only if the code is in a valid pattern for those
+////  codes: [5 digits] - [4 digits] - [2 digits]. When testing your code you may use
+////  real codes from the database along with real information, or you may make them up.
+////  The only thing that matters for this exercise is matching the pattern, not
+////  whether it is an actual code from the website. Your code should test for a
+////  match on the entire property and not report a match if only a substring of
+////  the property matches.
+////
+////  You should not need to modify task2(), only the isFormattedAsNDCCode() function
+//
+//fun isFormattedAsNDCCode(code: String): Boolean {
+//    // Replace the following line with your code
+//    return Regex("\\d\\d\\d\\d\\d-\\d\\d\\d\\d-\\d\\d").matches(code)
+//}
+//
+//fun task2(code: String): Boolean {
+//    return isFormattedAsNDCCode(code)
+//}
 //
 ////  Task 3
-////  Built-in functions like map, filter, reduce and sort take a parameter that is a closure.
+////  Edit addContainer() to call isFormattedAsNDCCode() to validate
+////  that the ndcPackageCode in the container to be added has a valid
+////  NDCCode format. If not, do not add the container and return false.
 ////
-////  Inside this function is an array of closures that each take two Int parameters. Complete each
-////  closure according to the requirements below.
+////  Now fill out the method addContainers() below. This accepts as parameters
+////  an expectedNdcPackageCode and a Set of MedicationContainers to be added to
+////  the Stock Tracker. Since this system is supposed to be dealing with medications
+////  there are extra layers of checking. All the containers in the Set passed
+////  to addContainers() should have the same ndcPackageCode and that code should
+////  match the expectedNdcPackageCode parameter.
 ////
-////  Closure 0: return the sum of the two parameters
-////  Closure 1: return the product of the two parameters
-////  Closure 2: return -1 if the first parameter is less than the second parameter,
-////              return 0 if they are equal
-////              return 1 if the first parameter is greater than the second parameter
-////  Closure 3: return -1 if both parameters are odd
-////              return 1 if both parameters are even
-////              return 0 if one parameter is odd and the other is even
-//typealias task3Func = (Int, Int) -> Int
-//fun task3(): List<task3Func> {
-//    return listOf(fun (lhs: Int, rhs: Int): Int {
-//        return lhs + rhs
-//    },fun (lhs: Int, rhs: Int): Int {
-//        return lhs * rhs
-//    },fun (lhs: Int, rhs: Int): Int {
-//        if (lhs < rhs) return -1
-//        if (lhs > rhs) return 1
-//        return 0
-//    },fun (lhs: Int, rhs: Int): Int {
-//        if (lhs % 2 == 0 && rhs % 2 == 0) return 1
-//        if (lhs % 2 != 0 && rhs % 2 != 0) return -1
-//        return 0
-//    })
-//}
-//
-//// Task 4
-//// Using the built-in map function, convert each integer into a string
-//fun task4(input: List<Int>): List<String> {
-//    return input.map { it.toString() }
-//}
-//
-//// Task 5
-//// Using the built-in filter method, remove all odd values from the array
-//fun task5(input: List<Int>): List<Int> {
-//    return input.filter { it % 2 == 0 }
-//}
-//
-//// Task 6
-//// Using the built-in reduce method, return the sum of the input array
-//fun task6(input: List<Int>): Int {
-//    return input.reduce { acc, value -> acc + value }
-//}
-//
-//// Task 7
-//// Given the 2-dimensional input array, return the count of null values
+////  The function returns the enum AddMessage
+////  As you complete the method, parts of your code should return each of the
+////  values in AddMessage except possibly .UNKNOWN_FAILURE. The others all
+////  represent error (or success) conditions that you should detect as you
+////  implement addContainers(). One  error you should detect would be found
+////  by calling the function isFormattedAsNDCCode() to verify the format
+////  of the NdcPackageCode used.
 ////
-//// Note: Both the sublists or the integers can be null
-//fun task7(input: List<List<Int?>?>): Int {
-//    var count = 0
+////  Hint: Remember to deal with both the case where there are currently no
+////  containers matching the ndcPackageCode and the case where there are
+////  already some containers matching the ndcPackageCode.
 //
-//    for (list in input) {
-//        if (list == null) {
-//            count++
-//        } else {
-//            for (value in list) {
-//                if (value == null) {
-//                    count++
-//                }
-//            }
-//        }
+//enum class AddMessage {
+//    SUCCESS, NDC_CODE_FORMAT_ERROR, EMPTY_CONTAINER_SET, MIXED_NDC_CODES, UNKNOWN_FAILURE
+//}
+//
+//fun PharmaceuticalStockTracker.addContainers(expectedNdcPackageCode: String, containersToAdd: Set<MedicationContainer>): AddMessage {
+//    if (containersToAdd.isEmpty()) {
+//        return AddMessage.EMPTY_CONTAINER_SET
 //    }
 //
-//    return count
-//}
-//
-//// Task 8
-//// Return a 2-dimensional array with the appropriate rows and columns
-//// The max parameter specifies the  maximum value for the random numbers
-////
-//// Hint: https://kotlinlang.org/docs/ranges.html
-//fun task8(rows: Int, columns: Int, max: Int): List<List<Int>> {
-//    var list = mutableListOf<List<Int>>()
-//    var rnd = Random.Default
-//    for (row in 0 until rows) {
-//        var sublist = mutableListOf<Int>()
-//        for (col in 0 until columns) {
-//            sublist.add(rnd.nextInt(max))
-//        }
-//        list.add((sublist))
+//    val matches = containersToAdd.filter { it.ndcPackageCode == expectedNdcPackageCode }
+//    if (matches.count() != containersToAdd.count()) {
+//        return AddMessage.MIXED_NDC_CODES
 //    }
 //
-//    return list
+//    val valid = containersToAdd.filter { isFormattedAsNDCCode(it.ndcPackageCode) }
+//    if (valid.count() != containersToAdd.count()) {
+//        return AddMessage.NDC_CODE_FORMAT_ERROR
+//    }
+//
+//    if (valid.isEmpty()) {
+//        return AddMessage.EMPTY_CONTAINER_SET
+//    }
+//
+//    valid.forEach { this.addContainer(it) }
+//
+//    return AddMessage.SUCCESS
 //}
 //
-//// Task 9
-//// Using the built-in map function, transform each row of data into the average of the row
-//// The input 2-dimensional array is like a spreadsheet, with rows and columns
-//// We need the average of each row
+//fun task3(): PharmaceuticalStockTracker {
+//    return PharmaceuticalStockTracker()
+//}
+//
+////  Task 4
+////  Implement the method currentStock(of:) below. This accepts as its parameter an
+////  ndcPackageCode. It returns a tuple with an enum of Type StockMessage
+////  and a set of MedicationContainers. Validate the ndcPackageCode format,
+////  check if there are any containers of that type and if there are, return
+////  them in a List
 ////
-//// Hint: List has a function called .average()
-//fun task9(data: List<List<Int>>): List<Double> {
-//    return data.map { it.average() }
+////  When you have completed and tested the code for currentStock(of:),
+////  change task4() to return true rather than nil
+//
+//enum class StockMessage {
+//    SUCCESS, NDC_CODE_FORMAT_ERROR, NO_INVENTORY, UNKNOWN_FAILURE
+//}
+//
+//fun PharmaceuticalStockTracker.currentStock(of: String): Pair<StockMessage, List<MedicationContainer>> {
+//    if (!isFormattedAsNDCCode(of)) {
+//        return Pair(StockMessage.NDC_CODE_FORMAT_ERROR, listOf())
+//    }
+//
+//    val stock = inStockMedications[of] ?: return Pair(StockMessage.NO_INVENTORY, listOf())
+//    if (stock.isEmpty()) {
+//        return Pair(StockMessage.NO_INVENTORY, listOf())
+//    }
+//
+//    return Pair(StockMessage.SUCCESS, stock.toList())
+//}
+//
+//fun task4(): PharmaceuticalStockTracker{
+//    return PharmaceuticalStockTracker()
+//}
+//
+////  Task 5
+////  Fill out the method sellContainers(count:of) below. This accepts as parameters a
+////  count of containers to sell, and an ndcPackageCode.
+////  It returns a SellMessage and a list of MedicationContainers.
+////  Like usual, this should validate the format of the ndcPackageCode, then find out
+////  if there is any inventory of the ndcPackageCode. If so, confirm that there is
+////  enough. If not, return a like this: Pair(SellMessage.NOT_ENOUGH_INVENTORY, listOf()). If there
+////  is enough of inventory of the requested ndcPackageCode, be sure to sell those
+////  with the earliest dates first. Return a sorted array of the containers sold.
+////  If the sale results in the Set being emptied out, remove that dictionary entry.
+//
+//enum class SellMessage {
+//    SUCCESS, INVALID_COUNT, NDC_CODE_FORMAT_ERROR, NO_INVENTORY, NOT_ENOUGH_INVENTORY
+//}
+//
+//fun PharmaceuticalStockTracker.sellContainers(count: Int, ndcPackageCode: String): Pair<SellMessage, List<MedicationContainer>> {
+//    if (!isFormattedAsNDCCode(ndcPackageCode)) {
+//        return Pair(SellMessage.NDC_CODE_FORMAT_ERROR, listOf())
+//    }
+//
+//    if (count < 1) {
+//        return Pair(SellMessage.INVALID_COUNT, listOf())
+//    }
+//
+//    val stock = inStockMedications[ndcPackageCode] ?: return Pair(SellMessage.NO_INVENTORY, listOf())
+//    if (stock.count() < count) {
+//        return Pair(SellMessage.NOT_ENOUGH_INVENTORY, listOf())
+//    }
+//
+//    val items = stock.toList().sortedBy { it.expirationDate }.slice(0 until count)
+//    stock.removeAll(items.toSet())
+//    inStockMedications[ndcPackageCode] = stock
+//
+//    return Pair(SellMessage.SUCCESS, items)
+//}
+//
+//fun task5(): PharmaceuticalStockTracker {
+//    return PharmaceuticalStockTracker()
+//}
+//
+////  Task 6
+////  Given a list of numbers, return the number of occurrences of each number
+////
+////  For example, if the list is [1, 2, 2, 2, 2, 2, 3]
+////  You would return a Map that looks like this:
+////      { 1: 1, 2: 5, 3: 1 }
+//
+//fun task6(numbers: List<Int>): Map<Int, Int> {
+//    val counts = mutableMapOf<Int, Int>()
+//    numbers.forEach {
+//        counts[it] = (counts[it] ?: 0) + 1
+//    }
+//
+//    return counts
+//}
+//
+////  Task 7
+////
+////  When objects are put into a set, uniqueness is evaluated based on the "hashCode" and "equals" methods
+////  The following PersonRecord object has an idNumber as its only attribute
+////  Override the necessary methods to ensure that uniqueness of the PersonRecord is based on the idNumber, not the object itself
+//class PersonRecord(var idNumber: String) {
+//    override fun hashCode(): Int {
+//        return idNumber.hashCode()
+//    }
+//
+//    override fun equals(other: Any?): Boolean {
+//        if (other is PersonRecord) {
+//            return other.idNumber == this.idNumber
+//        }
+//
+//        return false
+//    }
+//}
+//
+//// Task 7.1
+//// Return a list of 5 PersonRecord objects, each with a unique idNumber
+//fun task7(): Set<PersonRecord> {
+//    return setOf(
+//        PersonRecord("1"),
+//        PersonRecord("2"),
+//        PersonRecord("3"),
+//        PersonRecord("4"),
+//        PersonRecord("5"))
+//}
+//
+////  Task 8
+////  An interface in Kotlin allows a programmer to define a set of behaviors
+////  that classes can adopt.
+////
+////  For example, let's say you wanted to have different types of objects to
+////  all have a property called "area". You would create an interface like this:
+//interface Shape {
+//    fun area(): Double
+//}
+//
+//// After you have defined the interface, other classes can adopt the interface
+//// like this:
+//class Square: Shape {
+//    private val size: Double = 10.0
+//
+//    override fun area(): Double {
+//        return size * size
+//    }
+//}
+//
+//// When a class adopts a protocol, you can then treat different objects as the same
+//// interface type, such as this function:
+//fun getArea(s: Shape): Double {
+//    return s.area()
+//}
+//
+//// For Task 8, make the following 3 classes adopt the "Shape" protocol
+////      - Circle
+////      - Triangle
+////      - Rectangle
+//
+//class Circle(private val radius: Double): Shape {
+//    override fun area(): Double {
+//        return Math.PI * radius.pow(2.0)
+//    }
+//}
+//
+//class Triangle(private val base: Double, private val height: Double): Shape {
+//    override fun area(): Double {
+//        return .5 * base * height
+//    }
+//}
+//
+//class Rectangle(private val width: Double, private val height: Double): Shape {
+//    override fun area(): Double {
+//        return width * height
+//    }
+//}
+//
+//fun task8(s: Shape): Double {
+//    return getArea(s)
+//}
+//
+////  Task 9
+////
+////  Eliminate Duplicates
+////  Given an array of numbers, eliminate all duplicates in the most efficient way possible
+//
+//fun task9(numbers: List<Int>): List<Int> {
+//    return numbers.toSet().toList()
 //}

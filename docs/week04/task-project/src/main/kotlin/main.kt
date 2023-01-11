@@ -4,7 +4,7 @@ import kotlin.math.roundToInt
 // *************************
 //  Do not modify this file!
 // *************************
-//  You are welcome to read this file and to try to understand it, but you should not make edits.
+//  You are welcome to read this file and to try to understand it, but do not make edits.
 //  Your assignment is to edit tasks.kt and then run this file, assuming tasks.kt is in the same project as main.kt
 //  The code in this file will test your task functions and indicate which task functions pass.
 //
