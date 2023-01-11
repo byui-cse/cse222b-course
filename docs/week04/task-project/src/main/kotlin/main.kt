@@ -145,27 +145,49 @@ fun testTask5() {
 }
 
 fun testTask6() {
+    val test1 = task6(listOf(1, 2, 3))
+    check(test1[1] == 1)
+    check(test1[2] == 1)
+    check(test1[3] == 1)
 
+    val test2 = task6(listOf(1, 1, 1, 1, 1, 1, 1, 1, 1, 1))
+    check(test2[1] == 10)
 }
 
 fun testTask7() {
+    val test1 = task7()
+    check(test1.count() == 5) { "There should be 5 person objects" }
+    val idNumbers = test1.map { it.idNumber }.toSet()
+    check(idNumbers.count() == 5) { "All idNumbers should be unique" }
 
+    val personOne = test1.first()
+    val personTwo = test1.last()
+
+    personOne.idNumber = "same"
+    personTwo.idNumber = "same"
+    val same = setOf(personOne, personTwo)
+    check(same.count() == 1) { "If two PersonRecord objects have the same idNumber, both should not be allowed in a set"}
 }
 
 fun testTask8() {
-
-}
-
-fun testTask9() {
     val c = Circle(10.0)
-    val test1 = task9(c)
+    val test1 = task8(c)
     check(test1.roundToInt() == 314) { "Area of circle should be around 314"}
 
     val t = Triangle(10.0, 10.0)
-    val test2 = task9(t)
+    val test2 = task8(t)
     check(test2.roundToInt() == 50) { "Area of the triangle should be 50"}
 
     val r = Rectangle(10.0, 10.0)
-    val test3 = task9(r)
+    val test3 = task8(r)
     check(test3.roundToInt() == 100) { "Area of the rectangle should be 100" }
+}
+
+fun testTask9() {
+    val test1 = task9(listOf(1, 2, 3, 3, 4, 5, 6))
+    check(test1 == listOf(1, 2, 3, 4, 5, 6)) { "There is an extra 3 in this list"}
+
+    val bigList = listOf((0..1000000)).flatten()
+    val test2 = task9(bigList)
+    check(test2.count() == bigList.count()) { "There are no duplicates in here" }
 }

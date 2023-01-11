@@ -5,9 +5,7 @@
 //  You need to write code to complete the functions below to complete each task.
 //  You can develop and test each function individually, but some sequentially
 //  depend on the prior tasks.
-//  As long as a function returns nil, it is assumed to not be implemented.
-//
-//
+
 //  Due to the tests we need to perform, some lines in main.swift may generate
 //  warning errors. If you get an unexplained warning error from main.swift, please
 //  check if there is a comment near that line saying to ignore warning errors.
@@ -23,19 +21,16 @@ import kotlin.math.pow
 //
 //      1) PharmaceuticalStockTracker is now a class
 //
-//      2) MedicationContainer has a new property ndcPackageCode that identifies
+//      1) MedicationContainer has a new property ndcPackageCode that identifies
 //      the specific type of medication container (more about that later in task 2).
 //
-//      3) Changed "inStockMedications" from an Array of MedicationContainers to
-//      a Dictionary. The key is a String (actually an ndcPackageCode) and
-//      the value is a Set of MedicationContainers each of which have an
-//      ndcPackageCode attribute that matches the key.
+//      2) Changed "inStockMedications" to a Map. The key is a String and
+//      the value is a MutableSet of MedicationContainers
+//      each of which have an ndcPackageCode attribute that matches the key.
 //
-//      4) Added two new computed properties "description" and "count" and
-//      made PharmaceuticalStockTracker conform to the CustomStringConvertible
-//      to activate the description property when needed.
+//      3) Added a new computed property called "count"
 //
-//      5) Changed the parameter to count(of:) from "name" to "ndcPackageCode".
+//      4) Changed the parameter to count(of:) from "name" to "ndcPackageCode".
 //
 //  Your Task 0 assignment is to get the file to compile by doing the following:
 //
@@ -53,17 +48,6 @@ import kotlin.math.pow
 //      more MedicationContainers with the same ndcPackageCode have
 //      already been added.
 //
-//      4) As explained in the reading, Elements of a set must conform to
-//      the Hashable protocol. Mark the MedicationContainer class as
-//      conforming to Hashable. Then make it actually conform to Hashable.
-//      Note that since Equatable is a parent of Hashable, we must also
-//      conform to Equatable. Fortunately, we already did that last week,
-//      so part of the work to conform is already done.
-//      Hint: The combine() approach to conforming to Hashable works even
-//      if you are only "combining" one property,
-//
-//  After you correctly complete this task, the project should compile and
-//  task0() should be shown as passing.
 
 class PharmaceuticalStockTracker {
 
@@ -186,7 +170,6 @@ fun task1(): PharmaceuticalStockTracker {
 fun isFormattedAsNDCCode(code: String): Boolean {
     // Replace the following line with your code
     return Regex("\\d\\d\\d\\d\\d-\\d\\d\\d\\d-\\d\\d").matches(code)
-    return false
 }
 
 fun task2(code: String): Boolean {
@@ -316,84 +299,57 @@ fun PharmaceuticalStockTracker.sellContainers(count: Int, ndcPackageCode: String
     return Pair(SellMessage.SUCCESS, items)
 }
 
-fun task5(): PharmaceuticalStockTracker{
+fun task5(): PharmaceuticalStockTracker {
     return PharmaceuticalStockTracker()
 }
 
 //  Task 6
-//  Add a mutating method called setDates to the DateSequencer struct below
-//  with a parameter called daysTuple. The parameter should be a tuple of Type
-//  (Int, Int). The method should use the parameter to set the values (in order)
-//  of the two predefined properties: currentDaysOut and lastDaysOut. The purpose
-//  of this task is to set things up for the following tasks.
+//  Given a list of numbers, return the number of occurrences of each number
 //
-//  After you make the change, apply the additional protocol DateSequencerProtocol
-//  change task6() to return true rather than nil to will let the tests run.
-//
-//struct DateSequencer  {
-//
-//    var currentDaysOut = 0
-//    var lastDaysOut = 10
-//
-//    // your code goes here
-//}
-//func task6() -> Bool? {
-//    return nil
-//}
+//  For example, if the list is [1, 2, 2, 2, 2, 2, 3]
+//  You would return a Map that looks like this:
+//      { 1: 1, 2: 5, 3: 1 }
+
+fun task6(numbers: List<Int>): Map<Int, Int> {
+    val counts = mutableMapOf<Int, Int>()
+    numbers.forEach {
+        counts[it] = (counts[it] ?: 0) + 1
+    }
+
+    return counts
+}
 
 //  Task 7
-//  Add to the extension below to make the DateSequencer conform to the Sequence
-//  protocol. In conforming to this protocol, you can either have the object create
-//  a separate iterator or you can have the object be its own iterator . For this
-//  task, use the option where it is its own iterator  so in addition to conform
-//  to Sequence, it needs to explicitly conform to IteratorProtocol. You will
-//  need to add both of these protocols to the first line of the extension.
 //
-//  The next() function you implement to conform should return a date optional.
-//      If currentDaysOut == lastDaysOut then it should return nil.
-//      Otherwise, it should return a Date currentDaysOut in the future.
-//  Returning nil is how it indicates that the sequence is complete.
-//  It should then increment currentDaysOut "towards" lastDaysOut. That is:
-//      if currentDaysOut < lastDaysOut add 1 to currentDaysOut
-//      if currentDaysOut > lastDaysOut subtract 1 from currentDaysOut.
-//  In implementing this, you are welcome to call either or
-//  both of daysToMs() and futureDate() or to borrow code from them.
-//
-//  The result of your code will be objects that generate a sequence of dates.
-//  If you call setDates(x, y) then the struct will behave as a sequence of dates
-//  starting x days in the future and continuing up or down the calendar until
-//  just before it would output y days into the future.
-//
-//  When you have completed and tested these changes apply the additional
-//  protocol DateSequencerProtocol2 to the extension and change task7() to
-//  return true rather than nil.
-//
+//  When objects are put into a set, uniqueness is evaluated based on the "hashCode" and "equals" methods
+//  The following PersonRecord object has an idNumber as its only attribute
+//  Override the necessary methods to ensure that uniqueness of the PersonRecord is based on the idNumber, not the object itself
+class PersonRecord(var idNumber: String) {
+    override fun hashCode(): Int {
+        return idNumber.hashCode()
+    }
 
-//extension DateSequencer  {
-//    // add your code here
-//}
-//func task7() -> Bool? {
-//    return nil
-//}
+    override fun equals(other: Any?): Boolean {
+        if (other is PersonRecord) {
+            return other.idNumber == this.idNumber
+        }
+
+        return false
+    }
+}
+
+// Task 7.1
+// Return a list of 5 PersonRecord objects, each with a unique idNumber
+fun task7(): Set<PersonRecord> {
+    return setOf(
+        PersonRecord("1"),
+        PersonRecord("2"),
+        PersonRecord("3"),
+        PersonRecord("4"),
+        PersonRecord("5"))
+}
 
 //  Task 8
-//  Lets demonstrate how having the DateSequencer object conform to
-//  Sequence really adds value. In task8() below, create a DateSequencer
-//  object. Call setDates() on your DateSequencer using the parameters passed
-//  into task8(). Create an empty array of type [Date]. Then write a for-in
-//  loop that loops on your DateSequencer and appends each value produced by
-//  the for statement to your array of Dates. The result will be that for-in
-//  uses your struct to help you create an array of dates that matches the
-//  parameters.
-//
-//  When you are done with your code, change task8() to return the array produced
-//  instead of returning nil.
-//
-//func task8(_ aTuple: (Int, Int)) -> [Date]? {
-//    return nil
-//}
-
-//  Task 9
 //  An interface in Kotlin allows a programmer to define a set of behaviors
 //  that classes can adopt.
 //
@@ -419,7 +375,7 @@ fun getArea(s: Shape): Double {
     return s.area()
 }
 
-// For task 9, make the following 3 classes adopt the "Shape" protocol
+// For Task 8, make the following 3 classes adopt the "Shape" protocol
 //      - Circle
 //      - Triangle
 //      - Rectangle
@@ -442,6 +398,15 @@ class Rectangle(private val width: Double, private val height: Double): Shape {
     }
 }
 
-fun task9(s: Shape): Double {
+fun task8(s: Shape): Double {
     return getArea(s)
+}
+
+//  Task 9
+//
+//  Eliminate Duplicates
+//  Given an array of numbers, eliminate all duplicates in the most efficient way possible
+
+fun task9(numbers: List<Int>): List<Int> {
+    return numbers.toSet().toList()
 }
