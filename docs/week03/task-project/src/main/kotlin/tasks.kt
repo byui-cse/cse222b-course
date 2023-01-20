@@ -67,9 +67,9 @@ fun task2(): PharmaceuticalStockTracker? {
 
 //  Task 3
 //  A Range cannot step backwards, but sometimes we want to count down.
-//  An Array can act like a sequence and be used many places that a Range
+//  A List can act like a sequence and be used many places that a Range
 //  can be used. If the int1 <= int2 return the matching Range. Otherwise,
-//  return an Array that has values counting from int1 down to and including
+//  return a List that has values counting from int1 down to and including
 //  int 2.
 fun task3(int1: Int, int2: Int): Any? {
     return null

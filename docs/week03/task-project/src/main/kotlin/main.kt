@@ -69,7 +69,7 @@ fun testTask3() {
     val test1 = task3(0, 100)
     check(test1 is IntRange) { "if int1 is smaller than int2, return a IntRange"}
     val test2 = task3(100, 0)
-    check(test2 is List<*>) { "If int1 is bigger than int2, return an array from int2 to int1" }
+    check(test2 is List<*>) { "If int1 is bigger than int2, return a List from int2 to int1" }
     check(test2[0] == 100) { "int1 is 100, that means that the first element in the list should be 100" }
     check(test2.last() == 0) { "int2 is 0, which means the last element in the array should be 0" }
 }
