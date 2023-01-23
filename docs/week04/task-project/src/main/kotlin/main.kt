@@ -54,7 +54,7 @@ fun testTask1() {
 
 fun testTask2() {
     val test1 = task2("55555-4444-22")
-    check(test1) { "This is a valid code, task2 should return false" }
+    check(test1) { "This is a valid code, task2 should return true" }
 
     val test2 = task2("")
     check(!test2) { "This is not valid code, task2 should return false" }
