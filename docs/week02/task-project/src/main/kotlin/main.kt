@@ -60,7 +60,7 @@ fun testTask1() {
 
 fun testTask2() {
     val test0 = task2("4")
-    check(test0 == 4) { "the string '4' is easily converted into a string" }
+    check(test0 == 4) { "the string '4' should be converted into an int" }
 
     val test1 = task2("not a number")
     check(test1 == null) { "cannot be converted to a string" }
