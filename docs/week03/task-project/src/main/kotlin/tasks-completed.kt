@@ -153,7 +153,7 @@
 // //      if the value received is an Int, put 1 in the Array
 // //      if the value received is a Double, put 2 in the Array
 // //      if the value received is a String, put 3 in the Array
-// //      otherwise put null in the array and let compactMap remove it
+// //      otherwise put null in the array and let mapNotNull remove it
 // //  Then return that new array.
 // //  Note: the "is" keyword can be used to check a variable type
 // //  Note: you might need to use return@mapNotNull for the different cases
@@ -175,9 +175,9 @@
 // //      if the value received is an Int, convert it to a Double and put it in the Array.
 // //      if the value received is a Double, put it in the Array.
 // //      if the value received is a String, and it can be converted to a Double, put it
-// //          in the array, if not, put null in the array so compactMap removes this item.
+// //          in the array, if not, put null in the array so mapNotNull removes this item.
 // //          Note that if Double() fails to convert a String it conveniently returns null.
-// //      if the value received is null, return null so compactMap removes it
+// //      if the value received is null, return null so mapNotNull removes it
 // //  Then return that new array.
 // //  Note: the "is" keyword can be used to check a variable type
 // //  Note: you might need to use return@mapNotNull for the different cases
