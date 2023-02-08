@@ -90,6 +90,9 @@
 //    val isDouble: Boolean
 //        get() = doubleValue() != null
 //
+//    val isNumberType: Boolean
+//        get() = isInt || isDouble
+//
 //    fun stringValue(): String? {
 //        if (value is String) {
 //            return value
@@ -113,6 +116,69 @@
 //
 //        return null
 //    }
+//
+//    fun toDouble(default: Double = 0.0): Double {
+//        if (!isNumberType) return default
+//        return doubleValue() ?: intValue()?.toDouble() ?: default;
+//    }
+//
+//    fun toInt(default: Int = 0): Int {
+//        if (!isNumberType) return default
+//        return intValue() ?: doubleValue()?.toInt() ?: default
+//    }
+//
+//    fun canPerformOperation(other: AnyValue, type: OperationType): Boolean {
+//
+//        // If the operation is ADD or SUBTRACT, only number types can be added together
+//        if (type == OperationType.ADD || type == OperationType.SUBTRACT) {
+//            return isNumberType && other.isNumberType
+//        }
+//
+//        if (type == OperationType.CONCATENATE) {
+//            return isString && other.isString
+//        }
+//
+//        return false
+//    }
+//
+//    fun add(other: AnyValue): Pair<OperationStatus, AnyValue?> {
+//        if (!canPerformOperation(other, OperationType.ADD)) {
+//            return Pair(OperationStatus.INVALID, null)
+//        }
+//
+//        // If either value is a double, then the result needs to be a double
+//        return if (isDouble || other.isDouble) {
+//            val result = toDouble() + other.toDouble();
+//            Pair(OperationStatus.VALID, AnyValue(result))
+//        } else {
+//            val result = toInt() + other.toInt();
+//            Pair(OperationStatus.VALID, AnyValue(result))
+//        }
+//    }
+//
+//    fun subtract(other: AnyValue): Pair<OperationStatus, AnyValue?> {
+//        if (!canPerformOperation(other, OperationType.SUBTRACT)) {
+//            return Pair(OperationStatus.INVALID, null)
+//        }
+//
+//        // If either value is a double, then the result needs to be a double
+//        return if (isDouble || other.isDouble) {
+//            val result = toDouble() - other.toDouble();
+//            Pair(OperationStatus.VALID, AnyValue(result))
+//        } else {
+//            val result = toInt() - other.toInt();
+//            Pair(OperationStatus.VALID, AnyValue(result))
+//        }
+//    }
+//
+//    fun concat(other: AnyValue): Pair<OperationStatus, AnyValue?> {
+//        if (!canPerformOperation(other, OperationType.CONCATENATE)) {
+//            return Pair(OperationStatus.INVALID, null)
+//        }
+//
+//        val result = stringValue() + other.stringValue()
+//        return Pair(OperationStatus.VALID, AnyValue(result))
+//    }
 //}
 //
 //enum class OperationType {
@@ -129,10 +195,10 @@
 ////  to variables and passed as a parameter to a function.
 ////
 ////  For task0, you should return an OperationHandler with the following rules:
-////      - Int and Number types can be Added and Subtracted
+////      - Int and Double types can be Added and Subtracted
 ////      - String types can be concatenated
 ////      - Strings _cannot_ be added and subtracted
-////      - Int and Number types _cannot_ be concatenated
+////      - Int and Double types _cannot_ be concatenated
 ////      - If an Int and Double have an operation applied, the result should _be_ a Double
 ////
 ////  If the values can have an operation applied to them, return a OperationStatus.VALID, as well as the result
@@ -148,44 +214,10 @@
 //
 //    return { op: OperationType, a: AnyValue, b: AnyValue ->
 //
-//        var result: Pair<OperationStatus, AnyValue?> = Pair(OperationStatus.INVALID, null)
-//
-//        if (a.isString && b.isString && op == OperationType.CONCATENATE) {
-//            result = Pair(OperationStatus.VALID, AnyValue(a.stringValue() + b.stringValue()))
+//        when(op) {
+//            OperationType.ADD -> a.add(b)
+//            OperationType.SUBTRACT -> a.subtract(b)
+//            OperationType.CONCATENATE -> a.concat(b)
 //        }
-//
-//        if (a.isInt && b.isInt && op == OperationType.ADD) {
-//            result = Pair(OperationStatus.VALID, AnyValue((a.intValue() ?: 0) + (b.intValue() ?: 0)))
-//        }
-//
-//        if (a.isInt && b.isInt && op == OperationType.SUBTRACT) {
-//            result = Pair(OperationStatus.VALID, AnyValue((a.intValue() ?: 0) - (b.intValue() ?: 0)))
-//        }
-//
-//        if (a.isDouble && b.isDouble && op == OperationType.ADD) {
-//            result = Pair(OperationStatus.VALID, AnyValue((a.doubleValue() ?: 0.0) + (b.doubleValue() ?: 0.0)))
-//        }
-//
-//        if (a.isInt && b.isInt && op == OperationType.SUBTRACT) {
-//            result = Pair(OperationStatus.VALID, AnyValue((a.intValue() ?: 0) - (b.intValue() ?: 0)))
-//        }
-//
-//        if (a.isInt && b.isDouble && op == OperationType.ADD) {
-//            result = Pair(OperationStatus.VALID, AnyValue((a.intValue() ?: 0.0).toDouble() + (b.doubleValue() ?: 0.0)))
-//        }
-//
-//        if (a.isInt && b.isDouble && op == OperationType.SUBTRACT) {
-//            result = Pair(OperationStatus.VALID, AnyValue((a.intValue() ?: 0.0).toDouble() - (b.doubleValue() ?: 0.0)))
-//        }
-//
-//        if (a.isDouble && b.isInt && op == OperationType.ADD) {
-//            result = Pair(OperationStatus.VALID, AnyValue((a.doubleValue() ?: 0.0) + (b.intValue() ?: 0).toDouble()))
-//        }
-//
-//        if (a.isDouble && b.isInt && op == OperationType.SUBTRACT) {
-//            result = Pair(OperationStatus.VALID, AnyValue((a.doubleValue() ?: 0.0) - (b.intValue() ?: 0).toDouble()))
-//        }
-//
-//        result
 //    }
 //}
