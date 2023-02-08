@@ -120,7 +120,7 @@ fun task6(anyArray: List<Any?>): List<Double> {
 //  When we print a MedicationContainer, the description is not very informative.
 //  It makes it harder to print things and track down errors.
 //
-//  Assignment: Override the build in toString() on MedicationContainer.
+//  Assignment: Override the built-in toString() on MedicationContainer.
 //  It should include the name of the subclass as well as the id of the medication
 //  You can use the "is" keyword to check the type of object
 //
