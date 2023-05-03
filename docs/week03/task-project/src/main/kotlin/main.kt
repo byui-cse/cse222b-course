@@ -103,8 +103,8 @@ fun testTask7() {
     check(meds != null) { "Make sure to return a pair from task7() and not null!"}
     val test1 = meds.first.toString()
     val test2 = meds.second.toString()
-    check(test1 == "Liquid: ${meds.first.id}") { "toString() should use look like this: Liquid: ${meds.first.id}"}
-    check(test2 == "Tablet: ${meds.second.id}") { "toString() should use look like this: Tablet: ${meds.second.id}"}
+    check(test1 == "Liquid: ${meds.first.id}") { "toString() should look like this: Liquid: ${meds.first.id}"}
+    check(test2 == "Tablet: ${meds.second.id}") { "toString() should look like this: Tablet: ${meds.second.id}"}
 }
 
 fun testTask8() {
