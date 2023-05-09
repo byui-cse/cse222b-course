@@ -11,6 +11,14 @@
 //  check if there is a comment near that line saying to ignore warning errors.
 //
 
+//  !!!!!!!!
+//  !!!!!!!!
+//
+//  NOTE: You will need to complete parts of task8 in order for the program to compile.
+//  
+//  !!!!!!!!
+//  !!!!!!!!
+
 import java.util.*
 import kotlin.math.pow
 
@@ -195,9 +203,6 @@ fun task3(): PharmaceuticalStockTracker {
 //  and a set of MedicationContainers. Validate the ndcPackageCode format,
 //  check if there are any containers of that type and if there are, return
 //  them in a List
-//
-//  When you have completed and tested the code for currentStock(of:),
-//  change task4() to return true rather than nil
 
 enum class StockMessage {
     SUCCESS, NDC_CODE_FORMAT_ERROR, NO_INVENTORY, UNKNOWN_FAILURE
