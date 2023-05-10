@@ -73,13 +73,20 @@
 //    return { first() / second() }
 //}
 //
+
+// AnyValue can represent any type of value, and provides simple mechanisms check the type of value,
+// as well as perform different operations on the value
+//
+// To keep things simple, our AnyValue type only supports String and Int types
 //class AnyValue {
 //
 //    private val value: Any
 //
 //    constructor(s: String) { value = s }
 //    constructor(i: Int) { value = i }
-//    constructor(d: Double) { value = d }
+//
+//    fun stringValue(): String? { return value as? String  }
+//    fun intValue(): Int? { return value as? Int }
 //
 //    val isString: Boolean
 //        get() = stringValue() != null
@@ -87,51 +94,11 @@
 //    val isInt: Boolean
 //        get() = intValue() != null
 //
-//    val isDouble: Boolean
-//        get() = doubleValue() != null
-//
-//    val isNumberType: Boolean
-//        get() = isInt || isDouble
-//
-//    fun stringValue(): String? {
-//        if (value is String) {
-//            return value
-//        }
-//
-//        return null
-//    }
-//
-//    fun intValue(): Int? {
-//        if (value is Int) {
-//            return value
-//        }
-//
-//        return null
-//    }
-//
-//    fun doubleValue(): Double? {
-//        if (value is Double) {
-//            return value
-//        }
-//
-//        return null
-//    }
-//
-//    fun toDouble(default: Double = 0.0): Double {
-//        if (!isNumberType) return default
-//        return doubleValue() ?: intValue()?.toDouble() ?: default;
-//    }
-//
-//    fun toInt(default: Int = 0): Int {
-//        if (!isNumberType) return default
-//        return intValue() ?: doubleValue()?.toInt() ?: default
-//    }
-//
 //    fun canPerformOperation(other: AnyValue, type: OperationType): Boolean {
 //
 //        // If the operation is ADD or SUBTRACT, only number types can be added together
 //        if (type == OperationType.ADD || type == OperationType.SUBTRACT) {
-//            return isNumberType && other.isNumberType
+//            return isInt && other.isInt
 //        }
 //
 //        if (type == OperationType.CONCATENATE) {
@@ -146,14 +113,8 @@
 //            return Pair(OperationStatus.INVALID, null)
 //        }
 //
-//        // If either value is a double, then the result needs to be a double
-//        return if (isDouble || other.isDouble) {
-//            val result = toDouble() + other.toDouble();
-//            Pair(OperationStatus.VALID, AnyValue(result))
-//        } else {
-//            val result = toInt() + other.toInt();
-//            Pair(OperationStatus.VALID, AnyValue(result))
-//        }
+//        val result = (intValue() ?: 0) + (other.intValue() ?: 0);
+//        return Pair(OperationStatus.VALID, AnyValue(result))
 //    }
 //
 //    fun subtract(other: AnyValue): Pair<OperationStatus, AnyValue?> {
@@ -161,14 +122,8 @@
 //            return Pair(OperationStatus.INVALID, null)
 //        }
 //
-//        // If either value is a double, then the result needs to be a double
-//        return if (isDouble || other.isDouble) {
-//            val result = toDouble() - other.toDouble();
-//            Pair(OperationStatus.VALID, AnyValue(result))
-//        } else {
-//            val result = toInt() - other.toInt();
-//            Pair(OperationStatus.VALID, AnyValue(result))
-//        }
+//        val result = (intValue() ?: 0) - (other.intValue() ?: 0);
+//        return Pair(OperationStatus.VALID, AnyValue(result))
 //    }
 //
 //    fun concat(other: AnyValue): Pair<OperationStatus, AnyValue?> {
@@ -195,19 +150,14 @@
 ////  to variables and passed as a parameter to a function.
 ////
 ////  For task0, you should return an OperationHandler with the following rules:
-////      - Int and Double types can be Added and Subtracted
+////      - Int types can be Added and Subtracted
 ////      - String types can be concatenated
 ////      - Strings _cannot_ be added and subtracted
-////      - Int and Double types _cannot_ be concatenated
-////      - If an Int and Double have an operation applied, the result should _be_ a Double
+////      - Int types _cannot_ be concatenated
 ////
 ////  If the values can have an operation applied to them, return a OperationStatus.VALID, as well as the result
 ////  If the values cannot have the operation applied, return OperationStatus.INVALID in the Pair, along with null
 ////
-////  To make things easier to code, you should add several methods and computed properties to AnyValue,
-////  such as the following for string types:
-////      - fun stringValue(): String?
-////      - val isString: Boolean
 //
 //typealias OperationHandler = (OperationType, AnyValue, AnyValue) -> Pair<OperationStatus, AnyValue?>
 //fun task4(): OperationHandler? {

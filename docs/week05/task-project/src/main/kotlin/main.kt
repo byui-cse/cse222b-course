@@ -76,26 +76,26 @@ fun testTask3() {
 }
 
 fun testTask4() {
-    val operation = task4()
-    check(operation != null) { "Please return an operation lambda from task0"}
-    val test1 = operation(OperationType.ADD, AnyValue(2), AnyValue(2))
-    check(test1.first == OperationStatus.VALID && test1.second?.intValue() == 4) { "2 + 2 is 4" }
+    val operationMap = task4()
+    check(operationMap != null) { "Please return an operation lambda from task0"}
 
-    val test2 = operation(OperationType.ADD, AnyValue(2.75), AnyValue(2.75))
-    check(test2.first == OperationStatus.VALID && test2.second?.doubleValue() == 5.5) { "2.75 + 2.75 is 5.5" }
+    val test1 = AnyValue("Hello, World!")
+    check(!test1.isInt)
+    check(test1.isString)
 
-    val test3 = operation(OperationType.CONCATENATE, AnyValue("Merry"), AnyValue(" Christmas"))
-    check(test3.first == OperationStatus.VALID && test3.second?.stringValue() == "Merry Christmas") { "Make sure to concat the string values" }
+    val test2 = AnyValue(1)
+    check(test2.isInt)
+    check(!test2.isString)
 
-    val test4 = operation(OperationType.ADD, AnyValue(1), AnyValue(2.75))
-    check(test4.first == OperationStatus.VALID && test4.second?.doubleValue() == 3.75) { "1 + 2.75 is 3.75" }
+    val test3 = operationMap(OperationType.ADD, AnyValue(2), AnyValue(2))
+    check(test3.first == OperationStatus.VALID && test3.second?.intValue() == 4) { "2 + 2 is 4" }
 
-    val test5 = operation(OperationType.SUBTRACT, AnyValue(2.75), AnyValue(1))
-    check(test5.first == OperationStatus.VALID && test5.second?.doubleValue() == 1.75) { "2.75 - 1 is 1.75" }
+    val test4 = operationMap(OperationType.CONCATENATE, AnyValue("Merry"), AnyValue(" Christmas"))
+    check(test4.first == OperationStatus.VALID && test4.second?.stringValue() == "Merry Christmas") { "Make sure to concat the string values" }
 
-    val test6 = operation(OperationType.SUBTRACT, AnyValue(2.75), AnyValue("merry christmas!"))
-    check(test6.first == OperationStatus.INVALID) { "double and string cannot be subtracted" }
+    val test5 = operationMap(OperationType.SUBTRACT, AnyValue(2), AnyValue("merry christmas!"))
+    check(test5.first == OperationStatus.INVALID) { "double and string cannot be subtracted" }
 
-    val test7 = operation(OperationType.ADD, AnyValue("Happy Holidays"), AnyValue(1))
-    check(test7.first == OperationStatus.INVALID) { "Int and String cannot be added together" }
+    val test6 = operationMap(OperationType.ADD, AnyValue("Happy Holidays"), AnyValue(1))
+    check(test6.first == OperationStatus.INVALID) { "Int and String cannot be added together" }
 }

@@ -58,13 +58,57 @@ fun task3(op: IntOperationType, first: () -> Int, second: () -> Int): IntResult?
     return null
 }
 
+// AnyValue can represent any type of value, and provides simple mechanisms check the type of value,
+// as well as perform different operations on the value
+//
+// To keep things simple, our AnyValue type only supports String and Int types
+//
+// Please fill out all of the TODO tasks for the AnyValue class
 class AnyValue {
 
     private val value: Any
 
     constructor(s: String) { value = s }
     constructor(i: Int) { value = i }
-    constructor(d: Double) { value = d }
+
+    fun stringValue(): String? { return value as? String  }
+    fun intValue(): Int? { return value as? Int }
+
+    // TODO: Replace get() = false with the proper code
+    val isString: Boolean
+        get() = false
+
+    // TODO: Replace get() = false with the proper code
+    val isInt: Boolean
+        get() = false
+
+    fun canPerformOperation(other: AnyValue, type: OperationType): Boolean {
+
+        // TODO: This function should determine if two AnyValue objects can perform a given operation
+        // If both values contain an Int, then the operation can be performed
+        // If both values contain a String, then the operation can be performed
+        // Otherwise, it cannot
+
+        return false
+    }
+
+    fun add(other: AnyValue): Pair<OperationStatus, AnyValue?> {
+        // TODO: First check if the operation can be performed by called canPerformOperation
+        // If the operation can be performed, then perform the the ADD operation, and return the appropriate result
+        return Pair(OperationStatus.INVALID, null)
+    }
+
+    fun subtract(other: AnyValue): Pair<OperationStatus, AnyValue?> {
+        // TODO: First check if the operation can be performed by called canPerformOperation
+        // If the operation can be performed, then perform the the SUBTRACT operation, and return the appropriate result
+        return Pair(OperationStatus.INVALID, null)
+    }
+
+    fun concat(other: AnyValue): Pair<OperationStatus, AnyValue?> {
+        // TODO: First check if the operation can be performed by called canPerformOperation
+        // If the operation can be performed, then perform the the SUBTRACT operation, and return the appropriate result
+        return Pair(OperationStatus.INVALID, null)
+    }
 }
 
 enum class OperationType {
@@ -80,30 +124,18 @@ enum class OperationStatus {
 //  Lambda functions in Kotlin are first-class citizens, meaning they can be assigned
 //  to variables and passed as a parameter to a function.
 //
-//  For task0, you should return an OperationHandler with the following rules:
-//      - Int and Number types can be Added and Subtracted
-//      - String types can be concatenated
-//      - Strings _cannot_ be added and subtracted
-//      - Int and Number types _cannot_ be concatenated
-//      - If an Int and Double have an operation applied, the result should _be_ a Double
+// For task4, you will return a OperationHandler. The OperationHandler takes 3 parameters:
+//  - An OperationType, such as ADD or CONCATENATE
+//  - Two AnyValue objects
+// The Operation handler returns a Pair<OperationStatus, AnyValue?>:
+//  - The OperationStatus denotes whether the operation could be completed or not
+//  - And the AnyValue? should be null if the operation cannot be completed, or the result if it can
 //
-//  If the values can have an operation applied to them, return a OperationStatus.VALID, as well as the result
-//  If the values cannot have the operation applied, return OperationStatus.INVALID in the Pair, along with null
+// Please use the add, subtract and concat functions from AnyValue to do the actual operations.
 //
-//  To make things easier to code, you should add several methods and computed properties to AnyValue,
-//  such as the following for string types:
-//      - fun stringValue(): String?
-//      - val isString: Boolean
-//
-//  To get the tasks to compile, you must add the following methods:
-//      - fun stringValue(): String?
-//      - fun doubleValue(): Double?
-//      - fun intValue(): Int?
-//
-//  NOTE: These functions do not _convert_ the value. They simply return the value if it is the type
-//        or return null if it is not that type
-
 typealias OperationHandler = (OperationType, AnyValue, AnyValue) -> Pair<OperationStatus, AnyValue?>
 fun task4(): OperationHandler? {
+
+    // TODO: Replace this with the proper code
     return null
 }
