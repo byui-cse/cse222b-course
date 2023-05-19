@@ -149,7 +149,7 @@
 ////  Lambda functions in Kotlin are first-class citizens, meaning they can be assigned
 ////  to variables and passed as a parameter to a function.
 ////
-////  For task0, you should return an OperationHandler with the following rules:
+////  For task4, you should return an OperationHandler with the following rules:
 ////      - Int types can be Added and Subtracted
 ////      - String types can be concatenated
 ////      - Strings _cannot_ be added and subtracted
